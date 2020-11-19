@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<style>
+    .c{
+        margin-top:5px;
+        background-image: linear-gradient(to right, darkblue , dodgerblue);
+    }
+    .c1{
+        text-align:center;
+        color:#fff;
+        margin-top:4%;
+    }
+    .c1 input{
+        border:none;
+        border-radius:1.5rem;
+        padding:2%;
+        width: 60%;
+        background: #f8f9fa;
+        font-weight: bold;
+        color: black;
+        margin-top: 30%;
+        margin-bottom: 3%
+    }
+    .c1 img{
+        margin-top: 15%;
+        margin-bottom: 5%;
+        width:25%
+    }
+    .c1 p{
+        font-wight:lighter;
+        padding:12%;
+    }
+    .c2{
+        background: #f8f9fa;
+        border-top-left-radius: 10% 50%;
+        border-bottom-left-radius:10% 50% ;
+        padding: 50px;
+        margin-top: 10px;
+        padding-right:150px;
+        margin-bottom:10px;
+    }
+    .c .c4{
+    padding-top: 10%;
+        margin-top: 10%;
+    }
+    .c .nav-tabs{
+        margin-top:3%;
+        border:none;
+        background:#0062cc;
+        border-radius:1.5rem;
+        width:38%;
+        float:right;
+    }
+    .c .nav-tabs .nav-link{
+        padding:2%;
+        height:34px;
+        font-weight:600;
+        border-bottom-right-radius: 1.5rem;
+        border-top-right-radius: 1.5rem;
+    }
+    .c .nav-tabs .nav-link.active{
+        width : 100px;
+        border-bottom-left-radius: 1.5rem;
+        border-top-left-radius: 1.5rem;
+    }
+    .c3{
+        text-align:center;
+        margin-top:8%;
+        color:#495057;
+    }
+    .btnRegister{
+        float:right;
+        margin-top:10%;
+        border:none;
+        border-radius:1.5rem;
+        padding:2%;
+        background: #0062cc;
+        font-weight:600;
+        width:50%
+    }
+</style>
+</head>
+<body>
+    <div class="container  c ">
+        <div class="row">
+            <div col="col-md-3 " class="c1">
+                <img src="https://image.ibb.co/n7oTvU/logo_white.png">
+                <h3>Welcome</h3>
+                <p>You are 30 seconds away from earning your own money!</p>
+                <input type="submit" value="Login">
+            </div>
+                <div col="col-md-9" class="c2">
+                        <ul class="nav nav-tabs nav-justified">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#home">Employee</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link">Hirer</a>
+                            </li>
+                        </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="home">
+                    <h3 class="c3">Apply as a Employee</h3>
+                    <div class="row c4">
+                        <div class ="col-md-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="First Name *">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="last Name *">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" placeholder="Password *">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" placeholder="Confirm Password*">
+                            </div>
+                            <div class="form-group">
+                                <div class="max1">
+                                <label class="radio inline">
+                                    <input type="radio"  checked>
+                                    <span>Male</span>
+                                </label>
+                                    <label class="radio inline">
+                                        <input type="radio"  >
+                                        <span>Female</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="email" class="form-control" placeholder="Your Email *" value="">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" minlength="10" maxlength="10" name="txtEmpPhone" class="form-control" placeholder="Your Phone *" value="">
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control">
+                                    <option selected disabled>Please select your Sequrity Question</option>
+                                    <option>g</option>
+                                    <option>g</option>
+                                    <option>g</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Enter Your Answer *" value="">
+                            </div>
+                            <input type="submit" class="btnRegister" value="Register">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

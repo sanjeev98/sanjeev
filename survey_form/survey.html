@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <title>Survey Form</title>
+    <style>
+        body{
+
+            background-image: linear-gradient(to right, darkblue , dodgerblue);
+        }
+        .top{
+
+            margin-top: 5%;
+            margin-right:200px;
+            margin-left:25%;
+            margin-bottom:100px;
+        }
+        .d{
+            background-color:#f8f9fa;
+        }
+        .d .c{
+            color:white;
+            font-weight: bold;
+            background-color: black;
+            border-top-right-radius: 5px;
+            border-top-left-radius: 5px;
+        }
+        .m{
+            padding-top:20px;
+            padding-left:50px;
+            padding-right:50px;
+        }
+
+    </style>
+    <script>
+        $(document).ready(function(){
+         $("button").click(function() {
+             $(".ap").empty()
+             if($('input[name="first"]').val()!="" && $('input[name="last"]').val()!=""  && $('input[name="mail"]').val()!="" && $('input[name="num"]').val()!="" &&$('input[name="gender"]').val()!="" && $('input[name="birthday"]').val()!="" &&$('select[name="dep"]').val()!=""
+                && $('select[name="lang"]').val()!="" && $('input[name="language"]:checked').val() && $('textarea[name="address"]').val() ){
+                 var txt = "<h>Details:</h><br>";
+                 txt = txt + "<br>" + "First Name: " + $('input[name="first"]').val();
+                 txt = txt + "<br>" + "Last Name: " + $('input[name="last"]').val();
+                 txt = txt + "<br>" + "Mail: " + $('input[name="mail"]').val();
+                 txt = txt + "<br>" + "Number: " + $('input[name="num"]').val();
+                 txt = txt + "<br>" + "Gender: " + $('input[name="gender"]').val();
+                txt = txt + "<br>" + "Birthday: " + $('input[name="birthday"]').val();
+                txt = txt + "<br>" + "Role " + $('select[name="dep"]').val();
+               txt = txt + "<br>" + "Language: " + $('select[name="lang"]').val();
+                txt = txt + "<br>" + "Language: " + $('input[name="language"]:checked').val();
+                txt = txt + "<br>" + "Address " + $('textarea[name="address"]').val();
+                          $(".ap").append(txt);
+
+        }
+                    else{
+                         alert("please enter all field ");
+                   }
+         });});
+
+    </script>
+</head>
+<body>
+<div class="top" >
+    <div class="d" style="border-radius: 5px">
+        <nav class="navbar navabar-expand-sm  justify-content-center c">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link">SURVEY FORM</a>
+                </li>
+            </ul>
+        </nav>
+        <form   onsubmit="event.preventDefault(); return validateMyForm();">
+            <div class="m">
+        <div class="row p-2 ">
+                <div class="col-sm-6 form-group">
+                    <label>First Name</label>
+                    <input type="text" class="form-control" name="first" placeholder="First Name" value="First Name" maxlength="25" required>
+                </div>
+                <div class="col-sm-6 form-group">
+                    <label>Last Name</label>
+                    <input type="text" class="form-control"name="last" placeholder="Last Name" value="Last Name" maxlength="25" required>
+                </div>
+            </div>
+            <div class="row p-2">
+                <div class="col-sm-6 form-group">
+                    <label>Email</label>
+                    <input type="email" class="form-control" placeholder="Email" name="mail" required>
+                </div>
+                <div class="col-sm-6 form-group">
+                    <label>Phone Number</label>
+                    <input type="number" class="form-control" placeholder="Number" name="num" max="1000000000" required>
+                </div>
+            </div>
+            <div class="row p-2">
+                <div class="col-sm-6 form-group">
+                        <label>Gender</label><br>
+                        <label class="radio inline" >
+                            <input type="radio" name="gender" value="Male" required>
+                            <span>Male</span>
+                        </label>
+                        <label class="radio inline" >
+                            <input type="radio" name="gender" value="Female" required>
+                            <span>Female</span>
+                        </label>
+                    <label class="radio inline">
+                        <input type="radio" name="gender" value="Others" required>
+                        <span>Others</span>
+                    </label>
+                    </div>
+                <div class="col-sm-6 form-group">
+                    <label>Role</label>
+                    <select class="form-control" name="dep" required>
+                        <option selected >DEVELOPER</option>
+                        <option>MARKETING</option>
+                        <option>SALES</option>
+                        <option>TEAM LEADER</option>
+                    </select>
+                </div>
+        </div>
+                <div class="row p-2">
+                    <div class=" col-sm-6 form-group mt-3">
+                        <label >Birthday:</label>
+                        <input type="date" class="form-control" name="birthday" required>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label>Language</label>
+                        <select class="form-control" name="lang"multiple required>
+                            <option >PHP</option>
+                            <option>CSS</option>
+                            <option>JAVA</option>
+                            <option>PYTHON</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row p-2">
+                        <div class="col-sm-6 form-group ">
+                            <label>Language</label>
+                            <br>
+                        <div class=" form-check-inline " >
+
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" name="language" value="ENGLISH">ENGLISH
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" name="language" value="HINDI">HINDI
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" name="language" value="TAMIL">TAMIL
+                            </label>
+                        </div>
+                        </div>
+                </div>
+
+        <div class="row p-2">
+            <div class="col-sm">
+                <div class="form-group">
+                    <label >Address:</label>
+                    <textarea class="form-control" name="address" required></textarea>
+                </div>
+            </div>
+        </div>
+
+                <button type="submit" class="btn btn-primary p-2 mb-4 ">submit</button>
+
+            </div>
+        </form>
+        <div class="ap " style="margin:10%;padding-bottom: 10px" >
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
