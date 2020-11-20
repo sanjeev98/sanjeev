@@ -1,0 +1,17 @@
+                                      Git Command
+$  --version   gives the version of the git
+$ config --global user.name ""    set username global to git
+$ config --global user.email ""    set email global to git
+$ config --help  help fromthe git
+$ git  init intialize Local Git Repository
+$ git  status checking status of working tree
+$ git  commit commit changes in index
+$ git  push push to remote repository
+$ git pull  pull latest from remote repository
+$ git clone  clone repository into a new directory
+$ git branch  creating a branch
+$ git checkout   switch to another branch
+$ git fetch   tells local git to retrive the latest meta-data infornation.
+$ rebase   process of moving or combine  a sequenceof commits
+$ git stash   saves it on a stack of unfinished changes  
+
