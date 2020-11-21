@@ -51,27 +51,41 @@
     </script>
 </head>
 <body>
+
 <?php
-$first = $last = $mail = $Phone_number = $gender = $department=$language1=$language=$address=$birthday="";
-if($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (!(empty($_POST["first"]) || empty($_POST["last"]) || empty($_POST["$mail"]) || empty($_POST["Phone_number"]) || empty($_POST["gender"]) ||
-        empty($_POST["department"]) || empty($_POST["language1"]) || empty($_POST["language"]) || empty($_POST["address"]) || empty($_POST["birthday"]))) {
-        $first = $last = $mail = $Phone_number = $gender = $department = $language1 = $language = $address = $birthday = "";
-    } else {
 
-        $first = test_input($_POST["first"]);
-        $last = test_input($_POST["last"]);
-        $mail = test_input($_POST["mail"]);
-        $Phone_number = test_input($_POST["Phone_number"]);
-        $gender = test_input($_POST["gender"]);
-        $department = test_input($_POST["department"]);
-        $language1 = test_input($_POST["language1"]);
-        $language = test_input($_POST["language"]);
-        $address = test_input($_POST["address"]);
-        $birthday = test_input($_POST["birthday"]);
+    $first = $last = $mail = $Phone_number = $gender = $department = $language1 = $language = $address = $birthday = $marks_10 = $marks_12="";
 
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (!(empty($_POST["first"]) || empty($_POST["last"]) || empty($_POST["$mail"]) || empty($_POST["Phone_number"]) || empty($_POST["gender"]) ||
+            empty($_POST["department"]) || empty($_POST["language1"]) || empty($_POST["language"]) || empty($_POST["address"]) || empty($_POST["birthday"]))) {
+            $first = $last = $mail = $Phone_number = $gender = $department = $language1 = $language = $address = $birthday = $marks_10 = $mark_12="";
+        } else {
+            $first = test_input($_POST["first"]);
+            $last = test_input($_POST["last"]);
+            $mail = test_input($_POST["mail"]);
+            $Phone_number = test_input($_POST["Phone_number"]);
+            $gender = test_input($_POST["gender"]);
+            $department = test_input($_POST["department"]);
+            $language1 = test_input($_POST["language1"]);
+            $language = test_input($_POST["language"]);
+            $address = test_input($_POST["address"]);
+            $birthday = test_input($_POST["birthday"]);
+            $marks_10 = test_input($_POST["marks_10"]);
+            $marks_10 /= 5;
+            $marks_12 = test_input($_POST["marks_12"]);
+            $marks_12 /= 12;
+        }
+
+        if(isset($_FILES["fileToUpload"])) {
+            move_uploaded_file($_FILES["fileToUpload"]["tmp_name"],'imgaes/' . $_FILES["fileToUpload"]["name"]);
+            print_r($_FILES);
+            if($_FILES["fileToUpload"]["error"]) {
+                echo "<br>The uploaded file exceeds the upload_max_filesize directive in php.ini";
+            }
+        }
     }
-}
+
     function test_input($data)
     {
         $data = trim($data);
@@ -90,8 +104,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 </li>
             </ul>
         </nav>
-
-        <form   method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+        <div>
+            <span><?php
+              echo  "Date:".date("y.m.d");
+              echo   "<br>Time:".date("h:i:sa");
+                ?></span>
+        </div>
+        <form   method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" enctype="multipart/form-data">
             <div class="m">
                 <div class="row p-2 ">
                     <div class="col-sm-6 form-group">
@@ -178,6 +197,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
                 </div>
+                <div class="row p-2">
+                    <div class="col-sm-6 form-group">
+                        <label>10th</label>
+                        <input type="number" class="form-control" placeholder="TypeMark" name="marks_10" max="500" required>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label>12th</label>
+                        <input type="number" class="form-control" placeholder="TypeMark" name="marks_12" max="1200" required>
+                    </div>
+                </div>
 
                 <div class="row p-2">
                     <div class="col-sm">
@@ -187,34 +216,357 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
                 </div>
-
+                <span>Upload profile:</span>
+                <br>
+                <input type="file" name="fileToUpload" id="fileToUpload">
                 <button type="submit" class="btn btn-primary p-2 mb-4 pl-1">submit</button>
-
             </div>
         </form>
         <div class="ap " style="margin:10%;padding-bottom: 10px" >
            <?php
-
-                echo "<h2>DETAILS:</h2>";
-                echo $first ;
-                echo " <br>";
-                echo $last . "<br>";
-                echo $Phone_number;
-                echo $mail;
-                echo $gender . "<br>";
-                echo $department;
-                echo $language1 . "<br>";
-                echo $language;
-                echo "<br>";
-                echo $address;
-                echo "<br>";
-                echo $birthday;
+               $img='imgaes/'.$_FILES["fileToUpload"]["name"];
+                echo '<table><tr><th>UserDetails</th><th>Values</th></tr>';
+                echo '<tr><td>first</td><td>',$first,',</td></tr>' ;
+                echo '<tr><td>last</td><td>',$last,',</td></tr>' ;
+                echo '<tr><td>phone_number</td><td>',$Phone_number,',</td></tr>' ;
+                echo '<tr><td>MAIL</td><td>',$mail,',</td></tr>' ;
+                echo '<tr><td>gender</td><td>',$gender,',</td></tr>' ;
+                echo '<tr><td>department</td><td>',$department,',</td></tr>' ;
+                echo '<tr><td>language</td><td>',$language1,',</td></tr>' ;
+                echo '<tr><td>language</td><td>',$language,',</td></tr>' ;
+                echo '<tr><td>address</td><td>',$address,',</td></tr>' ;
+                echo '<tr><td>birthday</td><td>',$birthday,',</td></tr>' ;
+                echo '<tr><td>percentage10th</td><td>',$marks_10,',</td></tr>' ;
+                echo '<tr><td>percentage12th</td><td>',$marks_12,',</td></tr>' ;
+                echo '</table>';
+                echo '<img src='.$img.'>';
 
             ?>
         </div>
+        <script>
+            var d = new Date();
+            document.write(d.toLocaleString('en-US', { timeZone: 'Indian/Reunion' }))
+        </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
 
 </div>
+
 
 </body>
 </html>
