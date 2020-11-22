@@ -16,7 +16,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
-
     <title>Survey Form</title>
     <style>
         body {
@@ -43,7 +42,6 @@
             padding-left: 50px;
             padding-right: 50px;
         }
-
     </style>
     <script>
         $(document).ready(function () {
@@ -78,7 +76,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $marks_12 = test_input($_POST["marks_12"]);
         $marks_12 /= 12;
     }
-    
     if (isset($_FILES["fileToUpload"])) {
         move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], 'imgaes/' . $_FILES["fileToUpload"]["name"]);
         print_r($_FILES);
@@ -87,12 +84,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
-
 function test_input($data)
 {
     return    htmlspecialchars(stripslashes(trim($data)));
 }
-
 ?>
 <div class="top">
     <div class="d" style="border-radius: 5px">
