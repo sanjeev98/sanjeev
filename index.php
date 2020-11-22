@@ -20,22 +20,17 @@
     <title>Survey Form</title>
     <style>
         body {
-
             background-image: linear-gradient(to right, darkblue, dodgerblue);
         }
-
         .top {
-
             margin-top: 5%;
             margin-right: 200px;
             margin-left: 25%;
             margin-bottom: 100px;
         }
-
         .d {
             background-color: #f8f9fa;
         }
-
         .d .c {
             color: white;
             font-weight: bold;
@@ -43,7 +38,6 @@
             border-top-right-radius: 5px;
             border-top-left-radius: 5px;
         }
-
         .m {
             padding-top: 20px;
             padding-left: 50px;
@@ -52,11 +46,8 @@
 
     </style>
     <script>
-
         $(document).ready(function () {
             $('.js-example-basic-single').select2();
-        });
-        $(document).ready(function () {
             $('.js-example-basic-multiple').select2();
         });
     </script>
@@ -65,17 +56,17 @@
 
 <?php
 
-$first = $last = $mail = $Phone_number = $gender = $department = $language1 = $language = $address = $birthday = $marks_10 = $marks_12 = "";
+$first = $last = $mail = $phone_number = $gender = $department = $language1 = $language = $address = $birthday = $marks_10 = $marks_12 = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (!(empty($_POST["first"]) || empty($_POST["last"]) || empty($_POST["$mail"]) || empty($_POST["Phone_number"]) || empty($_POST["gender"]) ||
+    if (!(empty($_POST["first"]) || empty($_POST["last"]) || empty($_POST["$mail"]) || empty($_POST["phone_number"]) || empty($_POST["gender"]) ||
         empty($_POST["department"]) || empty($_POST["language1"]) || empty($_POST["language"]) || empty($_POST["address"]) || empty($_POST["birthday"]))) {
-        $first = $last = $mail = $Phone_number = $gender = $department = $language1 = $language = $address = $birthday = $marks_10 = $mark_12 = "";
+        $first = $last = $mail = $phone_number = $gender = $department = $language1 = $language = $address = $birthday = $marks_10 = $mark_12 = "";
     } else {
         $first = test_input($_POST["first"]);
         $last = test_input($_POST["last"]);
         $mail = test_input($_POST["mail"]);
-        $Phone_number = test_input($_POST["Phone_number"]);
+        $phone_number = test_input($_POST["phone_number"]);
         $gender = test_input($_POST["gender"]);
         $department = test_input($_POST["department"]);
         $language1 = test_input($_POST["language1"]);
@@ -99,16 +90,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 function test_input($data)
 {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
+    return    htmlspecialchars(stripslashes(trim($data)));
 }
 
 ?>
 <div class="top">
     <div class="d" style="border-radius: 5px">
-        <nav class="navbar navabar-expand-sm  justify-content-center c">
+        <nav class="navbar navabar-expand-sm justify-content-center c">
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link">SURVEY FORM</a>
@@ -124,7 +112,7 @@ function test_input($data)
         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"
               enctype="multipart/form-data">
             <div class="m">
-                <div class="row p-2 ">
+                <div class="row p-2">
                     <div class="col-sm-6 form-group">
                         <label>First Name</label>
                         <input type="text" class="form-control" name="first" placeholder="First Name" value="First Name"
@@ -143,7 +131,7 @@ function test_input($data)
                     </div>
                     <div class="col-sm-6 form-group">
                         <label>Phone Number</label>
-                        <input type="number" class="form-control" placeholder="Number" name="Phone_number"
+                        <input type="number" class="form-control" placeholder="Number" name="phone_number"
                                max="1000000000" required>
                     </div>
                 </div>
@@ -194,8 +182,7 @@ function test_input($data)
                     <div class="col-sm-6 form-group ">
                         <label>Language</label>
                         <br>
-                        <div class=" form-check-inline ">
-
+                        <div class="form-check-inline ">
                             <label class="form-check-label">
                                 <input type="checkbox" class="form-check-input" name="language" value="ENGLISH">ENGLISH
                             </label>
@@ -238,25 +225,24 @@ function test_input($data)
                 <button type="submit" class="btn btn-primary p-2 mb-4 pl-1">submit</button>
             </div>
         </form>
-        <div class="ap " style="margin:10%;padding-bottom: 10px">
+        <div class="ap" style="margin:10%;padding-bottom: 10px">
             <?php
             $img = 'imgaes/' . $_FILES["fileToUpload"]["name"];
             echo '<table><tr><th>UserDetails</th><th>Values</th></tr>';
-            echo '<tr><td>first</td><td>', $first, ',</td></tr>';
-            echo '<tr><td>last</td><td>', $last, ',</td></tr>';
-            echo '<tr><td>phone_number</td><td>', $Phone_number, ',</td></tr>';
+            echo '<tr><td>FirstName</td><td>', $first, ',</td></tr>';
+            echo '<tr><td>LastName</td><td>', $last, ',</td></tr>';
+            echo '<tr><td>Phonenumber</td><td>', $phone_number, ',</td></tr>';
             echo '<tr><td>MAIL</td><td>', $mail, ',</td></tr>';
-            echo '<tr><td>gender</td><td>', $gender, ',</td></tr>';
-            echo '<tr><td>department</td><td>', $department, ',</td></tr>';
-            echo '<tr><td>language</td><td>', $language1, ',</td></tr>';
-            echo '<tr><td>language</td><td>', $language, ',</td></tr>';
-            echo '<tr><td>address</td><td>', $address, ',</td></tr>';
-            echo '<tr><td>birthday</td><td>', $birthday, ',</td></tr>';
-            echo '<tr><td>percentage10th</td><td>', $marks_10, ',</td></tr>';
-            echo '<tr><td>percentage12th</td><td>', $marks_12, ',</td></tr>';
+            echo '<tr><td>Gender</td><td>', $gender, ',</td></tr>';
+            echo '<tr><td>Department</td><td>', $department, ',</td></tr>';
+            echo '<tr><td>Language</td><td>', $language1, ',</td></tr>';
+            echo '<tr><td>Languagespoken</td><td>', $language, ',</td></tr>';
+            echo '<tr><td>Address</td><td>', $address, ',</td></tr>';
+            echo '<tr><td>Birthday</td><td>', $birthday, ',</td></tr>';
+            echo '<tr><td>Percentage10th</td><td>', $marks_10, ',</td></tr>';
+            echo '<tr><td>Percentage12th</td><td>', $marks_12, ',</td></tr>';
             echo '</table>';
             echo '<img src=' . $img . '>';
-
             ?>
         </div>
         <script>
