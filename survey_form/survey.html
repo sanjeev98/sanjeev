@@ -50,8 +50,10 @@
 
     </style>
     <script>
-        $(document).ready(function () {
-            $("button").click(function () {
+        $(document).ready(function ()
+           {
+            $("button").click(function ()
+            {
                 $(".ap").empty()
                 if ($('input[name="first_name"]').val() != "" && $('input[name="last_name"]').val() != "" && $('input[name="mail"]').val() != "" && $('input[name="number"]').val() != "" && $('input[name="gender"]').val() != "" && $('input[name="birthday"]').val() != "" && $('select[name="department"]').val() != ""
                     && $('select[name="language1"]').val() != "" && $('input[name="language"]:checked').val() && $('textarea[name="address"]').val()) {
