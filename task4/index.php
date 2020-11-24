@@ -21,15 +21,18 @@
         body {
             background-image: linear-gradient(to right, darkblue, dodgerblue);
         }
+
         .top {
             margin-top: 5%;
             margin-right: 200px;
             margin-left: 25%;
             margin-bottom: 100px;
         }
+
         .d {
             background-color: #f8f9fa;
         }
+
         .d .c {
             color: white;
             font-weight: bold;
@@ -37,6 +40,7 @@
             border-top-right-radius: 5px;
             border-top-left-radius: 5px;
         }
+
         .m {
             padding-top: 20px;
             padding-left: 50px;
@@ -53,44 +57,38 @@
 <body>
 
 <?php
+class UserDetail
+{
+    public $firstname, $lastname, $mail, $phone_number, $gender, $department, $program_language, $spoken_language, $birthday;
 
-
-
-class User{
-    public $firstname;
-    public $lastname;
-    public $mail;
-    public $phone_number;
-    public $gender;
-    public $department;
-    public $language;
-    public $language1;
-    public $birthday;
-    public
-    function __construct($firstname,$lastname,$mail, $phone_number, $gender, $department, $language, $language1, $birthday) {
-      $this.$firstname=$firstname;
-      $this.$lastname=$lastname;
-      $this.$mail=$mail;
-      $this.$phone_number=$phone_number;
-      $this.$gender=$gender;
-      $this.$department=$department;
-      $this.$language=$language;
-      $this.$language1=$language1;
-      $this.$birthday;
+    function __construct($firstname, $lastname, $mail, $phone_number, $gender, $department, $program_language, $spoken_language, $birthday)
+    {
+        $this . $firstname = $firstname;
+        $this . $lastname = $lastname;
+        $this . $mail = $mail;
+        $this . $phone_number = $phone_number;
+        $this . $gender = $gender;
+        $this . $department = $department;
+        $this . $program_language = $program_language;
+        $this . $spoken_language = $spoken_language;
+        $this . $birthday;
     }
-    public function getFirstname()
+
+    public function getFirstName()
     {
         return $this->firstname;
     }
 
-    public function getLastname()
+    public function getLastName()
     {
         return $this->lastname;
     }
+
     public function getMail()
     {
         return $this->mail;
     }
+
     public function getBirthday()
     {
         return $this->birthday;
@@ -100,17 +98,20 @@ class User{
     {
         return $this->department;
     }
+
     public function getGender()
     {
         return $this->gender;
     }
-    public function getLanguage()
+    
+    public function getProgramLanguage()
     {
-        return $this->language;
+        return $this->program_language;
     }
-    public function getLanguage1()
+    
+    public function getSpokenLanguage()
     {
-        return $this->language1;
+        return $this->spoken_language;
     }
 
     public function getPhoneNumber()
@@ -118,67 +119,63 @@ class User{
         return $this->phone_number;
     }
 }
-class Survey{
-
+class SurveyDetail
+{
     private $age;
-    private $media;
-    public $conn;
-    
-    public function __construct($age,$media)
-    {   $conn =new  mysqli("localhost", "root","sanjeev98" , "survey_form");
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-        $sql = "INSERT INTO survey(Age,Media)
- VALUES ($age,'$media')";
-        if ($conn->query($sql) === TRUE) {
+    public $connect,$media;;
 
-        } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
+    public function __construct($age, $media)
+    {
+        $connect = new  mysqli("localhost", "root", "sanjeev98", "survey_form");
+        if ($connect->connect_error) {
+            die("Connection failed: " . $connect->connect_error);
+        }
+
+        $sql = "INSERT INTO survey(Age,Media)VALUES ($age,'$media')";
+
+        if (!($connect->query($sql) === TRUE)) {
+            echo "Error: " . $sql . "<br>" . $connect->error;
         }
     }
-    public function __set($name,$value)
-    {   $conn =new  mysqli("localhost", "root","sanjeev98" , "survey_form");
-        $sql = "SELECT COUNT(*) FROM survey where Media='$value'";
-        $result = $conn->query($sql);
-        $tourresult = $result->fetch_array()[0];
-       // echo $tourresult;
-        $sql = "SELECT COUNT(*) FROM survey;";
-        $result = $conn->query($sql);
-        $tour = $result->fetch_array()[0];
-    echo    $percent=($tourresult[0]/$tour[0])*100;
-        $con =new  mysqli("localhost", "root","sanjeev98" , "media_detail");
-        if ($con->connect_error) {
-            die("Connection failed: " . $con->connect_error);
-        }
-        $sql = "INSERT INTO media(media,percentage)
- VALUES ('$value','$percent')";
-        if ($con->query($sql) === TRUE) {
 
-        } else {
-            echo "Error: " . $sql . "<br>" . $con->error;
+    public function __set($name, $value)
+    {
+        $connect = new  mysqli("localhost", "root", "sanjeev98", "survey_form");
+        $sql = "SELECT COUNT(*) FROM survey where Media='$value'";
+        $result = $connect->query($sql);
+        $tourresult = $result->fetch_array()[0];
+        $sql = "SELECT COUNT(*) FROM survey;";
+        $result = $connect->query($sql);
+        $tour = $result->fetch_array()[0];
+        echo $percent = ($tourresult[0] / $tour[0]) * 100;
+        $connect1 = new  mysqli("localhost", "root", "sanjeev98", "media_detail");
+        if ($connect1->connect_error) {
+            die("Connection failed: " . $connect1->connect_error);
+        }
+        $sql = "INSERT INTO media(media,percentage)VALUES ('$value','$percent')";
+        if (!($connect1->query($sql) === TRUE)) {
+            echo "Error: " . $sql . "<br>" . $connect1->error;
         }
     }
 
 }
 
-$first = $last = $mail = $phone_number = $gender = $department = $language1 = $language = $address = $birthday = $age = $media= "";
+$firstname = $lastname = $mail = $phone_number = $gender = $department = $spoken_language = $program_language = $address = $birthday = $age = $media = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ((empty($_POST["first"]) || empty($_POST["last"]) || empty($_POST["mail"]) || empty($_POST["phone_number"]) || empty($_POST["gender"]) ||
-        empty($_POST["department"]) || empty($_POST["language1"]) || empty($_POST["language"]) || empty($_POST["address"]) || empty($_POST["birthday"]))) {
-        $first = $last = $mail = $phone_number = $gender = $department = $language1 = $language = $address = $birthday = $age = $media= "";
-    }
-    else {
-         $Survey = new Survey(test_input($_POST["Age"]),test_input($_POST["media"]));
-         $Survey->media='Skype';
-        $first = test_input($_POST["first"]);
-        $last = test_input($_POST["last"]);
+        empty($_POST["department"]) || empty($_POST["spoken_language"]) || empty($_POST["language"]) || empty($_POST["address"]) || empty($_POST["birthday"]))) {
+        $firstname = $lastname = $mail = $phone_number = $gender = $department = $spoken_language = $program_language = $address = $birthday = $age = $media = "";
+    } else {
+        $Survey = new SurveyDetail(test_input($_POST["Age"]), test_input($_POST["media"]));
+        $Survey->media = 'Skype';
+        $firstname = test_input($_POST["first"]);
+        $lastname = test_input($_POST["last"]);
         $mail = test_input($_POST["mail"]);
         $phone_number = test_input($_POST["phone_number"]);
         $gender = test_input($_POST["gender"]);
         $department = test_input($_POST["department"]);
-        $language1 = test_input($_POST["language1"]);
-        $language = test_input($_POST["language"]);
+        $spoken_language = test_input($_POST["spoken_language"]);
+        $program_language = test_input($_POST["language"]);
         $address = test_input($_POST["address"]);
         $birthday = test_input($_POST["birthday"]);
     }
@@ -193,9 +190,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 function test_input($data)
 {
-    return    htmlspecialchars(stripslashes(trim($data)));
+    return htmlspecialchars(stripslashes(trim($data)));
 }
 ?>
+
 <div class="top">
     <div class="d" style="border-radius: 5px">
         <nav class="navbar navabar-expand-sm justify-content-center c">
@@ -209,7 +207,8 @@ function test_input($data)
             <span><?php
                 echo "Date:" . date("y.m.d");
                 echo "<br>Time:" . date("h:i:sa");
-                ?></span>
+                ?>
+            </span>
         </div>
         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"
               enctype="multipart/form-data">
@@ -272,7 +271,7 @@ function test_input($data)
                     <div class="col-sm-6 form-group">
                         <label style="padding-bottom: 15px">Language</label>
                         <br>
-                        <select class="js-example-basic-multiple" name="language1" multiple required>
+                        <select class="js-example-basic-multiple" name="spoken_language" multiple required>
                             <option>PHP</option>
                             <option>CSS</option>
                             <option>JAVA</option>
@@ -308,13 +307,13 @@ function test_input($data)
                                required>
                     </div>
                     <div class="col-sm-6 form-group">
-                    <label>Social media</label>
-                    <br>
-                    <select class="js-example-basic-single" name="media" required>
-                        <option selected>Facebook</option>
-                        <option>WhatsAPP</option>
-                        <option>Skype</option>
-                    </select>
+                        <label>Social media</label>
+                        <br>
+                        <select class="js-example-basic-single" name="media" required>
+                            <option selected>Facebook</option>
+                            <option>WhatsAPP</option>
+                            <option>Skype</option>
+                        </select>
                     </div>
                 </div>
                 <div class="row p-2">
@@ -334,23 +333,23 @@ function test_input($data)
         </form>
         <div class="ap" style="margin:10%;padding-bottom: 10px">
             <?php
-            if(!empty($_POST["first"])){
-            $img = 'imgaes/' . $_FILES["fileToUpload"]["name"];
-            echo '<table><tr><th>UserDetails</th><th>Values</th></tr>';
-            echo '<tr><td>FirstName</td><td>', $first, ',</td></tr>';
-            echo '<tr><td>LastName</td><td>', $last, ',</td></tr>';
-            echo '<tr><td>Phonenumber</td><td>', $phone_number, ',</td></tr>';
-            echo '<tr><td>MAIL</td><td>', $mail, ',</td></tr>';
-            echo '<tr><td>Gender</td><td>', $gender, ',</td></tr>';
-            echo '<tr><td>Department</td><td>', $department, ',</td></tr>';
-            echo '<tr><td>Language</td><td>', $language1, ',</td></tr>';
-            echo '<tr><td>Languagespoken</td><td>', $language, ',</td></tr>';
-            echo '<tr><td>Address</td><td>', $address, ',</td></tr>';
-            echo '<tr><td>Birthday</td><td>', $birthday, ',</td></tr>';
-            echo '<tr><td>AGE</td><td>',$age, ',</td></tr>';
-            echo '<tr><td>MediaUsage</td><td>',$media, ',</td></tr>';
-            echo '</table>';
-            echo '<img src=' . $img . '>';
+            if (!empty($_POST["first"])) {
+                $img = 'imgaes/' . $_FILES["fileToUpload"]["name"];
+                echo '<table><tr><th>UserDetails</th><th>Values</th></tr>';
+                echo '<tr><td>FirstName</td><td>', $first, ',</td></tr>';
+                echo '<tr><td>LastName</td><td>', $last, ',</td></tr>';
+                echo '<tr><td>Phonenumber</td><td>', $phone_number, ',</td></tr>';
+                echo '<tr><td>MAIL</td><td>', $mail, ',</td></tr>';
+                echo '<tr><td>Gender</td><td>', $gender, ',</td></tr>';
+                echo '<tr><td>Department</td><td>', $department, ',</td></tr>';
+                echo '<tr><td>program</td><td>', $spoken_language, ',</td></tr>';
+                echo '<tr><td>spoken</td><td>', $program_language, ',</td></tr>';
+                echo '<tr><td>Address</td><td>', $address, ',</td></tr>';
+                echo '<tr><td>Birthday</td><td>', $birthday, ',</td></tr>';
+                echo '<tr><td>AGE</td><td>', $age, ',</td></tr>';
+                echo '<tr><td>MediaUsage</td><td>', $media, ',</td></tr>';
+                echo '</table>';
+                echo '<img src=' . $img . '>';
             }
             ?>
         </div>
