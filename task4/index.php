@@ -21,15 +21,18 @@
         body {
             background-image: linear-gradient(to right, darkblue, dodgerblue);
         }
+
         .top {
             margin-top: 5%;
             margin-right: 200px;
             margin-left: 25%;
             margin-bottom: 100px;
         }
+
         .d {
             background-color: #f8f9fa;
         }
+
         .d .c {
             color: white;
             font-weight: bold;
@@ -37,6 +40,7 @@
             border-top-right-radius: 5px;
             border-top-left-radius: 5px;
         }
+
         .m {
             padding-top: 20px;
             padding-left: 50px;
@@ -54,9 +58,67 @@
 
 <?php
 
+interface Write
+{
+    public function getAllValue();
+}
+
+class Database
+{
+
+    public $conn;
+
+    protected final function connect()
+    {
+        $this->conn = new  mysqli("localhost", "root", "sanjeev98", "users");
+        if ($this->conn->connect_error) {
+            die("Connection failed: " . $this->conn->connect_error);
+        }
+
+    }
+
+    protected final function insert1($firstname, $lastname, $mail, $phone_number, $gender, $department, $language, $language1, $birthday, $address)
+    {
+        $sql = "INSERT INTO user(firstname,lastname,mail,phoneNumber,gender,department,language,birthday,language1,address)
+  VALUES ('$firstname','$lastname','$mail','$phone_number','$gender','$department','$language','$birthday','$language1','$address')";
+        if ($this->conn->query($sql) === TRUE) {
+
+        } else {
+            echo "Error: " . $sql . "<br>" . $this->conn->error;
+        }
+    }
+
+    protected final function insert2($phoneNumber, $media, $hours, $percentage)
+    {
+        $sql = "INSERT INTO detail(phonenumber,media,hours,percentage)
+  VALUES ('$phoneNumber','$media',$hours,$percentage)";
+        if ($this->conn->query($sql) === TRUE) {
+
+        } else {
+            echo "Error: " . $sql . "<br>" . $this->conn->error;
+        }
+    }
 
 
-class User{
+    protected final function select1($value)
+    {
+        $sql = "SELECT * FROM user where phonenumber='$value'limit 1";
+        $result = $this->conn->query($sql);
+        return $result;
+    }
+
+    protected final function select2($value)
+    {
+
+        $sql = "SELECT * FROM detail where phonenumber='$value'limit 1";
+        $result = $this->conn->query($sql);
+        return $result;
+    }
+
+}
+
+class User extends Database implements Write
+{
     public $firstname;
     public $lastname;
     public $mail;
@@ -66,18 +128,32 @@ class User{
     public $language;
     public $language1;
     public $birthday;
-    public
-    function __construct($firstname,$lastname,$mail, $phone_number, $gender, $department, $language, $language1, $birthday) {
-      $this.$firstname=$firstname;
-      $this.$lastname=$lastname;
-      $this.$mail=$mail;
-      $this.$phone_number=$phone_number;
-      $this.$gender=$gender;
-      $this.$department=$department;
-      $this.$language=$language;
-      $this.$language1=$language1;
-      $this.$birthday;
+    public $address;
+
+    function __construct($firstname, $lastname, $mail, $phone_number, $gender, $department, $language, $language1, $birthday, $address)
+    {
+        $this->firstname = $firstname;
+        $this->lastname = $lastname;
+        $this->mail = $mail;
+        $this->phone_number = $phone_number;
+        $this->gender = $gender;
+        $this->department = $department;
+        $this->language = $language;
+        $this->language1 = $language1;
+        $this->birthday = $birthday;
+        $this->address = $address;
     }
+
+    public function getconnect()
+    {
+        $this->connect();
+    }
+
+    public function insert11()
+    {
+        $this->insert1($this->firstname, $this->lastname, $this->mail, $this->phone_number, $this->gender, $this->department, $this->language, $this->language1, $this->birthday, $this->address);
+    }
+
     public function getFirstname()
     {
         return $this->firstname;
@@ -87,10 +163,12 @@ class User{
     {
         return $this->lastname;
     }
+
     public function getMail()
     {
         return $this->mail;
     }
+
     public function getBirthday()
     {
         return $this->birthday;
@@ -100,14 +178,17 @@ class User{
     {
         return $this->department;
     }
+
     public function getGender()
     {
         return $this->gender;
     }
+
     public function getLanguage()
     {
         return $this->language;
     }
+
     public function getLanguage1()
     {
         return $this->language1;
@@ -117,60 +198,75 @@ class User{
     {
         return $this->phone_number;
     }
-}
-class Survey{
 
-    private $age;
-    private $media;
-    public $conn;
-    
-    public function __construct($age,$media)
-    {   $conn =new  mysqli("localhost", "root","sanjeev98" , "survey_form");
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-        $sql = "INSERT INTO survey(Age,Media)
- VALUES ($age,'$media')";
-        if ($conn->query($sql) === TRUE) {
-
-        } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
-        }
-    }
-    public function __set($name,$value)
-    {   $conn =new  mysqli("localhost", "root","sanjeev98" , "survey_form");
-        $sql = "SELECT COUNT(*) FROM survey where Media='$value'";
-        $result = $conn->query($sql);
-        $tourresult = $result->fetch_array()[0];
-       // echo $tourresult;
-        $sql = "SELECT COUNT(*) FROM survey;";
-        $result = $conn->query($sql);
-        $tour = $result->fetch_array()[0];
-    echo    $percent=($tourresult[0]/$tour[0])*100;
-        $con =new  mysqli("localhost", "root","sanjeev98" , "media_detail");
-        if ($con->connect_error) {
-            die("Connection failed: " . $con->connect_error);
-        }
-        $sql = "INSERT INTO media(media,percentage)
- VALUES ('$value','$percent')";
-        if ($con->query($sql) === TRUE) {
-
-        } else {
-            echo "Error: " . $sql . "<br>" . $con->error;
-        }
+    public function getAddress()
+    {
+        return $this->address;
     }
 
+    public function getAllValue()
+    {
+        $result = $this->select1($this->phone_number);
+        print_r($result->fetch_array());
+    }
 }
 
-$first = $last = $mail = $phone_number = $gender = $department = $language1 = $language = $address = $birthday = $age = $media= "";
+class Survey extends Database implements Write
+{
+
+    public $phoneNumber;
+    public $media;
+    public $hours;
+    public $percentage;
+
+    public function __construct($phoneNumber, $media, $hours)
+    {
+        $this->phoneNumber = $phoneNumber;
+        $this->media = $media;
+        $this->hours = $hours;
+        $this->percentage = round(($this->hours / 24) * 100);
+    }
+
+    public function getconnect()
+    {
+        $this->connect();
+    }
+
+    public function insert12()
+    {
+        $this->insert2($this->phoneNumber, $this->media, $this->hours, $this->percentage);
+    }
+
+    public function getHours()
+    {
+        return $this->hours;
+    }
+
+    public function getPercentage()
+    {
+        return $this->percentage;
+    }
+
+    public function getMedia()
+    {
+        return $this->media;
+    }
+
+    public function getAllValue()
+    {
+        $result = $this->select2($this->phoneNumber);
+        print_r($result->fetch_array());
+    }
+}
+
+$first = $last = $mail = $phone_number = $gender = $department = $language1 = $language = $address = $birthday = $hours = $media = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ((empty($_POST["first"]) || empty($_POST["last"]) || empty($_POST["mail"]) || empty($_POST["phone_number"]) || empty($_POST["gender"]) ||
         empty($_POST["department"]) || empty($_POST["language1"]) || empty($_POST["language"]) || empty($_POST["address"]) || empty($_POST["birthday"]))) {
-        $first = $last = $mail = $phone_number = $gender = $department = $language1 = $language = $address = $birthday = $age = $media= "";
-    }
-    else {
-         $Survey = new Survey(test_input($_POST["Age"]),test_input($_POST["media"]));
-         $Survey->media='Skype';
+        $first = $last = $mail = $phone_number = $gender = $department = $language1 = $language = $address = $birthday = $age = $media = "";
+    } else {
+        $hours = test_input($_POST["hours"]);
+        $media = test_input($_POST["media"]);
         $first = test_input($_POST["first"]);
         $last = test_input($_POST["last"]);
         $mail = test_input($_POST["mail"]);
@@ -181,8 +277,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $language = test_input($_POST["language"]);
         $address = test_input($_POST["address"]);
         $birthday = test_input($_POST["birthday"]);
+        $obj1 = new User($first, $last, $mail, $phone_number, $gender, $department, $language, $language1, $birthday, $address);
+        $obj2 = new Survey($phone_number, $media, $hours);
+        $obj1->getconnect();
+        $obj2->getconnect();
+        $obj1->insert11();
+        $obj2->insert12();
+        $obj2->getAllValue();
+        $obj1->getAllValue();
     }
-
     if (isset($_FILES["fileToUpload"])) {
         move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], 'imgaes/' . $_FILES["fileToUpload"]["name"]);
         print_r($_FILES);
@@ -193,8 +296,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 function test_input($data)
 {
-    return    htmlspecialchars(stripslashes(trim($data)));
+    return htmlspecialchars(stripslashes(trim($data)));
 }
+
 ?>
 <div class="top">
     <div class="d" style="border-radius: 5px">
@@ -303,18 +407,18 @@ function test_input($data)
                 </div>
                 <div class="row p-2">
                     <div class="col-sm-6 form-group">
-                        <label>Age</label>
-                        <input type="number" class="form-control" placeholder="TypeMark" name="Age" max="100"
+                        <label>DailyUsage</label>
+                        <input type="number" class="form-control" placeholder="TypeMark" name="hours" max="24"
                                required>
                     </div>
                     <div class="col-sm-6 form-group">
-                    <label>Social media</label>
-                    <br>
-                    <select class="js-example-basic-single" name="media" required>
-                        <option selected>Facebook</option>
-                        <option>WhatsAPP</option>
-                        <option>Skype</option>
-                    </select>
+                        <label>Social media</label>
+                        <br>
+                        <select class="js-example-basic-single" name="media" required>
+                            <option selected>Facebook</option>
+                            <option>WhatsAPP</option>
+                            <option>Skype</option>
+                        </select>
                     </div>
                 </div>
                 <div class="row p-2">
@@ -325,7 +429,6 @@ function test_input($data)
                         </div>
                     </div>
                 </div>
-
                 <span>Upload profile:</span>
                 <br>
                 <input type="file" name="fileToUpload" id="fileToUpload">
@@ -334,23 +437,23 @@ function test_input($data)
         </form>
         <div class="ap" style="margin:10%;padding-bottom: 10px">
             <?php
-            if(!empty($_POST["first"])){
-            $img = 'imgaes/' . $_FILES["fileToUpload"]["name"];
-            echo '<table><tr><th>UserDetails</th><th>Values</th></tr>';
-            echo '<tr><td>FirstName</td><td>', $first, ',</td></tr>';
-            echo '<tr><td>LastName</td><td>', $last, ',</td></tr>';
-            echo '<tr><td>Phonenumber</td><td>', $phone_number, ',</td></tr>';
-            echo '<tr><td>MAIL</td><td>', $mail, ',</td></tr>';
-            echo '<tr><td>Gender</td><td>', $gender, ',</td></tr>';
-            echo '<tr><td>Department</td><td>', $department, ',</td></tr>';
-            echo '<tr><td>Language</td><td>', $language1, ',</td></tr>';
-            echo '<tr><td>Languagespoken</td><td>', $language, ',</td></tr>';
-            echo '<tr><td>Address</td><td>', $address, ',</td></tr>';
-            echo '<tr><td>Birthday</td><td>', $birthday, ',</td></tr>';
-            echo '<tr><td>AGE</td><td>',$age, ',</td></tr>';
-            echo '<tr><td>MediaUsage</td><td>',$media, ',</td></tr>';
-            echo '</table>';
-            echo '<img src=' . $img . '>';
+            if (!empty($_POST["first"])) {
+                $img = 'imgaes/' . $_FILES["fileToUpload"]["name"];
+                echo '<table><tr><th>UserDetails</th><th>Values</th></tr>';
+                echo '<tr><td>FirstName</td><td>', $obj1->getFirstname(), ',</td></tr>';
+                echo '<tr><td>LastName</td><td>', $obj1->getLastname(), ',</td></tr>';
+                echo '<tr><td>Phonenumber</td><td>', $obj1->getPhoneNumber(), ',</td></tr>';
+                echo '<tr><td>MAIL</td><td>', $obj1->getMail(), ',</td></tr>';
+                echo '<tr><td>Gender</td><td>', $obj1->getGender(), ',</td></tr>';
+                echo '<tr><td>Department</td><td>', $obj1->getDepartment(), ',</td></tr>';
+                echo '<tr><td>Language</td><td>', $obj1->getLanguage(), ',</td></tr>';
+                echo '<tr><td>Languagespoken</td><td>', $obj1->getLanguage1(), ',</td></tr>';
+                echo '<tr><td>Address</td><td>', $obj1->getAddress(), ',</td></tr>';
+                echo '<tr><td>Birthday</td><td>', $obj1->getBirthday(), ',</td></tr>';
+                echo '<tr><td>Daily Usage</td><td>', $obj2->getHours(), ',</td></tr>';
+                echo '<tr><td>MediaUsage</td><td>', $obj2->getMedia(), ',</td></tr>';
+                echo '</table>';
+                echo '<img src=' . $img . '>';
             }
             ?>
         </div>
