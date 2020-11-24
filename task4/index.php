@@ -324,7 +324,6 @@ function test_input($data)
                         </div>
                     </div>
                 </div>
-
                 <span>Upload profile:</span>
                 <br>
                 <input type="file" name="fileToUpload" id="fileToUpload">
@@ -333,7 +332,7 @@ function test_input($data)
         </form>
         <div class="ap" style="margin:10%;padding-bottom: 10px">
             <?php
-            if (!empty($_POST["first"])) {
+            if (!empty($_POST["first"])){
                 $img = 'imgaes/' . $_FILES["fileToUpload"]["name"];
                 echo '<table><tr><th>UserDetails</th><th>Values</th></tr>';
                 echo '<tr><td>FirstName</td><td>', $first, ',</td></tr>';
