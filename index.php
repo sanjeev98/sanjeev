@@ -60,7 +60,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!(empty($_POST["first"]) || empty($_POST["last"]) || empty($_POST["$mail"]) || empty($_POST["phone_number"]) || empty($_POST["gender"]) ||
         empty($_POST["department"]) || empty($_POST["language1"]) || empty($_POST["language"]) || empty($_POST["address"]) || empty($_POST["birthday"]))) {
         $first = $last = $mail = $phone_number = $gender = $department = $language1 = $language = $address = $birthday = $marks_10 = $mark_12 = "";
-    } else {
+    }
+    else {
         $first = test_input($_POST["first"]);
         $last = test_input($_POST["last"]);
         $mail = test_input($_POST["mail"]);
