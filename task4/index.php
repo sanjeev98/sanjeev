@@ -121,8 +121,7 @@ class UserDetail
 }
 class SurveyDetail
 {
-    private $age;
-    public $connect,$media;;
+    private $age;public $connect,$media;
 
     public function __construct($age, $media)
     {
