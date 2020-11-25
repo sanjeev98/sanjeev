@@ -47,6 +47,7 @@
             padding-right: 50px;
         }
     </style>
+    
     <script>
         $(document).ready(function () {
             $('.js-example-basic-single').select2();
@@ -59,19 +60,19 @@
 <?php
 class UserDetail
 {
-    public $firstname, $lastname, $mail, $phone_number, $gender, $department, $program_language, $spoken_language, $birthday;
+    public $firstname, $lastname, $mail, $phone_number, $gender, $department, $programing_language, $spoken_language, $birthday;
 
-    function __construct($firstname, $lastname, $mail, $phone_number, $gender, $department, $program_language, $spoken_language, $birthday)
+    function __construct($firstname, $lastname, $mail, $phone_number, $gender, $department, $programing_language, $spoken_language, $birthday)
     {
-        $this . $firstname = $firstname;
-        $this . $lastname = $lastname;
-        $this . $mail = $mail;
-        $this . $phone_number = $phone_number;
-        $this . $gender = $gender;
-        $this . $department = $department;
-        $this . $program_language = $program_language;
-        $this . $spoken_language = $spoken_language;
-        $this . $birthday;
+        $this.$firstname = $firstname;
+        $this.$lastname = $lastname;
+        $this.$mail = $mail;
+        $this.$phone_number = $phone_number;
+        $this.$gender = $gender;
+        $this.$department = $department;
+        $this.$programing_language = $programing_language;
+        $this.$spoken_language = $spoken_language;
+        $this.$birthday = $birthday;
     }
 
     public function getFirstName()
@@ -93,7 +94,7 @@ class UserDetail
     {
         return $this->birthday;
     }
-
+    
     public function getDepartment()
     {
         return $this->department;
@@ -104,9 +105,9 @@ class UserDetail
         return $this->gender;
     }
     
-    public function getProgramLanguage()
+    public function getProgramingLanguage()
     {
-        return $this->program_language;
+        return $this->programing_language;
     }
     
     public function getSpokenLanguage()
@@ -119,27 +120,26 @@ class UserDetail
         return $this->phone_number;
     }
 }
+
 class SurveyDetail
 {
     private $age;public $connect,$media;
 
     public function __construct($age, $media)
     {
-        $connect = new  mysqli("localhost", "root", "sanjeev98", "survey_form");
+        $connect = new mysqli("localhost", "root", "sanjeev98", "survey_form");
         if ($connect->connect_error) {
             die("Connection failed: " . $connect->connect_error);
         }
-
-        $sql = "INSERT INTO survey(Age,Media)VALUES ($age,'$media')";
-
-        if (!($connect->query($sql) === TRUE)) {
+        $sql = "INSERT INTO survey(Age,Media) VALUES($age,'$media')";
+        if (!($connect->query($sql)===TRUE)) {
             echo "Error: " . $sql . "<br>" . $connect->error;
         }
     }
 
     public function __set($name, $value)
     {
-        $connect = new  mysqli("localhost", "root", "sanjeev98", "survey_form");
+        $connect = new mysqli("localhost", "root", "sanjeev98", "survey_form");
         $sql = "SELECT COUNT(*) FROM survey where Media='$value'";
         $result = $connect->query($sql);
         $tourresult = $result->fetch_array()[0];
@@ -147,36 +147,36 @@ class SurveyDetail
         $result = $connect->query($sql);
         $tour = $result->fetch_array()[0];
         echo $percent = ($tourresult[0] / $tour[0]) * 100;
-        $connect1 = new  mysqli("localhost", "root", "sanjeev98", "media_detail");
+        $connect1 = new mysqli("localhost", "root", "sanjeev98", "media_detail");
         if ($connect1->connect_error) {
             die("Connection failed: " . $connect1->connect_error);
         }
-        $sql = "INSERT INTO media(media,percentage)VALUES ('$value','$percent')";
+        $sql = "INSERT INTO media(media,percentage) VALUES('$value','$percent')";
         if (!($connect1->query($sql) === TRUE)) {
-            echo "Error: " . $sql . "<br>" . $connect1->error;
+            echo "Error: ".$sql."<br>".$connect1->error;
         }
     }
 
 }
 
-$firstname = $lastname = $mail = $phone_number = $gender = $department = $spoken_language = $program_language = $address = $birthday = $age = $media = "";
+$firstname = $lastname = $mail = $phone_number = $gender = $department = $spoken_language = $programing_language = $address = $birthday = $age = $media = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ((empty($_POST["first"]) || empty($_POST["last"]) || empty($_POST["mail"]) || empty($_POST["phone_number"]) || empty($_POST["gender"]) ||
         empty($_POST["department"]) || empty($_POST["spoken_language"]) || empty($_POST["language"]) || empty($_POST["address"]) || empty($_POST["birthday"]))) {
-        $firstname = $lastname = $mail = $phone_number = $gender = $department = $spoken_language = $program_language = $address = $birthday = $age = $media = "";
+        $firstname = $lastname = $mail = $phone_number = $gender = $department = $spoken_language = $programing_language = $address = $birthday = $age = $media = "";
     } else {
-        $Survey = new SurveyDetail(test_input($_POST["Age"]), test_input($_POST["media"]));
+        $Survey = new SurveyDetail(decodeInputField($_POST["Age"]), decodeInputField($_POST["media"]));
         $Survey->media = 'Skype';
-        $firstname = test_input($_POST["first"]);
-        $lastname = test_input($_POST["last"]);
-        $mail = test_input($_POST["mail"]);
-        $phone_number = test_input($_POST["phone_number"]);
-        $gender = test_input($_POST["gender"]);
-        $department = test_input($_POST["department"]);
-        $spoken_language = test_input($_POST["spoken_language"]);
-        $program_language = test_input($_POST["language"]);
-        $address = test_input($_POST["address"]);
-        $birthday = test_input($_POST["birthday"]);
+        $firstname = decodeInputField($_POST["first"]);
+        $lastname = decodeInputField($_POST["last"]);
+        $mail = decodeInputField($_POST["mail"]);
+        $phone_number = decodeInputField($_POST["phone_number"]);
+        $gender = decodeInputField($_POST["gender"]);
+        $department = decodeInputField($_POST["department"]);
+        $spoken_language = decodeInputField($_POST["spoken_language"]);
+        $programing_language = decodeInputField($_POST["language"]);
+        $address = decodeInputField($_POST["address"]);
+        $birthday = decodeInputField($_POST["birthday"]);
     }
 
     if (isset($_FILES["fileToUpload"])) {
@@ -187,7 +187,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
-function test_input($data)
+
+function decodeInputField($data)
 {
     return htmlspecialchars(stripslashes(trim($data)));
 }
@@ -203,11 +204,7 @@ function test_input($data)
             </ul>
         </nav>
         <div>
-            <span><?php
-                echo "Date:" . date("y.m.d");
-                echo "<br>Time:" . date("h:i:sa");
-                ?>
-            </span>
+            <span><?php  echo "Date:" . date("y.m.d");echo "<br>Time:" . date("h:i:sa"); ?></span>
         </div>
         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"
               enctype="multipart/form-data">
@@ -334,23 +331,24 @@ function test_input($data)
             if (!empty($_POST["first"])){
                 $img = 'imgaes/' . $_FILES["fileToUpload"]["name"];
                 echo '<table><tr><th>UserDetails</th><th>Values</th></tr>';
-                echo '<tr><td>FirstName</td><td>', $first, ',</td></tr>';
-                echo '<tr><td>LastName</td><td>', $last, ',</td></tr>';
-                echo '<tr><td>Phonenumber</td><td>', $phone_number, ',</td></tr>';
-                echo '<tr><td>MAIL</td><td>', $mail, ',</td></tr>';
-                echo '<tr><td>Gender</td><td>', $gender, ',</td></tr>';
-                echo '<tr><td>Department</td><td>', $department, ',</td></tr>';
-                echo '<tr><td>program</td><td>', $spoken_language, ',</td></tr>';
-                echo '<tr><td>spoken</td><td>', $program_language, ',</td></tr>';
-                echo '<tr><td>Address</td><td>', $address, ',</td></tr>';
-                echo '<tr><td>Birthday</td><td>', $birthday, ',</td></tr>';
-                echo '<tr><td>AGE</td><td>', $age, ',</td></tr>';
-                echo '<tr><td>MediaUsage</td><td>', $media, ',</td></tr>';
+                echo '<tr><td>FirstName</td><td>'.$firstname.',</td></tr>';
+                echo '<tr><td>LastName</td><td>'.$lastname.',</td></tr>';
+                echo '<tr><td>Phonenumber</td><td>'.$phone_number.',</td></tr>';
+                echo '<tr><td>MAIL</td><td>'.$mail.',</td></tr>';
+                echo '<tr><td>Gender</td><td>'.$gender.',</td></tr>';
+                echo '<tr><td>Department</td><td>'.$department.',</td></tr>';
+                echo '<tr><td>program</td><td>'.$spoken_language.',</td></tr>';
+                echo '<tr><td>spoken</td><td>'.$programing_language.',</td></tr>';
+                echo '<tr><td>Address</td><td>'.$address.',</td></tr>';
+                echo '<tr><td>Birthday</td><td>'.$birthday.',</td></tr>';
+                echo '<tr><td>AGE</td><td>'.$age.',</td></tr>';
+                echo '<tr><td>MediaUsage</td><td>'.$media.',</td></tr>';
                 echo '</table>';
                 echo '<img src=' . $img . '>';
             }
             ?>
         </div>
+
         <script>
             var d = new Date();
             document.write(d.toLocaleString('en-US', {timeZone: 'Indian/Reunion'}))
