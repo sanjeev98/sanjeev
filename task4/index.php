@@ -166,7 +166,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $firstname = $lastname = $mail = $phone_number = $gender = $department = $spoken_language = $programing_language = $address = $birthday = $age = $media = "";
     } else {
         $Survey = new SurveyDetail(decodeInputField($_POST["Age"]), decodeInputField($_POST["media"]));
-        $Survey->media = 'Skype';
+        $Survey->media = $media;
         $firstname = decodeInputField($_POST["first"]);
         $lastname = decodeInputField($_POST["last"]);
         $mail = decodeInputField($_POST["mail"]);
