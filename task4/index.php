@@ -58,6 +58,7 @@
 <body>
 
 <?php
+
 class UserDetail
 {
     public $firstname, $lastname, $mail, $phone_number, $gender, $department, $programing_language, $spoken_language, $birthday;
