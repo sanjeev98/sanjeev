@@ -4,9 +4,9 @@ require_once "usersdatabase.php";
 
 class UserDetail extends Users implements UserValue
 {
-    public $firstname,$lastname,$mail,$phone_number,$gender,$department,$language,$language1,$birthday,$address;
+    public $firstname, $lastname, $mail, $phone_number, $gender, $department, $speaking_language, $programing_language, $birthday, $address;
 
-    function __construct($firstname, $lastname, $mail, $phone_number, $gender, $department, $language, $language1, $birthday, $address)
+    function __construct($firstname, $lastname, $mail, $phone_number, $gender, $department, $speaking_language, $programing_language, $birthday, $address)
     {
         $this->firstname = $firstname;
         $this->lastname = $lastname;
@@ -14,8 +14,8 @@ class UserDetail extends Users implements UserValue
         $this->phone_number = $phone_number;
         $this->gender = $gender;
         $this->department = $department;
-        $this->language = $language;
-        $this->language1 = $language1;
+        $this->speaking_language = $speaking_language;
+        $this->programing_language = $programing_language;
         $this->birthday = $birthday;
         $this->address = $address;
     }
@@ -27,7 +27,7 @@ class UserDetail extends Users implements UserValue
 
     public function storeUserDetail()
     {
-        $this->StoreUserTable($this->firstname, $this->lastname, $this->mail, $this->phone_number, $this->gender, $this->department, $this->language, $this->language1, $this->birthday, $this->address);
+        $this->StoreUserTable($this->firstname, $this->lastname, $this->mail, $this->phone_number, $this->gender, $this->department, $this->speaking_language, $this->programing_language, $this->birthday, $this->address);
     }
 
     public function getFirstname()
@@ -60,14 +60,14 @@ class UserDetail extends Users implements UserValue
         return $this->gender;
     }
 
-    public function getLanguage()
+    public function getProgramingLanguage()
     {
-        return $this->language;
+        return $this->programing_language;
     }
 
-    public function getLanguage1()
+    public function getSpeakingLanguage()
     {
-        return $this->language1;
+        return $this->speaking_language;
     }
 
     public function getPhoneNumber()
@@ -86,4 +86,5 @@ class UserDetail extends Users implements UserValue
         print_r($result->fetch_array());
     }
 }
+
 ?>
