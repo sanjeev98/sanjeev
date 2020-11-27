@@ -1,10 +1,10 @@
 <?php
-require_once "usersdatabase.php";
-require_once "interface.php";
+require_once "UsersDatabase.php";
+require_once "Intreface.php";
 
-class SurveyDetail extends User implements UserValue
+class SurveyDetail extends UsersData implements UserInformation
 {
-    public $phoneNumber,$media,$hours,$percentage;
+    public $phoneNumber, $media, $hours, $percentage;
 
     public function __construct($phoneNumber, $media, $hours)
     {
@@ -39,10 +39,11 @@ class SurveyDetail extends User implements UserValue
         return $this->media;
     }
 
-    public function getUserValue()
+    public function getUserInformation()
     {
         $result = $this->getSurveyTable($this->phoneNumber);
         print_r($result->fetch_array());
     }
 }
+
 ?>

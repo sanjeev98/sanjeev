@@ -58,8 +58,8 @@
 <body>
 
 <?php
-include  "userdetail.php";
-include "surveydetail.php";
+include  "UserDetail.php";
+include "SurveyDetail.php";
 
 $firstname = $lastname = $mail = $phone_number = $gender = $department = $programming_language = $speaking_language = $address = $birthday = $hours = $media = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -67,18 +67,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         empty($_POST["department"]) || empty($_POST["language1"]) || empty($_POST["language"]) || empty($_POST["address"]) || empty($_POST["birthday"]))) {
         $first = $last = $mail = $phone_number = $gender = $department = $programming_language = $speaking_language = $address = $birthday = $age = $media = "";
     } else {
-        $hours = decodeInuputField($_POST["hours"]);
-        $media = decodeInuputField($_POST["media"]);
-        $firstname = decodeInuputField($_POST["first"]);
-        $lastname = decodeInuputField($_POST["last"]);
-        $mail = decodeInuputField($_POST["mail"]);
-        $phone_number = decodeInuputField($_POST["phone_number"]);
-        $gender = decodeInuputField($_POST["gender"]);
-        $department = decodeInuputField($_POST["department"]);
-        $programming_language = decodeInuputField($_POST["language1"]);
-        $speaking_language = decodeInuputField($_POST["language"]);
-        $address = decodeInuputField($_POST["address"]);
-        $birthday = decodeInuputField($_POST["birthday"]);
+        $hours = decodeTextField($_POST["hours"]);
+        $media = decodeTextField($_POST["media"]);
+        $firstname = decodeTextField($_POST["first"]);
+        $lastname = decodeTextField($_POST["last"]);
+        $mail = decodeTextField($_POST["mail"]);
+        $phone_number = decodeTextField($_POST["phone_number"]);
+        $gender = decodeTextField($_POST["gender"]);
+        $department = decodeTextField($_POST["department"]);
+        $programming_language = decodeTextField($_POST["language1"]);
+        $speaking_language = decodeTextField($_POST["language"]);
+        $address = decodeTextField($_POST["address"]);
+        $birthday = decodeTextField($_POST["birthday"]);
         $user_object = new UserDetail($firstname, $lastname, $mail, $phone_number, $gender, $department, $speaking_language, $programming_language, $birthday, $address);
         $survey_object = new SurveyDetail($phone_number, $media, $hours);
         $user_object->getConnect();
@@ -97,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-function decodeInuputField($data)
+function decodeTextField($data)
 {
     return htmlspecialchars(stripslashes(trim($data)));
 }
@@ -246,8 +246,8 @@ function decodeInuputField($data)
                 echo '<tr><td>MAIL</td><td>'.$user_object->getMail().',</td></tr>';
                 echo '<tr><td>Gender</td><td>'.$user_object->getGender().',</td></tr>';
                 echo '<tr><td>Department</td><td>'.$user_object->getDepartment().',</td></tr>';
-                echo '<tr><td>Language</td><td>'.$user_object->getLanguage().',</td></tr>';
-                echo '<tr><td>Languagespoken</td><td>'.$user_object->getLanguage1().',</td></tr>';
+                echo '<tr><td>Speaking_language</td><td>'.$user_object->getspeakingLanguage().',</td></tr>';
+                echo '<tr><td>Programming_language</td><td>'.$user_object->getprogrammingLanguage().',</td></tr>';
                 echo '<tr><td>Address</td><td>'.$user_object->getAddress().',</td></tr>';
                 echo '<tr><td>Birthday</td><td>'.$user_object->getBirthday().',</td></tr>';
                 echo '<tr><td>Daily Usage</td><td>'.$survey_object->getHours().',</td></tr>';

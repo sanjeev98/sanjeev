@@ -1,8 +1,8 @@
 <?php
-require_once "interface.php";
-require_once "usersdatabase.php";
+require_once "Intreface.php";
+require_once "UsersDatabase.php";
 
-class UserDetail extends Users implements UserValue
+class UserDetail extends UsersData implements UserInformation
 {
     public $firstname, $lastname, $mail, $phone_number, $gender, $department, $speaking_language, $programing_language, $birthday, $address;
 
@@ -27,7 +27,7 @@ class UserDetail extends Users implements UserValue
 
     public function storeUserDetail()
     {
-        $this->StoreUserTable($this->firstname, $this->lastname, $this->mail, $this->phone_number, $this->gender, $this->department, $this->speaking_language, $this->programing_language, $this->birthday, $this->address);
+        $this->storeUserTable($this->firstname, $this->lastname, $this->mail, $this->phone_number, $this->gender, $this->department, $this->speaking_language, $this->programing_language, $this->birthday, $this->address);
     }
 
     public function getFirstname()
@@ -80,7 +80,7 @@ class UserDetail extends Users implements UserValue
         return $this->address;
     }
 
-    public function getUserValue()
+    public function getUserInformation()
     {
         $result = $this->getUserTable($this->phone_number);
         print_r($result->fetch_array());
