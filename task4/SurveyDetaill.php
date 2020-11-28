@@ -1,5 +1,5 @@
 <?php
-require_once "UsersDatabase.php";
+require_once "UserData.php";
 require_once "Intreface.php";
 
 class SurveyDetail extends UsersData implements UserInformation

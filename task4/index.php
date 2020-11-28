@@ -58,8 +58,8 @@
 <body>
 
 <?php
-include  "UserDetail.php";
-include "SurveyDetail.php";
+include "UserDetail.php";
+include "SurveyDetaill.php";
 
 $firstname = $lastname = $mail = $phone_number = $gender = $department = $programming_language = $speaking_language = $address = $birthday = $hours = $media = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

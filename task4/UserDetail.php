@@ -1,6 +1,6 @@
 <?php
 require_once "Intreface.php";
-require_once "UsersDatabase.php";
+require_once "UserData.php";
 
 class UserDetail extends UsersData implements UserInformation
 {
