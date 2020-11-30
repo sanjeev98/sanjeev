@@ -155,8 +155,8 @@
                 echo '<img src=' . $img . '>';
             }*/
             ?>
+                {!! $name !!}
         </div>
-
         <script>
             var d = new Date();
             document.write(d.toLocaleString('en-US', {timeZone: 'Indian/Reunion'}))
