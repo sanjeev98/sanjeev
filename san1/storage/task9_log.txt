@@ -1,0 +1,2 @@
+[2020-12-02 04:01:26] local.INFO: Query {"Query":"select count(*) as aggregate from (select '1' as `row_count` from `posted`) count_row_table","Bindings":[],"Time":10.11}
+[2020-12-02 04:01:26] local.INFO: Query {"Query":"select * from `posted` order by `id` asc limit 10 offset 0","Bindings":[],"Time":1.75}
