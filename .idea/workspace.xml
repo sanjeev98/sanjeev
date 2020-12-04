@@ -20,30 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="baacd4ac-3128-4c23-8ead-291c977146e9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/san1/resources/views/add-post.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/san1/resources/views/edit-post.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/san1/resources/views/posts.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/san1/resources/views/single-post.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/san1/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/san1/.env.example" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/san1/app/Http/Controllers/PostController.php" beforeDir="false" afterPath="$PROJECT_DIR$/san1/app/Http/Controllers/PostController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/san1/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/san1/app/Http/Kernel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/san1/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/san1/app/Models/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/san1/app/Models/posted.php" beforeDir="false" afterPath="$PROJECT_DIR$/san1/app/Models/posted.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/san1/app/Providers/RouteServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/san1/app/Providers/RouteServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/san1/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/san1/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/san1/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/san1/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/san1/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/san1/config/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/san1/config/session.php" beforeDir="false" afterPath="$PROJECT_DIR$/san1/config/session.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/san1/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/san1/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/san1/database/migrations/2020_12_01_044010_create_posted_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/san1/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/san1/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/san1/resources/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/san1/resources/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/san1/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/san1/resources/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/san1/resources/views/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/san1/resources/views/welcome.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/san1/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/san1/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/san1/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/san1/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/san1/webpack.mix.js" beforeDir="false" afterPath="$PROJECT_DIR$/san1/webpack.mix.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +70,7 @@
       <workItem from="1606883088076" duration="9079000" />
       <workItem from="1606895026649" duration="11403000" />
       <workItem from="1606912961999" duration="5134000" />
-      <workItem from="1606946911117" duration="49156000" />
+      <workItem from="1606946911117" duration="54428000" />
     </task>
     <servers />
   </component>
