@@ -12,7 +12,8 @@
             </ul>
         </nav>
         <div>
-            <span><?php  echo "Date:" . date("y.m.d");echo "<br>Time:" . date("h:i:sa"); ?></span>
+            <strong>"Date:"</strong><b>{{date("y.m.d")}}</b><br>
+            <strong>Time:"</strong><b>{{date("h:i:sa")}}</b>
         </div>
         <form method="post" action="form" enctype="multipart/form-data">
             @csrf
@@ -20,23 +21,23 @@
                 <div class="row p-2">
                     <div class="col-sm-6 form-group">
                         <label>First Name</label>
-                        <input type="text" class="form-control" name="firstname" placeholder="First Name" value="First Name"
+                        <input type="text" class="form-control" name="array[]" placeholder="First Name" value="First Name"
                                maxlength="25" required>
                     </div>
                     <div class="col-sm-6 form-group">
                         <label>Last Name</label>
-                        <input type="text" class="form-control" name="lastname" placeholder="Last Name" value="Last Name"
+                        <input type="text" class="form-control" name="array[]" placeholder="Last Name" value="Last Name"
                                maxlength="25" required>
                     </div>
                 </div>
                 <div class="row p-2">
                     <div class="col-sm-6 form-group">
                         <label>Email</label>
-                        <input type="email" class="form-control" placeholder="Email" name="mail" required>
+                        <input type="email" class="form-control" placeholder="Email" name="array[]" required>
                     </div>
                     <div class="col-sm-6 form-group">
                         <label>Phone Number</label>
-                        <input type="number" class="form-control" placeholder="Number" name="phone_number"
+                        <input type="number" class="form-control" placeholder="Number" name="array[]"
                                max="1000000000" required>
                     </div>
                 </div>
@@ -44,22 +45,22 @@
                     <div class="col-sm-6 form-group">
                         <label>Gender</label><br>
                         <label class="radio inline">
-                            <input type="radio" name="gender" value="Male" required>
+                            <input type="radio" name="array[]" value="Male" required>
                             <span>Male</span>
                         </label>
                         <label class="radio inline">
-                            <input type="radio" name="gender" value="Female" required>
+                            <input type="radio" name="array[]" value="Female" required>
                             <span>Female</span>
                         </label>
                         <label class="radio inline">
-                            <input type="radio" name="gender" value="Others" required>
+                            <input type="radio" name="array[]" value="Others" required>
                             <span>Others</span>
                         </label>
                     </div>
                     <div class="col-sm-6 form-group">
                         <label>Role</label>
                         <br>
-                        <select class="js-example-basic-single" name="department" required>
+                        <select class="js-example-basic-single" name="array[]" required>
                             <option selected>DEVELOPER</option>
                             <option>MARKETING</option>
                             <option>SALES</option>
@@ -70,12 +71,12 @@
                 <div class="row p-2">
                     <div class=" col-sm-6 form-group mt-3">
                         <label>Birthday:</label>
-                        <input type="date" class="form-control" name="birthday" required>
+                        <input type="date" class="form-control" name="array[]" required>
                     </div>
                     <div class="col-sm-6 form-group">
                         <label style="padding-bottom: 15px">Language</label>
                         <br>
-                        <select class="js-example-basic-multiple" name="programing_language" multiple required>
+                        <select class="js-example-basic-multiple" name="array[]" multiple required>
                             <option>PHP</option>
                             <option>CSS</option>
                             <option>JAVA</option>
@@ -89,17 +90,17 @@
                         <br>
                         <div class="form-check-inline ">
                             <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" name="speaking_language" value="ENGLISH">ENGLISH
+                                <input type="checkbox" class="form-check-input" name="array[]" value="ENGLISH">ENGLISH
                             </label>
                         </div>
                         <div class="form-check-inline">
                             <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" name="speaking_language" value="HINDI">HINDI
+                                <input type="checkbox" class="form-check-input" name="array[]" value="HINDI">HINDI
                             </label>
                         </div>
                         <div class="form-check-inline">
                             <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" name="speaking_language" value="TAMIL">TAMIL
+                                <input type="checkbox" class="form-check-input" name="array[]" value="TAMIL">TAMIL
                             </label>
                         </div>
                     </div>
@@ -107,13 +108,13 @@
                 <div class="row p-2">
                     <div class="col-sm-6 form-group">
                         <label>Age</label>
-                        <input type="number" class="form-control" placeholder="TypeMark" name="age" max="100"
+                        <input type="number" class="form-control" placeholder="TypeMark" name="array[]" max="100"
                                required>
                     </div>
                     <div class="col-sm-6 form-group">
                         <label>Social media</label>
                         <br>
-                        <select class="js-example-basic-single" name="media" required>
+                        <select class="js-example-basic-single" name="array[]" required>
                             <option selected>Facebook</option>
                             <option>WhatsAPP</option>
                             <option>Skype</option>
@@ -124,43 +125,78 @@
                     <div class="col-sm">
                         <div class="form-group">
                             <label>Address:</label>
-                            <textarea class="form-control" name="address" required></textarea>
+                            <textarea class="form-control" name="array[]" required></textarea>
                         </div>
                     </div>
                 </div>
                 <span>Upload profile:</span>
                 <br>
-                <input type="file" name="fileToUpload" id="fileToUpload">
+                <input type="file" name="array[]" id="fileToUpload">
                 <button type="submit" class="btn btn-primary p-2 mb-4 pl-1">submit</button>
             </div>
         </form>
         <div class="ap" style="margin:10%;padding-bottom: 10px">
-            <?php
-           /* if (!empty($_POST["first"])){
-                $img = 'imgaes/' . $_FILES["fileToUpload"]["name"];
-                echo '<table><tr><th>UserDetails</th><th>Values</th></tr>';
-                echo '<tr><td>FirstName</td><td>'.$firstname.',</td></tr>';
-                echo '<tr><td>LastName</td><td>'.$lastname.',</td></tr>';
-                echo '<tr><td>Phonenumber</td><td>'.$phone_number.',</td></tr>';
-                echo '<tr><td>MAIL</td><td>'.$mail.',</td></tr>';
-                echo '<tr><td>Gender</td><td>'.$gender.',</td></tr>';
-                echo '<tr><td>Department</td><td>'.$department.',</td></tr>';
-                echo '<tr><td>program</td><td>'.$spoken_language.',</td></tr>';
-                echo '<tr><td>spoken</td><td>'.$programing_language.',</td></tr>';
-                echo '<tr><td>Address</td><td>'.$address.',</td></tr>';
-                echo '<tr><td>Birthday</td><td>'.$birthday.',</td></tr>';
-                echo '<tr><td>AGE</td><td>'.$age.',</td></tr>';
-                echo '<tr><td>MediaUsage</td><td>'.$media.',</td></tr>';
-                echo '</table>';
-                echo '<img src=' . $img . '>';
-            }*/
-            ?>
-                {!! $name !!}
+            <table>
+                <tr>
+                    <th>UserDetails</th>
+                    <th>  {!! $data[0] !!}</th>
+                </tr>
+                <tr>
+                    <td>FirstName</td>
+                    <td>  {!! $data[1] !!}</td>
+                </tr>
+                <tr>
+                    <td>LastName</td>
+                    <td>  {!! $data[2] !!}</td>
+                </tr>
+                <tr>
+                    <td>Phonenumber</td>
+                    <td>  {!! $data[3] !!}</td>
+                </tr>
+                <tr>
+                    <td>MAIL</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Gender</td>
+                    <td>  {!! $data[4] !!}</td>
+                </tr>
+                <tr>
+                    <td>Department</td>
+                    <td>  {!! $data[5] !!}</td>
+                </tr>
+                <tr>
+                    <td>program</td>
+                    <td>  {!! $data[6] !!}</td>
+                </tr>
+                <tr>
+                    <td>spoken</td>
+                    <td>  {!! $data[7] !!}</td>
+                </tr>
+                <tr>
+                    <td>Address</td>
+                    <td>  {!! $data[8] !!}</td>
+                </tr>
+                <tr>
+                    <td>Birthday</td>
+                    <td>  {!! $data[9] !!}</td>
+                </tr>
+                <tr>
+                    <td>AGE</td>
+                    <td>  {!! $data[10] !!}</td>
+                </tr>
+                <tr>
+                    <td>MediaUsage</td>
+                    <td>  {!! $data[11] !!}</td>
+                </tr>
+            </table>
         </div>
+
         <script>
             var d = new Date();
             document.write(d.toLocaleString('en-US', {timeZone: 'Indian/Reunion'}))
         </script>
+
     </div>
 </div>
 

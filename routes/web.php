@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\user;
+use App\Http\Controllers\userController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,8 +18,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('form',[user::class,'getData']);
-Route::get('form',function(){
-   return view ('form');
-});
+Route::post('form',[userController::class,'getData']);
+Route::get('form',[userController::class,'index']);
 
