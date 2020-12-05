@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\posted;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
-
 
 class PostController extends Controller
 {
@@ -13,8 +12,9 @@ class PostController extends Controller
     {
        return view('home');
     }
+
     public function getData()
     {
-        return DataTables::of(posted::query())->make(true);
+        return DataTables::of(Post::query())->make(true);
     }
 }

@@ -1,13 +1,3 @@
-{{--<div>--}}
-{{--    <ol style="block:inline">--}}
-{{--        @foreach($users as $user)--}}
-{{--        <li><h6>TITLE</h6><span>{{$user['title']}}</span></li>--}}
-{{--        <li><h6>description</h6><span>{{$user['description']}}</span></li>--}}
-{{--        <li><h6>posted_by</h6><span>{{$user['posted_by']}}</span></li>--}}
-{{--        @endforeach--}}
-{{--    </ol>--}}
-
-{{--</div>--}}
 @extends('layout')
 
 @section('content')

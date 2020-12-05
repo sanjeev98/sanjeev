@@ -8,10 +8,9 @@
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
 
-
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+
     <style>
         body {
             padding-top: 40px;
@@ -23,11 +22,8 @@
     @yield('content')
 </div>
 
-
 <script src="//code.jquery.com/jquery.js"></script>
-
 <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
-
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
 @stack('scripts')
