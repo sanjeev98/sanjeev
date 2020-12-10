@@ -22,7 +22,15 @@ class PostController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()) {
-           return DataTables::of(Post::query())->make(true);
+           return DataTables::of(Post::query()) ->addIndexColumn()
+               ->addColumn('action', function($row) {
+                   $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editPost">Edit</a>';
+                  '{{ csrf_token() }}';
+                   $btn = $btn.'<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deletePost">Delete</a>';
+                   return $btn;
+               })
+               ->rawColumns(['action'])
+               ->make(true);;
         }
         return view('posts.index');
     }
@@ -48,6 +56,7 @@ class PostController extends Controller
         Post::create($request->all());
         return redirect()->route('posts.index')
             ->with('success','Posts created successfully.');
+
     }
 
     /**
@@ -67,9 +76,11 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit($id)
     {
-        //
+        $post = Post::find($id);
+        return Response()->json($post);
+
     }
 
     /**
@@ -79,9 +90,10 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request,Post $post)
     {
-        //
+        $post->update($request->all());
+        return response()->json(['success'=>'Post updated successfully!']);
     }
 
     /**
@@ -92,6 +104,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return response()->json(['success'=>'Customer deleted!']);
     }
 }
