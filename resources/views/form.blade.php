@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    
+
 <div class="top">
     <div class="d" style="border-radius: 5px">
         <nav class="navbar navabar-expand-sm justify-content-center c">
@@ -20,23 +20,23 @@
                 <div class="row p-2">
                     <div class="col-sm-6 form-group">
                         <label>First Name</label>
-                        <input type="text" class="form-control" name="array[]" placeholder="First Name" value="First Name"
+                        <input type="text" class="form-control" name="data" placeholder="First Name" value="First Name"
                                maxlength="25" required>
                     </div>
                     <div class="col-sm-6 form-group">
                         <label>Last Name</label>
-                        <input type="text" class="form-control" name="array[]" placeholder="Last Name" value="Last Name"
+                        <input type="text" class="form-control" name="data" placeholder="Last Name" value="Last Name"
                                maxlength="25" required>
                     </div>
                 </div>
                 <div class="row p-2">
                     <div class="col-sm-6 form-group">
                         <label>Email</label>
-                        <input type="email" class="form-control" placeholder="Email" name="array[]" required>
+                        <input type="email" class="form-control" placeholder="Email" name="data" required>
                     </div>
                     <div class="col-sm-6 form-group">
                         <label>Phone Number</label>
-                        <input type="number" class="form-control" placeholder="Number" name="array[]"
+                        <input type="number" class="form-control" placeholder="Number" name="data"
                                max="1000000000" required>
                     </div>
                 </div>
