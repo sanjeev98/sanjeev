@@ -12,7 +12,8 @@ class UserController extends Controller
    }
 
   function getData(Request $request)
-  {     $data=$request->all();
-      return view('form',compact('data'));
+  {
+      $data = $request->all();
+      return view('form', compact('data'));
   }
 }
