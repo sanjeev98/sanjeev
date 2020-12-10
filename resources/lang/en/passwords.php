@@ -17,6 +17,6 @@ return [
     'sent' => 'We have emailed your password reset link!',
     'throttled' => 'Please wait before retrying.',
     'token' => 'This password reset token is invalid.',
-    'userController' => "We can't find a userController with that email address.",
+    'UserController' => "We can't find a UserController with that email address.",
 
 ];
