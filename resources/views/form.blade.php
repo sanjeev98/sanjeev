@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('content')
-
-
+    
 <div class="top">
     <div class="d" style="border-radius: 5px">
         <nav class="navbar navabar-expand-sm justify-content-center c">
@@ -45,22 +44,22 @@
                     <div class="col-sm-6 form-group">
                         <label>Gender</label><br>
                         <label class="radio inline">
-                            <input type="radio" name="array[]" value="Male" required>
+                            <input type="radio" name="data" value="Male" required>
                             <span>Male</span>
                         </label>
                         <label class="radio inline">
-                            <input type="radio" name="array[]" value="Female" required>
+                            <input type="radio" name="data" value="Female" required>
                             <span>Female</span>
                         </label>
                         <label class="radio inline">
-                            <input type="radio" name="array[]" value="Others" required>
+                            <input type="radio" name="data" value="Others" required>
                             <span>Others</span>
                         </label>
                     </div>
                     <div class="col-sm-6 form-group">
                         <label>Role</label>
                         <br>
-                        <select class="js-example-basic-single" name="array[]" required>
+                        <select class="js-example-basic-single" name="data" required>
                             <option selected>DEVELOPER</option>
                             <option>MARKETING</option>
                             <option>SALES</option>
@@ -71,12 +70,12 @@
                 <div class="row p-2">
                     <div class=" col-sm-6 form-group mt-3">
                         <label>Birthday:</label>
-                        <input type="date" class="form-control" name="array[]" required>
+                        <input type="date" class="form-control" name="data" required>
                     </div>
                     <div class="col-sm-6 form-group">
                         <label style="padding-bottom: 15px">Language</label>
                         <br>
-                        <select class="js-example-basic-multiple" name="array[]" multiple required>
+                        <select class="js-example-basic-multiple" name="data" multiple required>
                             <option>PHP</option>
                             <option>CSS</option>
                             <option>JAVA</option>
@@ -90,17 +89,17 @@
                         <br>
                         <div class="form-check-inline ">
                             <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" name="array[]" value="ENGLISH">ENGLISH
+                                <input type="checkbox" class="form-check-input" name="data" value="ENGLISH">ENGLISH
                             </label>
                         </div>
                         <div class="form-check-inline">
                             <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" name="array[]" value="HINDI">HINDI
+                                <input type="checkbox" class="form-check-input" name="data" value="HINDI">HINDI
                             </label>
                         </div>
                         <div class="form-check-inline">
                             <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" name="array[]" value="TAMIL">TAMIL
+                                <input type="checkbox" class="form-check-input" name="data" value="TAMIL">TAMIL
                             </label>
                         </div>
                     </div>
@@ -108,13 +107,13 @@
                 <div class="row p-2">
                     <div class="col-sm-6 form-group">
                         <label>Age</label>
-                        <input type="number" class="form-control" placeholder="TypeMark" name="array[]" max="100"
+                        <input type="number" class="form-control" placeholder="TypeMark" name="data" max="100"
                                required>
                     </div>
                     <div class="col-sm-6 form-group">
                         <label>Social media</label>
                         <br>
-                        <select class="js-example-basic-single" name="array[]" required>
+                        <select class="js-example-basic-single" name="data" required>
                             <option selected>Facebook</option>
                             <option>WhatsAPP</option>
                             <option>Skype</option>
@@ -125,13 +124,13 @@
                     <div class="col-sm">
                         <div class="form-group">
                             <label>Address:</label>
-                            <textarea class="form-control" name="array[]" required></textarea>
+                            <textarea class="form-control" name="data" required></textarea>
                         </div>
                     </div>
                 </div>
                 <span>Upload profile:</span>
                 <br>
-                <input type="file" name="array[]" id="fileToUpload">
+                <input type="file" name="data" id="fileToUpload">
                 <button type="submit" class="btn btn-primary p-2 mb-4 pl-1">submit</button>
             </div>
         </form>
