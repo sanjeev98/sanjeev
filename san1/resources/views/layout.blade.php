@@ -12,6 +12,7 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 
     <style>
+
         body {
             padding-top: 40px;
         }
@@ -21,7 +22,6 @@
 <div class="container">
     @yield('content')
 </div>
-
 <script src="//code.jquery.com/jquery.js"></script>
 <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
