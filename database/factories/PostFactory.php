@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\posted;
+use App\Models\Post;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class postedFactory extends Factory
+class PostFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = posted::class;
+    protected $model = Post::class;
 
     /**
      * Define the model's default state.
@@ -23,8 +23,8 @@ class postedFactory extends Factory
     {
         return [
             'title' => $this->faker->title,
-            'description'=>$this->faker->text,
-            'posted_by' => $this->faker->unique()->safeEmail,
+            'description' => $this->faker->text,
+            'posted_by' => $this->faker->safeEmail,
 
         ];
     }

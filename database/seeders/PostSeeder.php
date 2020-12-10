@@ -3,8 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use  \App\Models\Post;
 
-class posted extends Seeder
+class PostSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,6 +14,6 @@ class posted extends Seeder
      */
     public function run()
     {
-        \App\Models\posted::factory(100)->create();
+        Post::factory(100)->create();
     }
 }
