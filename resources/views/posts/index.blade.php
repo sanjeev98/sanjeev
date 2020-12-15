@@ -78,6 +78,7 @@
         </div>
     </div>
     </div>
+
         <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -98,15 +99,13 @@
                         {data: 'action', name: 'action', orderable: false, searchable: false},
                     ]
                 });
-
             });
             $('body').on('click', '.editPost', function () {
-
                  var user_id = $(this).data('id');
                 $.ajax({
                     url: "posts"+'/' + user_id +'/edit',
                     success: function (data) {
-                        $('#modelHeading').html("Edit Customer");
+                        $('#modelHeading').html("Edit Post");
                         $('#update').val("edit-post");
                         $('#ajaxModel').modal('show');
                         $('#id').val(data.id);
@@ -121,17 +120,17 @@
             });
             $('#update').click(function (e) {
                 e.preventDefault();
-                $(this).html('Sending..');
+                var tab=$('#post-table').DataTable();
                 $.ajax({
                     data: $('#PostForm').serialize(),
                     url: "posts"+'/'+$('#id').val(),
                     method:'post',
                     dataType: 'json',
                     success: function (data) {
+                        alert(data.success);
                         $('#PostForm').trigger("reset");
                         $('#ajaxModel').modal('hide');
-                        table.draw();
-
+                        tab.draw();
                     },
                     error: function (data) {
                         console.log('Error:', data);
@@ -142,7 +141,7 @@
 
             $('body').on('click', '.deletePost', function () {
                 var post_id = $(this).data("id");
-
+                var tab=$('#post-table').DataTable();
                 confirm("Are You sure want to delete !");
 
                 $.ajax({
@@ -153,7 +152,8 @@
                         '_token': '{{ csrf_token() }}',
                     },
                     success: function (data) {
-
+                        alert(data.success);
+                        tab.draw();
                     },
                     error: function (data) {
                         console.log('Error:', data);
@@ -162,6 +162,5 @@
             });
 
         </script>
-
 
 @endsection

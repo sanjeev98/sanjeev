@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,5 +22,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home',[HomeController::class,'index'])->name('home');
-//Route::get('posts/{id}/edit', [PostController::class,'edit']);
+Route::put('posts/comments/{id}', [CommentController::class,'update']);
 Route::resource('posts', PostController::class);
+Route::post('posts/comments/{id}', [CommentController::class,'store']);
+Route::get('posts/comments/{id}/edit', [CommentController::class,'edit']);
+Route::delete('posts/comments/{id}', [CommentController::class,'delete']);

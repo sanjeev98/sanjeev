@@ -27,6 +27,7 @@ class StoreBlogPost extends FormRequest
             'title' => 'required|unique:posts|max:255',
             'description' => 'required',
             'posted_by' => 'required',
+            'file' =>'required',
         ];
     }
 
