@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Image;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreBlogPost;
 use DataTables;
@@ -47,8 +48,8 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('posts.create');
+    {   $tag =Tag::all();
+        return view('posts.create',compact('tag'));
     }
 
     /**
@@ -64,6 +65,7 @@ class PostController extends Controller
         $posts->description=$request['description'];
         $posts->posted_by=$request['posted_by'];
         $post=User::find(Auth::id())->posts()->save($posts);
+        $posts->tags()->sync($request->tags,false);
         $images = $request->file('files');
         foreach($images as $image)
         {   log::error("sss");
@@ -99,7 +101,19 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
-        return Response()->json($post);
+        $tag = Tag::all();
+        $tags=array();
+        foreach($tag as $tag1)
+        {
+          $tags[$tag1->id]=$tag1->name;
+        }
+        $tag2=$post->tags;
+        $tags3=array();
+        foreach($tag2 as $tag1)
+        {
+            $tags3[]=$tag1->id;
+        }
+        return Response()->json([$post,$tags,$tags3]);
     }
 
     /**
@@ -109,9 +123,14 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,Post $post)
+    public function update(Request $request,$id)
     {
-        $post->update($request->all());
+        $posts=Post::find($id);
+        $posts->title=$request['title'];
+        $posts->description=$request['description'];
+        $posts->posted_by=$request['posted_by'];
+        $posts->save();
+        $posts->tags()->sync($request->tags);
         return response()->json(['success'=>'Post updated successfully!']);
     }
 

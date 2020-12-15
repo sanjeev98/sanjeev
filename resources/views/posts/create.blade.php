@@ -11,7 +11,6 @@
             </div>
         </div>
     </div>
-
     @if ($errors->any())
         <div class="alert alert-danger">
             <strong>Whoops!</strong> There were some problems with your input.<br><br>
@@ -36,6 +35,16 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
+                    <strong>tags:</strong>
+            <select class="form-control" id="js-example-basic-multiple"  name="tags[]" style="width:100%;" multiple="multiple">
+                @foreach($tag as $tags)
+                <option value='{{$tags->id}}'>{{$tags->name}}</option>
+                @endforeach
+            </select>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
                     <strong>description:</strong>
                     <textarea class="form-control" style="height:150px" name="description" placeholder="description"></textarea>
                 </div>
@@ -43,7 +52,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>posted-by:</strong>
-                    <input type="text" name="posted_by" class="form-control" placeholder="posted_by">
+                    <input type="email" name="posted_by" class="form-control" placeholder="posted_by">
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
@@ -58,4 +67,10 @@
             </div>
         </div>
     </form>
+    <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            $("#js-example-basic-multiple").select2();
+        });
+    </script>
 @endsection

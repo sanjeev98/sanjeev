@@ -56,7 +56,11 @@
                             <input type="text" class="form-control" id="title" name="title" placeholder="Enter title" value="" maxlength="50" required="">
                         </div>
                     </div>
-
+                        <div class="form-group">
+                            <strong>tags:</strong>
+                            <select class="form-control" id="js-example-basic-multiple"  name="tags[]" style="width:100%;" multiple="multiple">
+                            </select>
+                        </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">description</label>
                         <div class="col-sm-12">
@@ -78,7 +82,6 @@
         </div>
     </div>
     </div>
-
         <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -102,16 +105,22 @@
             });
             $('body').on('click', '.editPost', function () {
                  var user_id = $(this).data('id');
+                 var s='';
                 $.ajax({
                     url: "posts"+'/' + user_id +'/edit',
                     success: function (data) {
                         $('#modelHeading').html("Edit Post");
                         $('#update').val("edit-post");
                         $('#ajaxModel').modal('show');
-                        $('#id').val(data.id);
-                        $('#title').val(data.title);
-                        $('#description').val(data.description);
-                        $('#posted_by').val(data.posted_by);
+                        $('#id').val(data[0].id);
+                        $('#title').val(data[0].title);
+                        $('#description').val(data[0].description);
+                        $('#posted_by').val(data[0].posted_by);
+                        for(s in data[1])
+                        {
+                            $("#js-example-basic-multiple").append('<option value='+s+'>'+data[1][s]+'</option>');
+                        }
+                        $("#js-example-basic-multiple").select2().val(data[2]);
                     },
                     error: function (data) {
                         console.log('Error:', data);
