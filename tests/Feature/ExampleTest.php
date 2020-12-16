@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Post;
+use App\Models\Image;
 
 class ExampleTest extends TestCase
 {
@@ -36,11 +37,15 @@ class ExampleTest extends TestCase
     /**
      * @test
      */
-    public function user_can_visit_post_and_create_the_post()
+    public function user_can_visit_post_and_create_store_the_post()
     {
         $users = User::factory()->make();
         $this->actingAs($users);
         $posts = Post::factory()->make(['user_id' => $users->id]);
+        $new_name ='4569875321326.png';
+        $images=new Image();
+        $images->name=$new_name;
+        $images->save();
         $this->post('posts', $posts->toArray());
         $response = $this->get('posts/create');
         $response->assertOk();

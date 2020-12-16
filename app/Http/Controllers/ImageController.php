@@ -13,8 +13,4 @@ class ImageController extends Controller
         return Response()->json($image);
     }
 
-    public function edit()
-    {
-
-    }
 }
