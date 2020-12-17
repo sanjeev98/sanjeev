@@ -103,6 +103,7 @@
             $('body').on('click', '.editPost', function () {
 
                  var user_id = $(this).data('id');
+
                 $.ajax({
                     url: "posts"+'/' + user_id +'/edit',
                     success: function (data) {
@@ -121,16 +122,16 @@
             });
             $('#update').click(function (e) {
                 e.preventDefault();
-                $(this).html('Sending..');
+                var tab =$('#post-table').DataTable();
                 $.ajax({
                     data: $('#PostForm').serialize(),
-                    url: "posts"+'/'+$('#id').val(),
-                    method:'post',
+                    url: "api/posts"+'/'+$('#id').val(),
+                    method:'put',
                     dataType: 'json',
                     success: function (data) {
                         $('#PostForm').trigger("reset");
                         $('#ajaxModel').modal('hide');
-                        table.draw();
+                        tab.draw();
 
                     },
                     error: function (data) {
@@ -142,7 +143,7 @@
 
             $('body').on('click', '.deletePost', function () {
                 var post_id = $(this).data("id");
-
+                var tab =$('#post-table').DataTable();
                 confirm("Are You sure want to delete !");
 
                 $.ajax({
@@ -153,7 +154,7 @@
                         '_token': '{{ csrf_token() }}',
                     },
                     success: function (data) {
-
+                        tab.draw();
                     },
                     error: function (data) {
                         console.log('Error:', data);
