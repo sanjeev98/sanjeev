@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+{{--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">--}}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <div class="row">
         <div class="col-lg-10 margin-tb">
             <div class="pull-left">
@@ -33,12 +34,12 @@
                     <div class="carousel-inner">
                         @foreach($images as $image)
                             @if($loop->iteration==1)
-                                <div class="item active">
+                                <div class="carousel-item active">
                                     <img src="{{asset('files/'.$image->name.'')}}" alt="Los Angeles"
                                          style="width:100%;">
                                 </div>
                             @else
-                                <div class="item">
+                                <div class="carousel-item">
                                     <img src="{{asset('files/'.$image->name.'')}}" alt="Los Angeles"
                                          style="width:100%;">
                                 </div>
@@ -102,10 +103,7 @@
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
         <script>
         $('#create').click(function (e) {
             e.preventDefault();
@@ -115,7 +113,7 @@
                 method:'post',
                 dataType: 'json',
                 success: function (data) {
-                    $('#c').append('<div class='+data[0].id+'><hr><span>'+data[0].id+'</span> <hr><span>'+data[1]+'</span><br> <hr><p id='+data[0].id+'>'+data[0].comment+'</p><br> <a href="javascript:void(0)" data-toggle="tooltip"  data-id='+data[0].id+' data-original-title="Edit" class="edit btn btn-primary btn-sm editcomment">Edit</a><hr><a href="javascript:void(0)"  data-id='+data[0].id+' class="edit btn btn-primary btn-sm deletecomment">delete</a></div>');
+                    $('#c').append('<div class='+data[0].id+'><hr><span>'+data[0].id+'</span> <hr><span>'+data[1]+'</span><br> <hr><p id='+data[0].id+'>'+data[0].comment+'</p><br> <a href="javascript:void(0)" data-toggle="tooltip"  data-id='+data[0].id+' data-original-title="Edit" class="edit btn btn-primary btn-sm editcomment">Edit</a><hr><a href="javascript:void(0)" data-id='+data[0].id+' data-original-title="delete" class="edit btn btn-primary btn-sm deletecomment">delete</a></div>');
                 },
                 error: function (data) {
                     console.log('Error:', data);
