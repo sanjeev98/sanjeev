@@ -61,7 +61,7 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreBlogPost $request)
     {
 //        $posts= new Post();
 //        $posts->title=$request['title'];
@@ -155,7 +155,7 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(StoreBlogPost $request,$id)
     {
 //        $posts=Post::find($id);
 //        $posts->title=$request['title'];

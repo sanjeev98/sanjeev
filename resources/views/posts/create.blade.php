@@ -51,14 +51,14 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>posted-by:</strong>
-                    <input type="email" name="posted_by" class="form-control" placeholder="posted_by">
+                    <input type="hidden" name="posted_by" class="form-control" placeholder="posted_by" value="{{auth()->user()->email}}">
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>title:</strong>
-                    <input type="file" name="files[]" id="file" multiple>
+                    <strong>Images:</strong>
+                    <br>
+                    <input type="file"  name="files[]" id="file" multiple>
                 </div>
             </div>
 
