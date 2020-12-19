@@ -17,8 +17,10 @@ class PostController extends Controller
 {
     public function __construct()
     {
-       $this->middleware('auth');
-       log::info('Authenticated user');
+        $this->middleware('permission:post-list|product-create|product-edit|product-delete', ['only' => ['index','show']]);
+        $this->middleware('permission:post-create', ['only' => ['create','store']]);
+        $this->middleware('permission:post-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:post-delete', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
