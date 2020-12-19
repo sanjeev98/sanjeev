@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-md-12 offset-md-3">
                 <div class="card-header">
-                    post Detail
+                    Post Detail
                 </div>
                 <div class="card-body">
                     <table class="table table-striped">
