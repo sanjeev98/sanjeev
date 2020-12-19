@@ -42,7 +42,7 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>Posted-by:</strong>
+                    <strong>Posted By:</strong>
                     <input type="hidden" name="posted_by" class="form-control" value="{{auth()->user()->email}}">
                 </div>
             </div>
