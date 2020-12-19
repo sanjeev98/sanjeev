@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     use HasFactory;
-    protected $fillable =['id','user_id','title','description','posted_by','created_at','posted_at'];
-    protected $table='posts';
+
+    protected $fillable = ['id', 'user_id', 'title', 'description', 'posted_by', 'created_at', 'posted_at'];
+    protected $table = 'posts';
 
     public function images()
     {
@@ -20,6 +21,7 @@ class Post extends Model
     {
         return $this->belongsTo(User::class);
     }
+
     public function comments()
     {
         return $this->hasMany(Comment::class);
