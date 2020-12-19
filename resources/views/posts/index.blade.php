@@ -5,8 +5,6 @@
 @endsection
 
 @section('content')
-
-
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
@@ -17,13 +15,11 @@
             </div>
         </div>
     </div>
-
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
             <p>{{ $message }}</p>
         </div>
     @endif
-
     <div class="container mt-5">
         <table class="table mt-4" id="post-table">
             <thead>
@@ -56,7 +52,6 @@
                             <input type="text" class="form-control" id="title" name="title" placeholder="Enter title" value="" maxlength="50" required="">
                         </div>
                     </div>
-
                     <div class="form-group">
                         <label class="col-sm-2 control-label">description</label>
                         <div class="col-sm-12">
@@ -98,10 +93,8 @@
                         {data: 'action', name: 'action', orderable: false, searchable: false},
                     ]
                 });
-
             });
             $('body').on('click', '.editPost', function () {
-
                  var user_id = $(this).data('id');
                 $.ajax({
                     url: "posts"+'/' + user_id +'/edit',
@@ -121,6 +114,7 @@
             });
             $('#update').click(function (e) {
                 e.preventDefault();
+                var tab =    $('#post-table').DataTable();
                 $(this).html('Sending..');
                 $.ajax({
                     data: $('#PostForm').serialize(),
@@ -130,8 +124,7 @@
                     success: function (data) {
                         $('#PostForm').trigger("reset");
                         $('#ajaxModel').modal('hide');
-                        table.draw();
-
+                        tab.draw();
                     },
                     error: function (data) {
                         console.log('Error:', data);
@@ -139,12 +132,10 @@
                     }
                 });
             });
-
             $('body').on('click', '.deletePost', function () {
                 var post_id = $(this).data("id");
-
+                var tab =    $('#post-table').DataTable();
                 confirm("Are You sure want to delete !");
-
                 $.ajax({
                     type: "DELETE",
                     url: "posts/"+post_id,
@@ -153,15 +144,12 @@
                         '_token': '{{ csrf_token() }}',
                     },
                     success: function (data) {
-
+                        tab.draw();
                     },
                     error: function (data) {
                         console.log('Error:', data);
                     }
                 });
             });
-
         </script>
-
-
 @endsection

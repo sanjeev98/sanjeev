@@ -11,7 +11,6 @@
             </div>
         </div>
     </div>
-
     @if ($errors->any())
         <div class="alert alert-danger">
             <strong>Whoops!</strong> There were some problems with your input.<br><br>
@@ -22,10 +21,8 @@
             </ul>
         </div>
     @endif
-
     <form action="{{ route('posts.store') }}" method="POST">
         @csrf
-
         <div class="row">
             <input type="hidden"  name="user_id" value="{{auth()->user()->id}}"/>
             <div class="col-xs-12 col-sm-12 col-md-12">
@@ -50,6 +47,5 @@
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </div>
-
     </form>
 @endsection

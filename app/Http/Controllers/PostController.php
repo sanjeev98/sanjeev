@@ -56,7 +56,6 @@ class PostController extends Controller
         Post::create($request->all());
         return redirect()->route('posts.index')
             ->with('success','Posts created successfully.');
-
     }
 
     /**
@@ -80,7 +79,6 @@ class PostController extends Controller
     {
         $post = Post::find($id);
         return Response()->json($post);
-
     }
 
     /**
@@ -106,5 +104,5 @@ class PostController extends Controller
     {
         $post->delete();
         return response()->json(['success'=>'Customer deleted!']);
-    }
+     }
 }
