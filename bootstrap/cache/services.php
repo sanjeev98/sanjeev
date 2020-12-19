@@ -48,6 +48,8 @@
     44 => 'App\\Providers\\AuthServiceProvider',
     45 => 'App\\Providers\\EventServiceProvider',
     46 => 'App\\Providers\\RouteServiceProvider',
+    47 => 'App\\Providers\\FortifyServiceProvider',
+    48 => 'App\\Providers\\JetstreamServiceProvider',
   ),
   'eager' => 
   array (
@@ -84,6 +86,8 @@
     30 => 'App\\Providers\\AuthServiceProvider',
     31 => 'App\\Providers\\EventServiceProvider',
     32 => 'App\\Providers\\RouteServiceProvider',
+    33 => 'App\\Providers\\FortifyServiceProvider',
+    34 => 'App\\Providers\\JetstreamServiceProvider',
   ),
   'deferred' => 
   array (

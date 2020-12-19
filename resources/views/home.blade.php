@@ -16,21 +16,23 @@
 @stop
 
 @push('scripts')
+
     <script>
-        $(function() {
+        $(function () {
             $('#users-table').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: '{!! route('get.users') !!}',
                 columns: [
-                    { data: 'id', name: 'id' },
-                    { data: 'title', name: 'title' },
-                    { data: 'description', name: 'description' },
-                    { data: 'posted_by', name: 'posted_by' },
-                    { data: 'created_at', name: 'created_at' },
-                    { data: 'updated_at', name: 'updated_at' }
+                    {data: 'id', name: 'id'},
+                    {data: 'title', name: 'title'},
+                    {data: 'description', name: 'description'},
+                    {data: 'posted_by', name: 'posted_by'},
+                    {data: 'created_at', name: 'created_at'},
+                    {data: 'updated_at', name: 'updated_at'}
                 ]
             });
         });
     </script>
+
 @endpush

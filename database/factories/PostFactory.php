@@ -25,6 +25,7 @@ class PostFactory extends Factory
             'title' => $this->faker->title,
             'description' => $this->faker->text,
             'posted_by' => $this->faker->safeEmail,
+
         ];
     }
 }
