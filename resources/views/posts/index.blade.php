@@ -12,7 +12,7 @@
                 <h2>Posts</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('posts.create') }}"> Create New Post</a>
+                <a class="btn btn-success" href="{{ route('posts.create') }}">New</a>
             </div>
         </div>
     </div>
@@ -22,7 +22,6 @@
             <p>{{ $message }}</p>
         </div>
     @endif
-
     <div class="container mt-5">
         <table class="table mt-4" id="post-table">
             <thead>
@@ -61,6 +60,4 @@
 
             });
         </script>
-
-
 @endsection

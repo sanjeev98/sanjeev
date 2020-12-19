@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreBlogPost;
+use App\Http\Requests\StorePostRequest;
 use DataTables;
 
 class PostController extends Controller
@@ -14,6 +14,7 @@ class PostController extends Controller
     {
        $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -43,9 +44,9 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreBlogPost $request)
+    public function store(StorePostRequest $request)
     {
-        Post::create($request->all());
+        Post::create($request->only(['user_id','title','description','posted_by']));
         return redirect()->route('posts.index')
             ->with('success','Posts created successfully.');
     }
