@@ -38,7 +38,7 @@
                     <strong>tags:</strong>
             <select class="form-control" id="js-example-basic-multiple"  name="tags[]" style="width:100%;" multiple="multiple">
                 @foreach($tag as $tags)
-                <option value='{{$tags->id}}'>{{$tags->name}}</option>
+                <option >{{$tags->name}}</option>
                 @endforeach
             </select>
                 </div>
@@ -70,7 +70,7 @@
     <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function() {
-            $("#js-example-basic-multiple").select2();
+            $("#js-example-basic-multiple").select2({tags: true});
         });
     </script>
 @endsection

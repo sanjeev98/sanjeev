@@ -29,16 +29,17 @@
         </div>
         <div class="col-xs-10 col-sm-10 col-md-10">
             <div class="form-group">
+                @if(count($images)>0)
                 <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
                     <div class="carousel-inner">
                         @foreach($images as $image)
                             @if($loop->iteration==1)
-                                <div class="item active">
+                                <div class="carousel-item active">
                                     <img src="{{asset('files/'.$image->name.'')}}" alt="Los Angeles"
                                          style="width:100%;">
                                 </div>
                             @else
-                                <div class="item">
+                                <div class="carousel-item">
                                     <img src="{{asset('files/'.$image->name.'')}}" alt="Los Angeles"
                                          style="width:100%;">
                                 </div>
@@ -54,6 +55,7 @@
                         <span class="sr-only">Next</span>
                     </a>
                 </div>
+                @endif
                 <hr>
             </div>
         </div>

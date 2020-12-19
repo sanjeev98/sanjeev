@@ -65,7 +65,15 @@ class PostController extends Controller
         $posts->description=$request['description'];
         $posts->posted_by=$request['posted_by'];
         $post=User::find(Auth::id())->posts()->save($posts);
-        $posts->tags()->sync($request->tags,false);
+        $tags3=array();
+        foreach($request->tags as $tag1)
+        {
+            $tags1 = Tag::firstOrCreate([
+                'name' => $tag1
+            ]);
+            $tags3[]=$tags1->id;
+        }
+        $posts->tags()->sync($tags3,false);
         $images = $request->file('files');
         foreach($images as $image)
         {   log::error("sss");
@@ -111,7 +119,7 @@ class PostController extends Controller
         $tags3=array();
         foreach($tag2 as $tag1)
         {
-            $tags3[]=$tag1->id;
+            $tags3[]=$tag1->name;
         }
         return Response()->json([$post,$tags,$tags3]);
     }

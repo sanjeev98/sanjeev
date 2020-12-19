@@ -117,9 +117,11 @@
                         $('#posted_by').val(data[0].posted_by);
                         for(s in data[1])
                         {
-                            $("#js-example-basic-multiple").append('<option value='+s+'>'+data[1][s]+'</option>');
+                            $("#js-example-basic-multiple").append('<option >'+data[1][s]+'</option>');
                         }
-                        $("#js-example-basic-multiple").select2().val(data[2]);
+                        $("#js-example-basic-multiple").select2({
+                            tags: true,
+                        }).val(data[2]);
                     },
                     error: function (data) {
                         console.log('Error:', data);
