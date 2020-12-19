@@ -25,12 +25,12 @@
     <div class="container mt-5">
         <table class="table mt-4" id="post-table">
             <thead>
-            <th>id</th>
-            <th>user_id</th>
-            <th>title</th>
+            <th>Id</th>
+            <th>User_id</th>
+            <th>Title</th>
             <th>description</th>
-            <th>posted_by</th>
-            <th>created_at</th>
+            <th>Posted_by</th>
+            <th>Created_at</th>
             <th>Action</th>
             </thead>
             <tbody>
