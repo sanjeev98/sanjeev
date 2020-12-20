@@ -46,7 +46,7 @@
                 $('#post-table').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: '{!! route('posts.index') !!}',
+                    ajax: '{!! route('posts.table') !!}',
                     columns: [
                         {data: 'id', name: 'id'},
                         {data: 'user_id', name: 'user_id'},

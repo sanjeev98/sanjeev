@@ -26,7 +26,6 @@ class StorePostRequest extends FormRequest
         return [
             'title' => 'required|unique:posts|min:3|max:255',
             'description' => 'required|min:10|max:255',
-            'posted_by' => 'required|email',
         ];
     }
 }

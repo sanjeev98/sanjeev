@@ -26,11 +26,11 @@
     <form action="{{ route('posts.store') }}" method="POST">
         @csrf
         <div class="row">
-            <input type="hidden" name="user_id" value="{{auth()->user()->id}}"/>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Title:</strong>
-                    <input type="text" name="title" class="form-control" placeholder="title" minlength="3" maxlength="200" required>
+                    <input type="text" name="title" class="form-control" placeholder="title" minlength="3"
+                           maxlength="200" required>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
@@ -38,12 +38,6 @@
                     <strong>Description:</strong>
                     <textarea class="form-control" style="height:150px" name="description"
                               placeholder="description" minlength="10" maxlength="200" required></textarea>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <strong>Posted By:</strong>
-                    <input type="hidden" name="posted_by" class="form-control" value="{{auth()->user()->email}}">
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">

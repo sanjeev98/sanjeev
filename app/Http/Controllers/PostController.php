@@ -10,9 +10,14 @@ use DataTables;
 
 class PostController extends Controller
 {
+    /**
+     * Execute all request in base method.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function __construct()
     {
-       $this->middleware('auth');
+        $this->middleware('auth');
     }
 
     /**
@@ -22,9 +27,6 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->ajax()) {
-           return DataTables::of(Post::query())->make(true);
-        }
         return view('posts.index');
     }
 
@@ -41,20 +43,23 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(StorePostRequest $request)
     {
-        Post::create($request->only(['user_id','title','description','posted_by']));
+        $input = $request->only(['title', 'description']);
+        $input['user_id'] = Auth::id();
+        $input['posted_by'] = auth()->user()->email;
+        Post::create();
         return redirect()->route('posts.index')
-            ->with('success','Posts created successfully.');
+            ->with('success', 'Posts created successfully.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Post  $post
+     * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
     public function show(Post $post)
@@ -65,7 +70,7 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Post  $post
+     * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
     public function edit(Post $post)
@@ -76,8 +81,8 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Post  $post
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Post $post)
@@ -88,11 +93,21 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Post  $post
+     * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
     public function destroy(Post $post)
     {
         //
+    }
+
+    /**
+     * Get post from post and send to datatable.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getPostTable()
+    {
+        return DataTables::of(Post::query())->make(true);
     }
 }
