@@ -125,7 +125,7 @@
             var tab = $('#post-table').DataTable();
             $.ajax({
                 data: $('#PostForm').serialize(),
-                url: "api/posts" + '/' + $('#id').val(),
+                url: "posts" + '/' + $('#id').val(),
                 method: 'put',
                 dataType: 'json',
                 success: function (data) {

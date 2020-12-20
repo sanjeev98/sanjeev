@@ -24,20 +24,9 @@ class StoreBlogPost extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|unique:posts|max:255',
+            'title' => 'required|max:255',
             'description' => 'required',
             'posted_by' => 'required',
         ];
     }
-
-    public function messages()
-    {
-        return [
-            'title.required' => 'A title is required',
-            'description.required' => 'A description is required',
-            'posted_by.required' => 'A posted_by is required',
-        ];
-    }
-
-
 }

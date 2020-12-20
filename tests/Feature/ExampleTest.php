@@ -26,7 +26,7 @@ class ExampleTest extends TestCase
     /**
      * @test
      */
-    public function user_can_visit_page_and_see_the_post()
+    public function indexPost()
     {
         $users = User::factory()->make();
         $response = $this->actingAs($users)->get('posts');
@@ -36,28 +36,32 @@ class ExampleTest extends TestCase
     /**
      * @test
      */
-    public function user_can_visit_post_and_create_the_post()
+    public function storePost()
     {
         $users = User::factory()->make();
         $this->actingAs($users);
-        $posts = Post::factory()->make(['user_id' => $users->id]);
-        $this->post('posts', $posts->toArray());
-        $response = $this->get('posts/create');
-        $response->assertOk();
+        $posts=Post::factory()->create();
+        $response = $this->json('POST', 'http://127.0.0.1:8000/posts', ['user_id' => $posts->user_id, 'title' => $posts->title, 'description' => $posts->description, 'posted_by' => $posts->posted_by]);
+        $this->assertDatabaseHas('posts', ['title' => $posts->title, 'id' => $posts->id, 'user_id' => $posts->user_id, 'description' => $posts->description, 'posted_by' => $posts->posted_by]);
+        $response
+            ->assertRedirect('posts');
+        $this->failedDueToTitleValidations();
+        $this->failedDueToDescriptionValidations();
     }
 
     /**
      * @test
      */
-    public function user_can_edit_and_update_the_post()
+    public function updatePost()
     {
         $users = User::factory()->make();
         $this->actingAs($users);
         $posts = post::factory()->create();
-        $this->get(' posts/'.$posts->id.'/edit ');
-        $posts = Post::factory()->make(['id' => $posts->id]);
-        $this->put('posts/' . $posts->id, $posts->toArray());
-        $this->assertDatabaseHas('posts', ['title' => $posts->title, 'id' => $posts->id, 'description' => $posts->description, 'posted_by' => $posts->posted_by]);
+        $response=$this->put('posts/' . $posts->id,['id' => $posts->id,'title' => $posts->title, 'description' => $posts->description, 'posted_by' => $posts->posted_by]);
+        $this->assertDatabaseHas('posts', ['title' => $posts->title, 'id' => $posts->id, 'user_id' => $posts->user_id, 'description' => $posts->description, 'posted_by' => $posts->posted_by]);
+        $response->assertOk();
+        $response->assertExactJson(['success'=>'Post updated successfully!']);
+
     }
 
     /**
@@ -68,7 +72,32 @@ class ExampleTest extends TestCase
         $users = User::factory()->make();
         $this->actingAs($users);
         $posts = Post::factory()->create();
-        $this->delete('posts/'.$posts->id);
+        $response=$this->delete('posts/'.$posts->id);
         $this->assertDeleted($posts);
+        $response->assertOk();
+        $response->assertExactJson(['success'=>'Customer deleted!']);
+    }
+
+    public function failedDueToTitleValidations()
+    {
+        $response = $this->json('post', 'http://127.0.0.1:8000/posts', ['title' => '']);
+        $response->assertExactJson([
+            "errors" => ["description" => ["The description field is required."],
+            "posted_by" =>["The posted by field is required."],
+            "title" => ["The title field is required."]],
+            "message" => "The given data was invalid."
+        ]);
+        $response->assertStatus(422);
+    }
+    public function failedDueToDescriptionValidations()
+    {
+        $response = $this->json('post', 'http://127.0.0.1:8000/posts', ['description' => '']);
+        $response->assertExactJson([
+            "errors" => ["description" => ["The description field is required."],
+                "posted_by" =>["The posted by field is required."],
+                "title" => ["The title field is required."]],
+            "message" => "The given data was invalid."
+        ]);
+        $response->assertStatus(422);
     }
 }
