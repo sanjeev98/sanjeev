@@ -51,7 +51,7 @@ class PostController extends Controller
         $input = $request->only(['title', 'description']);
         $input['user_id'] = Auth::id();
         $input['posted_by'] = auth()->user()->email;
-        Post::create();
+        Post::create($input);
         return redirect()->route('posts.index')
             ->with('success', 'Posts created successfully.');
     }
