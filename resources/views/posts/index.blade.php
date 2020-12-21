@@ -50,24 +50,18 @@
                         @method('put')
                         <input type="hidden" name="id" id="id">
                         <div class="form-group">
-                            <label for="title" class="col-sm-2 control-label">title</label>
+                            <label for="title" class="col-sm-2 control-label">Title</label>
                             <div class="col-sm-12">
                                 <input type="text" class="form-control" id="title" name="title"
-                                       placeholder="Enter title" value="" maxlength="50" required="">
+                                       placeholder="Enter title" value="" minlength="3" maxlength="50" required="">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">description</label>
+                            <label class="col-sm-2 control-label">Description</label>
                             <div class="col-sm-12">
                                 <textarea id="description" name="description" required=""
-                                          placeholder="Enter Description" class="form-control"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="posted_by" class="col-sm-2 control-label">posted_by</label>
-                            <div class="col-sm-12">
-                                <input type="email" class="form-control" id="posted_by" name="posted_by"
-                                       placeholder="Enter posted_by" value="" maxlength="50" required="">
+                                          minlength="10" placeholder="Enter Description"
+                                          class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="col-sm-offset-2 col-sm-10">
