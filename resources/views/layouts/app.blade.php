@@ -48,7 +48,7 @@
      data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
     <!-- ============================================================== -->
      @include('layouts.header');
-    @include('layouts.aside');
+    @include('layouts.side');
     <div class="page-wrapper">
         <div class="container-fluid">
             @yield('content')

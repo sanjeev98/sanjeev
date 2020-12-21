@@ -5,30 +5,33 @@
 @endsection
 
 @section('content')
+
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
                 <h2>Posts</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('posts.create') }}"> Create New Post</a>
+                <a class="btn btn-success" href="{{ route('posts.create') }}">New</a>
             </div>
         </div>
     </div>
+
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
             <p>{{ $message }}</p>
         </div>
     @endif
+
     <div class="container mt-5">
         <table class="table mt-4" id="post-table">
             <thead>
-            <th>id</th>
-            <th>user_id</th>
-            <th>title</th>
-            <th>description</th>
-            <th>posted_by</th>
-            <th>created_at</th>
+            <th>Id</th>
+            <th>User id</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Posted by</th>
+            <th>Created at</th>
             <th>Action</th>
             </thead>
             <tbody>
@@ -90,7 +93,7 @@
             $('#post-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{!! route('posts.index') !!}',
+                ajax: '{!! route('posts.table') !!}',
                 columns: [
                     {data: 'id', name: 'id'},
                     {data: 'user_id', name: 'user_id'},
