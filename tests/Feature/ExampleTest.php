@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Post;
+use Illuminate\Support\Str;
 
 class ExampleTest extends TestCase
 {
@@ -19,7 +20,6 @@ class ExampleTest extends TestCase
     public function testBasicTest()
     {
         $response = $this->get('/');
-
         $response->assertStatus(200);
     }
 
@@ -44,7 +44,7 @@ class ExampleTest extends TestCase
         $response = $this->json('POST', 'http://127.0.0.1:8000/posts', ['user_id' => $posts->user_id, 'title' => $posts->title, 'description' => $posts->description, 'posted_by' => $posts->posted_by]);
         $this->assertDatabaseHas('posts', ['title' => $posts->title, 'id' => $posts->id, 'user_id' => $posts->user_id, 'description' => $posts->description, 'posted_by' => $posts->posted_by]);
         $response
-            ->assertRedirect('posts');
+            ->assertStatus(422);
         $this->failedDueToTitleValidations();
         $this->failedDueToDescriptionValidations();
     }
@@ -54,14 +54,16 @@ class ExampleTest extends TestCase
      */
     public function updatePost()
     {
+        $this->withExceptionHandling();
         $users = User::factory()->make();
         $this->actingAs($users);
         $posts = post::factory()->create();
-        $response = $this->put('posts/' . $posts->id, ['id' => $posts->id, 'title' => $posts->title, 'description' => $posts->description, 'posted_by' => $posts->posted_by]);
+        $response = $this->put('posts/' . $posts->id, ['id' => $posts->id, 'title' => $posts->title, 'description' => $posts->description]);
         $this->assertDatabaseHas('posts', ['title' => $posts->title, 'id' => $posts->id, 'user_id' => $posts->user_id, 'description' => $posts->description, 'posted_by' => $posts->posted_by]);
-        $response->assertOk();
+        $response->assertStatus(200);
         $response->assertExactJson(['success' => 'Post updated successfully!']);
-
+        $this->failedDueToTitleValidations();
+        $this->failedDueToDescriptionValidations();
     }
 
     /**
@@ -86,8 +88,21 @@ class ExampleTest extends TestCase
         $response = $this->json('post', 'http://127.0.0.1:8000/posts', ['title' => '']);
         $response->assertExactJson([
             "errors" => ["description" => ["The description field is required."],
-                "posted_by" => ["The posted by field is required."],
                 "title" => ["The title field is required."]],
+            "message" => "The given data was invalid."
+        ]);
+        $response->assertStatus(422);
+        $response = $this->json('post', 'http://127.0.0.1:8000/posts', ['title' => 'jc']);
+        $response->assertExactJson([
+            "errors" => ["description" => ["The description field is required."],
+                "title" => ["The title must be at least 3 characters."]],
+            "message" => "The given data was invalid."
+        ]);
+        $response->assertStatus(422);
+        $response = $this->json('post', 'http://127.0.0.1:8000/posts', ['title' => Str::random(300) ]);
+        $response->assertExactJson([
+            "errors" => ["description" => ["The description field is required."],
+                "title" => ["The title may not be greater than 255 characters."]],
             "message" => "The given data was invalid."
         ]);
         $response->assertStatus(422);
@@ -101,10 +116,24 @@ class ExampleTest extends TestCase
         $response = $this->json('post', 'http://127.0.0.1:8000/posts', ['description' => '']);
         $response->assertExactJson([
             "errors" => ["description" => ["The description field is required."],
-                "posted_by" => ["The posted by field is required."],
+                "title" => ["The title field is required."]],
+            "message" => "The given data was invalid."
+        ]);
+        $response->assertStatus(422);
+        $response = $this->json('post', 'http://127.0.0.1:8000/posts', ['description' => 'jc']);
+        $response->assertExactJson([
+            "errors" => ["description" => ["The description must be at least 10 characters."],
+                "title" => ["The title field is required."]],
+            "message" => "The given data was invalid."
+        ]);
+        $response->assertStatus(422);
+        $response = $this->json('post', 'http://127.0.0.1:8000/posts', ['description' => Str::random(300) ]);
+        $response->assertExactJson([
+            "errors" => ["description" => ["The description may not be greater than 255 characters."],
                 "title" => ["The title field is required."]],
             "message" => "The given data was invalid."
         ]);
         $response->assertStatus(422);
     }
+
 }

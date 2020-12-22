@@ -23,8 +23,7 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
-            $user = User::factory()->create(),
-            'user_id' => $user->id,
+            'user_id' => User::factory()->create(),
             'title' => $this->faker->title,
             'description' => $this->faker->text,
             'posted_by' => $this->faker->safeEmail,
