@@ -99,7 +99,7 @@ class ExampleTest extends TestCase
             "message" => "The given data was invalid."
         ]);
         $response->assertStatus(422);
-        $response = $this->json('post', 'http://127.0.0.1:8000/posts', ['title' => Str::random(300) ]);
+        $response = $this->json('post', 'http://127.0.0.1:8000/posts', ['title' => Str::random(300)]);
         $response->assertExactJson([
             "errors" => ["description" => ["The description field is required."],
                 "title" => ["The title may not be greater than 255 characters."]],
@@ -127,7 +127,7 @@ class ExampleTest extends TestCase
             "message" => "The given data was invalid."
         ]);
         $response->assertStatus(422);
-        $response = $this->json('post', 'http://127.0.0.1:8000/posts', ['description' => Str::random(300) ]);
+        $response = $this->json('post', 'http://127.0.0.1:8000/posts', ['description' => Str::random(300)]);
         $response->assertExactJson([
             "errors" => ["description" => ["The description may not be greater than 255 characters."],
                 "title" => ["The title field is required."]],
