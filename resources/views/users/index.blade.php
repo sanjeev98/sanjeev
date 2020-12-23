@@ -8,11 +8,12 @@
                 <h2>Users Management</h2>
             </div>
             <div class="pull-right">
+                @can('user-create')
                 <a class="btn btn-success" href="{{ route('users.create') }}"> Create New User</a>
+                @endcan
             </div>
         </div>
     </div>
-
 
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
@@ -20,41 +21,52 @@
         </div>
     @endif
 
-
-    <table class="table table-bordered">
-        <tr>
-            <th>No</th>
+    <table class="table table-bordered" id="role-table">
+        <thead>
             <th>Name</th>
             <th>Email</th>
             <th>Roles</th>
-            <th width="280px">Action</th>
-        </tr>
-        @foreach ($data as $key => $user)
-            <tr>
-                <td>{{ ++$i }}</td>
-                <td>{{ $user->name }}</td>
-                <td>{{ $user->email }}</td>
-                <td>
-                    @if(!empty($user->getRoleNames()))
-                        @foreach($user->getRoleNames() as $v)
-                            <label class="badge badge-success">{{ $v }}</label>
-                        @endforeach
-                    @endif
-                </td>
-                <td>
-                    <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Show</a>
-                    <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Edit</a>
-                    {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
-                    {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                    {!! Form::close() !!}
-                </td>
-            </tr>
-        @endforeach
+            <th width="280px">Action</th></thead>
+        <tbody>
+        </tbody>
     </table>
+    <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
+    <script>
+        $(function(){
+            $('#role-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{!! route('roles.table') !!}',
+                columns: [
+                    {data: 'name', name: 'name'},
+                    {data: 'email', name: 'name'},
+                    {data: 'role', name: 'role'},
+                    {data: 'action', name: 'action', orderable: false, searchable: false},
+                ]
+            });
+        });
+        $('body').on('click', '.deletePost', function () {
+            var role_id = $(this).data("id");
+            var tab=$('#role-table').DataTable();
+            confirm("Are You sure want to delete !");
 
-
-    {!! $data->render() !!}
-
+            $.ajax({
+                method: "DELETE",
+                url: "users/"+role_id,
+                data: {
+                    "id": role_id,
+                    '_token': '{{ csrf_token() }}',
+                },
+                success: function (data) {
+                    alert(data[0]);
+                    tab.draw();
+                },
+                error: function (data) {
+                    console.log('Error:', data);
+                }
+            });
+        });
+    </script>
 
     <p class="text-center text-primary"><small></small></p>
 @endsection

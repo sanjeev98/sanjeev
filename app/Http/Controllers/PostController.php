@@ -17,7 +17,7 @@ class PostController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:post-list|product-create|product-edit|product-delete', ['only' => ['index','show']]);
+        $this->middleware('permission:post-list|post-create|post-edit|post-delete', ['only' => ['index','show']]);
         $this->middleware('permission:post-create', ['only' => ['create','store']]);
         $this->middleware('permission:post-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:post-delete', ['only' => ['destroy']]);
@@ -32,10 +32,13 @@ class PostController extends Controller
         if($request->ajax()) {
            return DataTables::of(Post::query()) ->addIndexColumn()
                ->addColumn('action', function($row) {
-                   $btn =  ' <a href="posts/'.$row->id.'" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm showPost">Show</a>';
+                  ;
+                   $btn = ' <a href="posts/'.$row->id.'" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm showPost">Show</a>';
+
                    $btn = $btn .'<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editPost">Edit</a>';
                   '{{ csrf_token() }}';
                    $btn = $btn.'<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deletePost">Delete</a>';
+
                    return $btn;
                })
                ->rawColumns(['action'])

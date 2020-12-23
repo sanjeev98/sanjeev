@@ -42,7 +42,6 @@
 
     <!-- Styles -->
 
-
 </head>
 
 <body>

@@ -10,12 +10,15 @@ use Illuminate\Support\Carbon;
 
 class CommentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:comment-create', ['only' => ['store']]);
+        $this->middleware('permission:comment-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:comment-delete', ['only' => ['destroy']]);
+    }
+
     public function store(Request $request)
     {
-//        $comment= new Comment();
-//        $comment->post_id=$request->id;
-//        $comment->comment=$request->comments;
-//        $comment->save();
         $id=DB::table('coments')->insertGetId([
             'post_id' =>$request->id,
             'comment' => $request->comments

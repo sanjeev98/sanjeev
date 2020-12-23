@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use DB;
-
+use DataTables;
 
 class RoleController extends Controller
 {
@@ -19,10 +19,10 @@ class RoleController extends Controller
      */
     function __construct()
     {
-//        $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
-//        $this->middleware('permission:role-create', ['only' => ['create','store']]);
-//        $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
-//        $this->middleware('permission:role-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','show','getData']]);
+        $this->middleware('permission:role-create', ['only' => ['create','store']]);
+        $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:role-delete', ['only' => ['destroy']]);
     }
 
 
@@ -33,9 +33,7 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-        $roles = Role::orderBy('id','DESC')->paginate(5);
-        return view('roles.index',compact('roles'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+        return view('roles.index');
     }
 
 
@@ -143,7 +141,20 @@ class RoleController extends Controller
     public function destroy($id)
     {
         DB::table("roles")->where('id',$id)->delete();
-        return redirect()->route('roles.index')
-            ->with('success','Role deleted successfully');
+        return response()->json(['Role deleted successfully']);
+    }
+
+    public function getData()
+    {
+        return DataTables::of(Role::query()) ->addIndexColumn()
+            ->addColumn('action', function($row) {
+                $btn = '<a href="roles/'.$row->id.'" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm showPost">Show</a>';
+                $btn = $btn .'<a href="roles/'.$row->id.'/edit" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editPost">Edit</a>';
+                '{{ csrf_token() }}';
+                $btn = $btn.'<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deletePost">Delete</a>';
+                return $btn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);;
     }
 }

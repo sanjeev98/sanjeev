@@ -160,7 +160,7 @@
                         '_token': '{{ csrf_token() }}',
                     },
                     success: function (data) {
-                        alert(data.success);
+                        alert(data[0]);
                         tab.draw();
                     },
                     error: function (data) {
