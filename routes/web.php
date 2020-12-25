@@ -23,6 +23,10 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+
+Route::get('dashboard', function(){
+    return view('posts.dashboard');
+});
 Route::get('get-post', [RoleController::class,'getdata'])->name('roles.get');
 Route::get('get-user', [UserController::class,'getdata'])->name('roles.table');
 Route::resource('roles',RoleController::class);

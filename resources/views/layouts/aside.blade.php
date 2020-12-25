@@ -10,17 +10,6 @@
                                              aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span
                             class="hide-menu">@yield('title')</span></a></li>
                 <li class="list-divider"></li>
-
-                <ul class="list-group">
-                <li class="nav-small-cap"><span class="hide-menu">Tags posts</span></li>
-                        @foreach($tags as $tag)
-                    <li class="list-group-item">
-                        <button class="btn btn-primary" type="submit"  href="javascript:void(0)" style="border-radius:30px; width: 80%;">
-                            {{$tag->name}} <span class="badge badge-pill badge-success" >{{$tag->count}}</span>
-                        </button>
-                    </li>
-                @endforeach
-                </ul>
                 <li class="nav-small-cap"><span class="hide-menu">Applications</span></li>
 
                 <li class="sidebar-item"> <a class="sidebar-link" href="ticket-list.html"
