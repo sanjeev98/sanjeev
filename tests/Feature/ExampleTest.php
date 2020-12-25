@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithFaker;
 use App\Models\User;
 use App\Models\Post;
 use Illuminate\Support\Str;
@@ -11,6 +12,7 @@ use Illuminate\Support\Str;
 class ExampleTest extends TestCase
 {
     use RefreshDatabase;
+    use WithFaker;
 
     /**
      * A basic test example.
@@ -54,7 +56,6 @@ class ExampleTest extends TestCase
      */
     public function updatePost()
     {
-        $this->withExceptionHandling();
         $users = User::factory()->make();
         $this->actingAs($users);
         $posts = post::factory()->create();
@@ -92,7 +93,7 @@ class ExampleTest extends TestCase
             "message" => "The given data was invalid."
         ]);
         $response->assertStatus(422);
-        $response = $this->json('post', 'http://127.0.0.1:8000/posts', ['title' => 'jc']);
+        $response = $this->json('post', 'http://127.0.0.1:8000/posts', ['title' => str::random(2)]);
         $response->assertExactJson([
             "errors" => ["description" => ["The description field is required."],
                 "title" => ["The title must be at least 3 characters."]],
@@ -103,6 +104,18 @@ class ExampleTest extends TestCase
         $response->assertExactJson([
             "errors" => ["description" => ["The description field is required."],
                 "title" => ["The title may not be greater than 255 characters."]],
+            "message" => "The given data was invalid."
+        ]);
+        $response->assertStatus(422);
+        $response = $this->json('post', 'http://127.0.0.1:8000/posts', ['title' => str::random(2),'description' => $this->faker->text]);
+        $response->assertExactJson([
+            "errors" => ["title" => ["The title must be at least 3 characters."]],
+            "message" => "The given data was invalid."
+        ]);
+        $response->assertStatus(422);
+        $response = $this->json('post', 'http://127.0.0.1:8000/posts', ['title' => Str::random(300),'description' => $this->faker->text]);
+        $response->assertExactJson([
+            "errors" => ["title" => ["The title may not be greater than 255 characters."]],
             "message" => "The given data was invalid."
         ]);
         $response->assertStatus(422);
@@ -120,7 +133,7 @@ class ExampleTest extends TestCase
             "message" => "The given data was invalid."
         ]);
         $response->assertStatus(422);
-        $response = $this->json('post', 'http://127.0.0.1:8000/posts', ['description' => 'jc']);
+        $response = $this->json('post', 'http://127.0.0.1:8000/posts', ['description' =>  Str::random(2)]);
         $response->assertExactJson([
             "errors" => ["description" => ["The description must be at least 10 characters."],
                 "title" => ["The title field is required."]],
@@ -131,6 +144,18 @@ class ExampleTest extends TestCase
         $response->assertExactJson([
             "errors" => ["description" => ["The description may not be greater than 255 characters."],
                 "title" => ["The title field is required."]],
+            "message" => "The given data was invalid."
+        ]);
+        $response->assertStatus(422);
+        $response = $this->json('post', 'http://127.0.0.1:8000/posts', ['title' => $this->faker->name,'description' =>  Str::random(2)]);
+        $response->assertExactJson([
+            "errors" => ["description" => ["The description must be at least 10 characters."]],
+            "message" => "The given data was invalid."
+        ]);
+        $response->assertStatus(422);
+        $response = $this->json('post', 'http://127.0.0.1:8000/posts', ['title' => $this->faker->name,'description' => Str::random(300)]);
+        $response->assertExactJson([
+            "errors" => ["description" => ["The description may not be greater than 255 characters."]],
             "message" => "The given data was invalid."
         ]);
         $response->assertStatus(422);
