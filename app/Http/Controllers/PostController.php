@@ -7,16 +7,21 @@ use App\Models\Post;
 use App\Models\User;
 use App\Models\Image;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreBlogPost;
+use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use DataTables;
 use Illuminate\Support\Facades\Log;
 
 class PostController extends Controller
 {
+    /**
+     * Execute all request in base method.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function __construct()
     {
-        $this->middleware('auth');
-        log::info('Authenticated user');
+       $this->middleware('auth');
     }
 
     /**
@@ -26,18 +31,6 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->ajax()) {
-            return DataTables::of(Post::query())->addIndexColumn()
-                ->addColumn('action', function ($row) {
-                    $btn = ' <a href="posts/' . $row->id . '" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm showPost">Show</a>';
-                    $btn = $btn . '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editPost">Edit</a>';
-                    '{{ csrf_token() }}';
-                    $btn = $btn . '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deletePost">Delete</a>';
-                    return $btn;
-                })
-                ->rawColumns(['action'])
-                ->make(true);;
-        }
         return view('posts.index');
     }
 
@@ -57,12 +50,12 @@ class PostController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreBlogPost $request)
+    public function store(StorePostRequest $request)
     {
         $posts = new Post();
         $posts->title = $request['title'];
         $posts->description = $request['description'];
-        $posts->posted_by = $request['posted_by'];
+        $posts->posted_by = auth()->user()->email;
         $post = User::find(Auth::id())->posts()->save($posts);
         $images = $request->file('files');
         foreach ($images as $image) {
@@ -95,9 +88,8 @@ class PostController extends Controller
      * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        $post = Post::find($id);
         return Response()->json($post);
     }
 
@@ -108,7 +100,7 @@ class PostController extends Controller
      * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreBlogPost $request, Post $post)
+    public function update(UpdatePostRequest $request, Post $post)
     {
         $post->update($request->all());
         return response()->json(['success' => 'Post updated successfully!']);
@@ -124,5 +116,23 @@ class PostController extends Controller
     {
         $post->delete();
         return response()->json(['success' => 'Post deleted!']);
+    }
+
+    /**
+     * Get post from post and send to datatable.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getPostTable()
+    {
+        return DataTables::of(Post::query())->addIndexColumn()
+            ->addColumn('action', function ($row) {
+                $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editPost">Edit</a>';
+                '{{ csrf_token() }}';
+                $btn = $btn . '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deletePost">Delete</a>';
+                return $btn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 }
