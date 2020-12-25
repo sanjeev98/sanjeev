@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use DataTables;
 
 class PostController extends Controller
@@ -75,7 +76,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return Response()->json($post);
     }
 
     /**
@@ -85,9 +86,10 @@ class PostController extends Controller
      * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(UpdatePostRequest $request, Post $post)
     {
-        //
+        $post->update($request->all());
+        return response()->json(['success' => 'Post updated successfully!']);
     }
 
     /**
@@ -98,7 +100,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return response()->json(['success' => 'Customer deleted!']);
     }
 
     /**
@@ -108,6 +111,14 @@ class PostController extends Controller
      */
     public function getPostTable()
     {
-        return DataTables::of(Post::query())->make(true);
+        return DataTables::of(Post::query())->addIndexColumn()
+            ->addColumn('action', function ($row) {
+                $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editPost">Edit</a>';
+                '{{ csrf_token() }}';
+                $btn = $btn . '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deletePost">Delete</a>';
+                return $btn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 }
