@@ -8,6 +8,8 @@ use App\Models\Post;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
+use DataTables;
+use Illuminate\Support\Facades\DB;
 
 class TagComposer
 {
@@ -41,7 +43,18 @@ class TagComposer
             }
             return $post1;
         });
+        $k = Cache::remember('hello',1, function () {
+            $post=Post::all();
+            $post2=[];
+            foreach($post as $post3)
+            {
+                $post3['tag']= DB::table('tags')->leftJoin('post_tag','tags.id','=','post_tag.tag_id')->select('tags.name')->where('post_tag.post_id','=',$post3->id)->get();
+                $post3['date']=$post3->created_at->format('Y-m-d');
+                $post2[]=$post3;
+            }
+            return $post2;
 
-        $view->with('tags4',$value)->with('post',$value1);
+        });
+        $view->with('tags4',$value)->with('pos',$value1)->with('tab',$k);
     }
 }

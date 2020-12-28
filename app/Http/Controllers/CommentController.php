@@ -10,23 +10,18 @@ use Illuminate\Support\Carbon;
 
 class CommentController extends Controller
 {
-    public function __construct()
+    public function show($id)
     {
-        $this->middleware('permission:comment-create', ['only' => ['store']]);
-        $this->middleware('permission:comment-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:comment-delete', ['only' => ['destroy']]);
+        $post = Post::find($id);
+        $image = $post->images;
+        return view('posts.show',['post'=>$post,'images'=>$image]);
     }
 
     public function store(Request $request)
     {
-        $id=DB::table('coments')->insertGetId([
-            'post_id' =>$request->id,
-            'comment' => $request->comments
-        ]);
-        $comment=DB::table('coments')->select('*')->where('id','=',$id)->get();
-        $comment=$comment[0];
-        $comments=Carbon::parse($comment->created_at)->diffForHumans();
-        return response()->Json([$comment,$comments]);
+        $comment= Comment::create(['user'=>$request['user'], 'email'=>$request['email'],'comment'=>$request['comment'],'post_id'=>$request['post_id']]);
+        $comment['time']=$comment->created_at->diffForHumans();
+        return response()->Json([$comment]);
     }
     public function edit($id)
     {

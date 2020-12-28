@@ -30,7 +30,9 @@
         </div>
         <div class="col-xs-10 col-sm-10 col-md-10">
             <div class="form-group">
+                @if(count($images)>0)
                 <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
+
                     <div class="carousel-inner">
                         @foreach($images as $image)
                             @if($loop->iteration==1)
@@ -55,6 +57,7 @@
                         <span class="sr-only">Next</span>
                     </a>
                 </div>
+                @endif
                 <hr>
             </div>
         </div>
@@ -63,8 +66,10 @@
                 <label for="comment">Comment:</label>
                 <form id="PostForm" name="PostForm" class="form-horizontal">
                     @csrf
-                    <input type="hidden" name="id" id="id" value="{{$post->id}}">
-                    <textarea class="form-control" name="comments" rows="5" id="comment" ></textarea>
+                    <input type="hidden" name="post_id" id="id" value="{{$post->id}}">
+                    <input type="text" name="user" id="user">
+                    <input type ="email" name="email" id="email">
+                    <textarea class="form-control" name="comment" rows="5" id="comment" ></textarea>
                     <hr>
                     <button type="submit" class="btn btn-success" id="create" >create
                     </button>
