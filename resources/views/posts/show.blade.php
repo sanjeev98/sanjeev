@@ -118,7 +118,12 @@
                 method:'post',
                 dataType: 'json',
                 success: function (data) {
-                    $('#c').append('<div class='+data[0].id+'><hr><span>'+data[0].id+'</span> <hr><span>'+data[1]+'</span><br> <hr><p id='+data[0].id+'>'+data[0].comment+'</p><br> <a href="javascript:void(0)" data-toggle="tooltip"  data-id='+data[0].id+' data-original-title="Edit" class="edit btn btn-primary btn-sm editcomment">Edit</a><hr><a href="javascript:void(0)" data-id='+data[0].id+' data-original-title="delete" class="edit btn btn-primary btn-sm deletecomment">delete</a></div>');
+                    if($('.'+data[0].user).children().length==0) {
+                        $('#c').append('<div class=' + data[0].user + '><span>' + data[0].user+ '</span><div class="' + data[0].id + '"> <span>' + data[0].time + '</span><br><p id=' + data[0].id + '>' + data[0].comment + '</p><br><a href="javascript:void(0)" data-toggle="tooltip"  data-id=' + data[0].id + ' data-original-title="Edit" class="editcomment">Edit</a><a href="javascript:void(0)" data-id=' + data[0].id + ' data-original-title="delete" class="deletecomment">delete</a></div></div>');
+                    }
+                    else{
+                        $('.'+data[0].user).append('<span>' + data[0].time + '</span><br><p id=' + data[0].id + '>' + data[0].comment + '</p><br><a href="javascript:void(0)" data-toggle="tooltip"  data-id=' + data[0].id + ' data-original-title="Edit" class="editcomment">Edit</a><a href="javascript:void(0)" data-id=' + data[0].id + ' data-original-title="delete" class="deletecomment">delete</a>');
+                    }
                 },
                 error: function (data) {
                     console.log('Error:', data);
