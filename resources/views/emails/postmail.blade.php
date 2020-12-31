@@ -3,7 +3,6 @@
 
 The body of your message.
 {{$postsmail}}
-{{$message}}
 @component('mail::button', ['url' => ''])
 Button Text
 @endcomponent

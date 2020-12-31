@@ -12,16 +12,16 @@ class PostMail extends Mailable
     use Queueable, SerializesModels;
 
     public $postsmail;
-    public $message;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($postsmail,$message)
+    public function __construct($postsmail)
     {
         $this->postsmail = $postsmail;
-        $this->message = $message;
+
     }
 
 
@@ -32,6 +32,10 @@ class PostMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.postmail');
+
+        return $this->markdown('emails.postmail') ->attach(public_path('storage/files/san.pdf'), [
+            'as' => 'san.pdf',
+            'mime' => 'application/pdf',
+        ])->attach(public_path('storage/files/pos1t.xlsx'));
     }
 }

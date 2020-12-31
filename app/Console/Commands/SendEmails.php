@@ -7,6 +7,10 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Post;
 use Illuminate\Support\Carbon;
+use PDF;
+use App\Exports\PostExport;
+use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SendEmails extends Command
 {
@@ -41,8 +45,10 @@ class SendEmails extends Command
      */
     public function handle()
     {
-        $user=Post::where("created_at",">",Carbon::now()->subDay())->where("created_at","<",Carbon::now())->get();
-        $message = 'Yesterday post';
-        Mail::to('sanjeev@gmail.com')->send(new PostMail($user,$message));
+        $postsmail=Post::where("created_at",">",Carbon::now()->subDay())->where("created_at","<",Carbon::now())->get();
+         $pdf = PDF::loadView('pdf', compact('postsmail'));
+         Storage::put('public/files/san.pdf', $pdf->output());
+         Excel::store(new PostExport(2018), 'public/files/pos1t.xlsx');
+         Mail::to('sanjeev@gmail.com')->send(new PostMail($postsmail));
     }
 }
