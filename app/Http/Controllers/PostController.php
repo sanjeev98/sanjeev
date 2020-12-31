@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PostDeleteEvent;
+use App\Events\PostUpdateEvent;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 use App\Models\User;
@@ -12,16 +14,18 @@ use App\Http\Requests\StoreBlogPost;
 use DataTables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Event;
+use App\Events\PostCreateEvent;
 
 class PostController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('permission:post-list|post-create|post-edit|post-delete', ['only' => ['index','show']]);
-        $this->middleware('permission:post-create', ['only' => ['create','store']]);
-        $this->middleware('permission:post-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:post-delete', ['only' => ['destroy']]);
-    }
+//    public function __construct()
+//    {
+////        $this->middleware('permission:post-list|post-create|post-edit|post-delete', ['only' => ['index','show']]);
+////        $this->middleware('permission:post-create', ['only' => ['create','store']]);
+////        $this->middleware('permission:post-edit', ['only' => ['edit','update']]);
+////        $this->middleware('permission:post-delete', ['only' => ['destroy']]);
+//    }
     /**
      * Display a listing of the resource.
      *
@@ -42,7 +46,7 @@ class PostController extends Controller
                    return $btn;
                })
                ->rawColumns(['action'])
-               ->make(true);;
+               ->make(true);
                log::info('Datatable created');
         }
         return view('posts.index');
@@ -90,6 +94,8 @@ class PostController extends Controller
             $file->name=$new_name;
             $post->images()->save($file);
         }
+        PostCreateEvent::dispatch($posts);
+//        Mail::to('example@gmail.com')->send(new PostMail($posts));
         return redirect()->route('posts.index')
             ->with('success','Posts created successfully.');
     }
@@ -145,7 +151,17 @@ class PostController extends Controller
         $posts->description=$request['description'];
         $posts->posted_by=$request['posted_by'];
         $posts->save();
-        $posts->tags()->sync($request->tags);
+        $tags3=array();
+        foreach($request->tags as $tag1)
+        {
+            $tags1 = Tag::firstOrCreate([
+                'name' => $tag1
+            ]);
+            $tags3[]=$tags1->id;
+        }
+        $posts->tags()->sync($tags3,false);
+        $posts->tags()->sync($tags3);
+        PostUpdateEvent::dispatch($posts);
         return response()->json(['success'=>'Post updated successfully!']);
     }
 
@@ -157,6 +173,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        PostDeleteEvent::dispatch($post);
         $post->delete();
         return response()->json(['success'=>'Post deleted!']);
     }

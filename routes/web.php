@@ -27,7 +27,7 @@ Auth::routes();
 Route::get('dashboard', function(){
     return view('posts.dashboard');
 });
-Route::get('posts/{id}', [CommentController::class,'show']);
+//Route::get('posts/{id}/show', [CommentController::class,'show']);
 Route::get('get-post', [RoleController::class,'getdata'])->name('roles.get');
 Route::get('get-user', [UserController::class,'getdata'])->name('roles.table');
 Route::resource('roles',RoleController::class);
