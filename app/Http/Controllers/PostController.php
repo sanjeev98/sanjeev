@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use DataTables;
-use Illuminate\Support\Facades\Log;
 
 class PostController extends Controller
 {
@@ -21,7 +20,7 @@ class PostController extends Controller
      */
     public function __construct()
     {
-       $this->middleware('auth');
+        $this->middleware('auth');
     }
 
     /**
@@ -52,11 +51,10 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        $posts = new Post();
-        $posts->title = $request['title'];
-        $posts->description = $request['description'];
-        $posts->posted_by = auth()->user()->email;
-        $post = User::find(Auth::id())->posts()->save($posts);
+        $input = $request->only(['title', 'description']);
+        $input['user_id'] = Auth::id();
+        $input['posted_by'] = auth()->user()->email;
+        $post = Post::create($input);
         $images = $request->file('files');
         foreach ($images as $image) {
             $new_name = rand() . '.' . $image->getClientOriginalExtension();
@@ -77,9 +75,10 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::find($id);
-        $image = $post->images;
-        return view('posts.show', ['post' => $post, 'images' => $image]);
+        $post = Post::find($id)->with('images.name');
+        dd($post);
+
+//        return view('posts.show', ['post' => $post, 'images' => $image]);
     }
 
     /**
