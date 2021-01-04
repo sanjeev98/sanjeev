@@ -20,6 +20,12 @@
                 <tbody>
                 </tbody>
             </table>
+            <figure class="highcharts-figure">
+                <div id="container"></div>
+            </figure>
+            <figure class="highcharts-figure">
+                <div id="container1"></div>
+            </figure>
         </div>
         <div class="col-3" >
             <div style="position: fixed;">
@@ -28,7 +34,7 @@
         <div class="filter-content">
             <div class="card-body">
                 @foreach($tags4 as $tag)
-                <button class="btn btn-success post" style="border-radius: 10px;padding: 2px;margin: 2px;" data-id="{{$tag->name}}">
+                <button class="btn btn-success" style="border-radius: 10px;padding: 2px;margin: 2px;" data-id="{{$tag->name}}">
                     <span class="form-check-label" style="font-size: 10px">{{$tag->name}}</span>
                     <span class="badge badge-pill badge-primary" style="font-size: 10px">{{$tag->count}}</span>
                 </button>
@@ -44,7 +50,7 @@
                 <div class="filter-content">
                     <div class="card-body">
                         @foreach($pos as $post1)
-                            <button class="btn btn-success" style="border-radius: 10px;padding: 2px;margin: 2px;">
+                            <button class="btn btn-success post" style="border-radius: 10px;padding: 2px;margin: 2px;" data-id="{{$post1->title}}">
                                 <span class="form-check-label" style="font-size: 10px">{{$post1->title}}</span>
                                 <span class="badge badge-pill badge-primary" style="font-size: 10px">{{$post1->time}}</span>
                             </button>
@@ -61,10 +67,9 @@
     <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.css"/>
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.js"></script>
-
+    <script src="https://code.highcharts.com/highcharts.js"></script>
     <script>
         $(function(){
-            console.log({!! json_encode($tab) !!});
      $('#post-table').DataTable({
             data:{!! json_encode($tab) !!},
              columns: [
@@ -90,7 +95,7 @@
             var table = $('#post-table').DataTable();
             var user_id = $(this).data('id');
             console.log(user_id);
-            table.column(4).search(user_id).draw();
+            table.column(1).search(user_id).draw();
         });
 
 
@@ -112,5 +117,132 @@
             table.draw();
         });
 
+        Highcharts.chart('container', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Monthly post and users'
+            },
+            subtitle: {
+                text: 'Source: post and user'
+            },
+            xAxis: {
+                categories: [
+                    'Jan',
+                    'Feb',
+                    'Mar',
+                    'Apr',
+                    'May',
+                    'Jun',
+                    'Jul',
+                    'Aug',
+                    'Sep',
+                    'Oct',
+                    'Nov',
+                    'Dec'
+                ],
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'No of Post AND User'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y} {series.name}</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                name: 'Post',
+                data: {!! json_encode($chart) !!}
+
+            },{
+                name: 'user',
+                data: {!! json_encode($chart1) !!}
+
+            }]
+        });
+        Highcharts.chart('container1', {
+
+            title: {
+                text: 'Solar Employment Growth by Sector, 2010-2016'
+            },
+
+            subtitle: {
+                text: 'Source: thesolarfoundation.com'
+            },
+
+            yAxis: {
+                title: {
+                    text: 'Number of Employees'
+                }
+            },
+
+            xAxis: {
+                accessibility: {
+                    rangeDescription: 'Range:2009 to 2010'
+                }
+            },
+
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle'
+            },
+
+            plotOptions: {
+                series: {
+                    label: {
+                        connectorAllowed: false
+                    },
+                    pointStart: 2008
+                }
+            },
+
+            series: [{
+                name: 'Installation',
+                data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
+            }, {
+                name: 'Manufacturing',
+                data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
+            }, {
+                name: 'Sales & Distribution',
+                data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
+            }, {
+                name: 'Project Development',
+                data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
+            }, {
+                name: 'Other',
+                data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
+            }],
+
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 500
+                    },
+                    chartOptions: {
+                        legend: {
+                            layout: 'horizontal',
+                            align: 'center',
+                            verticalAlign: 'bottom'
+                        }
+                    }
+                }]
+            }
+
+        });
     </script>
 @endsection

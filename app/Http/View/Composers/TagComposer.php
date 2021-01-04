@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
 use DataTables;
 use Illuminate\Support\Facades\DB;
-
 class TagComposer
 {
 
@@ -43,7 +42,7 @@ class TagComposer
             }
             return $post1;
         });
-        $k = Cache::remember('hello',1, function () {
+        $k = Cache::remember('hello',400, function () {
             $post=Post::all();
             $post2=[];
             foreach($post as $post3)
@@ -55,6 +54,38 @@ class TagComposer
             return $post2;
 
         });
-        $view->with('tags4',$value)->with('pos',$value1)->with('tab',$k);
+        $chart = Cache::remember('chart1',400, function () {
+           $user1= DB::table('posts')->select(\DB::raw("COUNT(*) as count"))
+                ->whereYear('created_at','2020')
+                ->groupBy(\DB::raw("Month(created_at)"))
+                ->pluck('count');
+            $user= DB::table('posts')->select(\DB::raw("Month(created_at) as month"))
+                ->whereYear('created_at','2020')
+                ->groupBy(\DB::raw("Month(created_at)"))
+                ->pluck('month');
+            $postmonth=array(0,0,0,0,0,0,0,0,0,0,0,0);
+            foreach($user as $index=>$user2)
+            {
+                $postmonth[$user2]=$user1[$index];
+            }
+           return $postmonth;
+        });
+        $chart1 = Cache::remember('chart2',400, function () {
+            $user1= DB::table('users')->select(\DB::raw("COUNT(*) as count"))
+                ->whereYear('created_at','2020')
+                ->groupBy(\DB::raw("Month(created_at)"))
+                ->pluck('count');
+            $user= DB::table('users')->select(\DB::raw("Month(created_at) as month"))
+                ->whereYear('created_at','2020')
+                ->groupBy(\DB::raw("Month(created_at)"))
+                ->pluck('month');
+            $usermonth=array(0,0,0,0,0,0,0,0,0,0,0,0);
+            foreach($user as $index=>$user2)
+            {
+                $usermonth[$user2]=$user1[$index];
+            }
+            return $usermonth;
+        });
+        $view->with('tags4',$value)->with('pos',$value1)->with('tab',$k)->with('chart',$chart)->with('chart1',$chart1);
     }
 }
