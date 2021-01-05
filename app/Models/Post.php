@@ -22,4 +22,24 @@ class Post extends Model
      * @var string
      */
     protected $table = 'posts';
+
+    /**
+     * Post has many relationship with image.
+     *
+     * @var string
+     */
+    public function images()
+    {
+        return $this->hasMany(Image::class);
+    }
+
+    /**
+     * User has many relationship with post.
+     *
+     * @var string
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

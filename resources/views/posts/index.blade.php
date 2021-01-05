@@ -110,7 +110,6 @@
                     $('#id').val(data.id);
                     $('#title').val(data.title);
                     $('#description').val(data.description);
-                    $('#posted_by').val(data.posted_by);
                 },
                 error: function (data) {
                     console.log('Error:', data);

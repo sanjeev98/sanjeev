@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
+use App\Models\User;
+use App\Models\Image;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
@@ -52,7 +54,17 @@ class PostController extends Controller
         $input = $request->only(['title', 'description']);
         $input['user_id'] = Auth::id();
         $input['posted_by'] = auth()->user()->email;
-        Post::create($input);
+        $post = Post::create($input);
+        if ($request->has('files')) {
+            $images = $request->file('files');
+            foreach ($images as $image) {
+                $new_name = rand() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('files'), $new_name);
+                $file = new Image();
+                $file->name = $new_name;
+                $post->images()->save($file);
+            }
+        }
         return redirect()->route('posts.index')
             ->with('success', 'Posts created successfully.');
     }
@@ -101,7 +113,7 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
-        return response()->json(['success' => 'Customer deleted!']);
+        return response()->json(['success' => 'Post deleted!']);
     }
 
     /**
