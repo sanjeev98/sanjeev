@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CommentController;
@@ -21,10 +22,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home',[HomeController::class,'index'])->name('home');
-Route::put('posts/comments/{id}', [CommentController::class,'update']);
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::put('posts/comments/{id}', [CommentController::class, 'update']);
 Route::resource('posts', PostController::class);
 Route::get('get-post', [PostController::class, 'getPostTable'])->name('posts.table');
-Route::post('posts/comments/{id}', [CommentController::class,'store']);
-Route::get('posts/comments/{id}/edit', [CommentController::class,'edit']);
-Route::delete('posts/comments/{id}', [CommentController::class,'delete']);
+Route::post('posts/comments/{id}', [CommentController::class, 'store']);
+Route::get('posts/comments/{id}/edit', [CommentController::class, 'edit']);
+Route::delete('posts/comments/{id}', [CommentController::class, 'delete']);
