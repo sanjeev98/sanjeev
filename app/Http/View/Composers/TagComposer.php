@@ -86,6 +86,53 @@ class TagComposer
             }
             return $usermonth;
         });
-        $view->with('tags4',$value)->with('pos',$value1)->with('tab',$k)->with('chart',$chart)->with('chart1',$chart1);
+        $graphchart = Cache::remember('graphchart',400, function () {
+            $user1= DB::table('users')->select(\DB::raw("COUNT(*) as count"))
+                ->whereBetween(\DB::raw("Year(created_at)"),['2010','2020'])
+                ->groupBy(\DB::raw("Year(created_at)"))
+                ->orderBy(\DB::raw("Year(created_at)"))
+                ->pluck('count');
+            $user= DB::table('users')->select(\DB::raw("Year(created_at) as year"))
+                ->whereBetween(\DB::raw("Year(created_at)"),['2010','2020'])
+                ->groupBy(\DB::raw("Year(created_at)"))
+                ->orderBy(\DB::raw("Year(created_at)"))
+                ->pluck('year');
+            $useryear=array();
+            $year=2010;
+            foreach($user as $index=>$user2)
+            {
+                if($user2 == $year)
+                $useryear[]=$user1[$index];
+                else
+                    $useryear[]=0;
+                ++$year;
+            }
+            return $useryear;
+        });
+        $graphchart1 = Cache::remember('graphchart1',400, function () {
+            $user1= DB::table('posts')->select(\DB::raw("COUNT(*) as count"))
+                ->whereBetween(\DB::raw("Year(created_at)"),['2010','2020'])
+                ->groupBy(\DB::raw("Year(created_at)"))
+                ->orderBy(\DB::raw("Year(created_at)"))
+                ->pluck('count');
+            $user= DB::table('posts')->select(\DB::raw("Year(created_at) as year"))
+                ->whereBetween(\DB::raw("Year(created_at)"),['2010','2020'])
+                ->groupBy(\DB::raw("Year(created_at)"))
+                ->orderBy(\DB::raw("Year(created_at)"))
+                ->pluck('year');
+            $useryear=array();
+            $year=2010;
+            foreach($user as $index=>$user2)
+            {
+                if($user2 == $year)
+                    $useryear[]=$user1[$index];
+                else
+                    $useryear[]=0;
+                ++$year;
+            }
+
+            return $useryear;
+        });
+        $view->with('tags4',$value)->with('pos',$value1)->with('tab',$k)->with('chart',$chart)->with('chart1',$chart1)->with('graphchart1',$graphchart1)->with('graphchart', $graphchart);
     }
 }
