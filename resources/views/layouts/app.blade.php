@@ -9,7 +9,6 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('asset/assets/images/favicon.png') }}">
     <title>@yield('title')</title>
     <!-- Custom CSS -->
@@ -23,28 +22,14 @@
     <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet">
 
-{{--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>--}}
-{{--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>--}}
-{{--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">--}}
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
 
     <title>Laravel</title>
-
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
-
     <!-- Styles -->
-
-
 </head>
-
 <body>
 <!-- ============================================================== -->
 <!-- Preloader - style you can find in spinners.css -->
@@ -103,8 +88,5 @@
 <script src="{{ asset('asset/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js') }}"></script>
 <script src="{{ asset('asset/dist/js/pages/dashboards/dashboard1.min.js') }}"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-
-
 </body>
-
 </html>

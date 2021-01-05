@@ -9,8 +9,20 @@ class Tag extends Model
 {
     use HasFactory;
 
-    protected $fillable =['name'];
-    protected $table='tags';
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
+     */
+    protected $fillable = ['name'];
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'tags';
+
     public function posts()
     {
         return $this->belongsToMany(Post::class, 'post_tag');

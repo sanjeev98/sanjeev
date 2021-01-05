@@ -43,9 +43,9 @@ class PostTest extends TestCase
         $users = User::factory()->make();
         $this->actingAs($users);
         $posts = Post::factory()->make(['user_id' => $users->id]);
-        $new_name ='4569875321326.png';
-        Image::make(['post_id'=>$posts->id,
-            'name'=>$new_name]);
+        $new_name = '4569875321326.png';
+        Image::make(['post_id' => $posts->id,
+            'name' => $new_name]);
         $this->post('posts', $posts->toArray());
         $response = $this->get('posts/create');
         $response->assertOk();
@@ -59,7 +59,7 @@ class PostTest extends TestCase
         $users = User::factory()->make();
         $this->actingAs($users);
         $posts = post::factory()->create();
-        $this->get(' posts/'.$posts->id.'/edit ');
+        $this->get(' posts/' . $posts->id . '/edit ');
         $posts = Post::factory()->make(['id' => $posts->id]);
         $this->put('posts/' . $posts->id, $posts->toArray());
         $this->assertDatabaseHas('posts', ['title' => $posts->title, 'id' => $posts->id, 'description' => $posts->description, 'posted_by' => $posts->posted_by]);
@@ -73,7 +73,7 @@ class PostTest extends TestCase
         $users = User::factory()->make();
         $this->actingAs($users);
         $posts = Post::factory()->create();
-        $this->delete('posts/'.$posts->id);
+        $this->delete('posts/' . $posts->id);
         $this->assertDeleted($posts);
     }
 }

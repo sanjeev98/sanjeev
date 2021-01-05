@@ -33,7 +33,7 @@ class CommentTest extends TestCase
         $this->actingAs($users);
         $posts = Post::factory()->make(['user_id' => $users->id]);
         $new_name = 'hekk';
-        $comment=Comment::make(['post_id' => $posts->id,
+        $comment = Comment::make(['post_id' => $posts->id,
             'comment' => $new_name]);
         $this->post('posts/comments/{id}', $comment->toArray());
         $response = $this->get('posts/create');
@@ -48,9 +48,9 @@ class CommentTest extends TestCase
         $users = User::factory()->make();
         $this->actingAs($users);
         $posts = Post::factory()->create();
-        $this->get(' posts/comments/'. $posts->id .'/edit ');
-        $comment=Comment::factory()->create(['post_id' =>$posts->id,
-            'comment' =>'jhvd']);
+        $this->get(' posts/comments/' . $posts->id . '/edit ');
+        $comment = Comment::factory()->create(['post_id' => $posts->id,
+            'comment' => 'jhvd']);
         $this->put('posts/comments/' . $posts->id, $comment->toArray());
         $this->assertDatabaseHas('coments', ['post_id' => $comment->post_id, 'id' => $comment->id, 'comment' => $comment->comment]);
     }
@@ -62,7 +62,7 @@ class CommentTest extends TestCase
     {
         $users = User::factory()->make();
         $this->actingAs($users);
-        $comment=Comment::factory()->create();
+        $comment = Comment::factory()->create();
         $this->delete('posts/comments/' . $comment->id);
         $this->assertDeleted($comment);
     }
