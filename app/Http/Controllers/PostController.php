@@ -55,13 +55,15 @@ class PostController extends Controller
         $input['user_id'] = Auth::id();
         $input['posted_by'] = auth()->user()->email;
         $post = Post::create($input);
-        $images = $request->file('files');
-        foreach ($images as $image) {
-            $new_name = rand() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('files'), $new_name);
-            $file = new Image();
-            $file->name = $new_name;
-            $post->images()->save($file);
+        if ($request->has('files')) {
+            $images = $request->file('files');
+            foreach ($images as $image) {
+                $new_name = rand() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('files'), $new_name);
+                $file = new Image();
+                $file->name = $new_name;
+                $post->images()->save($file);
+            }
         }
         return redirect()->route('posts.index')
             ->with('success', 'Posts created successfully.');
@@ -73,10 +75,9 @@ class PostController extends Controller
      * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        $post = Post::find($id)->with('images.name');
-        return view('posts.show', ['post' => $post]);
+        //
     }
 
     /**
