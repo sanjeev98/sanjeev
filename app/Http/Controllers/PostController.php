@@ -41,8 +41,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        $tag = Tag::all();
-        return view('posts.create', compact('tag'));
+        $tags = Tag::all();
+        return view('posts.create', compact('tags'));
     }
 
     /**
@@ -57,15 +57,16 @@ class PostController extends Controller
         $input['user_id'] = Auth::id();
         $input['posted_by'] = auth()->user()->email;
         $post = Post::create($input);
+
+        $tags = array();
+        foreach ($request->tags as $tag) {
+            $tag = Tag::firstOrCreate([
+                'name' => $tag
+            ]);
+            $tags[] = $tag->id;
+        }
+        $post->tags()->sync($tags, false);
         if ($request->has('files')) {
-            $tags3 = array();
-            foreach ($request->tags as $tag1) {
-                $tags1 = Tag::firstOrCreate([
-                    'name' => $tag1
-                ]);
-                $tags3[] = $tags1->id;
-            }
-            $post->tags()->sync($tags3, false);
             $images = $request->file('files');
             foreach ($images as $image) {
                 $new_name = rand() . '.' . $image->getClientOriginalExtension();
@@ -85,10 +86,9 @@ class PostController extends Controller
      * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        $post = Post::find($id);
-        $image = $post->images;
+        $image = $post->load('images');
         return view('posts.show', ['post' => $post, 'images' => $image]);
     }
 
@@ -100,17 +100,17 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        $tag = Tag::all();
-        $tags = array();
-        foreach ($tag as $tag1) {
-            $tags[$tag1->id] = $tag1->name;
+        $tags = Tag::all();
+        $allTags = array();
+        foreach ($tags as $tag) {
+            $allTags[$tag->id] = $tag->name;
         }
-        $tag2 = $post->tags;
-        $tags3 = array();
-        foreach ($tag2 as $tag1) {
-            $tags3[] = $tag1->name;
+        $tags = $post->load('tags');
+        $postTags = array();
+        foreach ($tags as $tag) {
+            $postTags[] = $tag->name;
         }
-        return Response()->json([$post, $tags, $tags3]);
+        return Response()->json([$post, $allTags, $postTags]);
     }
 
     /**
@@ -120,14 +120,11 @@ class PostController extends Controller
      * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePostRequest $request, $id)
+    public function update(UpdatePostRequest $request, Post $post)
     {
-        $posts = Post::find($id);
-        $posts->title = $request['title'];
-        $posts->description = $request['description'];
-        $posts->posted_by = $request['posted_by'];
-        $posts->save();
-        $posts->tags()->sync($request->tags);
+        $input = $request->only(['title', 'description']);
+        $post->update($input);
+        $post->tags()->sync($request->tags);
         return response()->json(['success' => 'Post updated successfully!']);
     }
 

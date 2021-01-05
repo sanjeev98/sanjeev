@@ -76,10 +76,8 @@
             </div>
         </div>
         <div class="col-xs-4 col-sm-4 col-md-4" id="c">
-
         </div>
     </div>
-
     <div class="modal fade" id="ajaxModel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

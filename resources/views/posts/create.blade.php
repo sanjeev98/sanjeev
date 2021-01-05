@@ -34,8 +34,8 @@
                     <strong>tags:</strong>
                     <select class="form-control" id="js-example-basic-multiple" name="tags[]" style="width:100%;"
                             multiple="multiple">
-                        @foreach($tag as $tags)
-                            <option>{{$tags->name}}</option>
+                        @foreach($tags as $tag)
+                            <option>{{$tag->name}}</option>
                         @endforeach
                     </select>
                 </div>

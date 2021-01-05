@@ -16,7 +16,7 @@ class CommentController extends Controller
     public function store(CommentRequest $request)
     {
         $input = $request->only(['post_id', 'comment']);
-        $comment=Comment::create($input);
+        $comment = Comment::create($input);
         $time = $comment->created_at->diffForHumans();
         return response()->Json([$comment, $time]);
     }
@@ -36,14 +36,14 @@ class CommentController extends Controller
      */
     public function update(CommentRequest $request)
     {
-        $comment=Comment::findOrFail($request->id1);
+        $comment = Comment::findOrFail($request->id1);
         $comment->update(['comment' => $request->comment1]);
         return response()->json($comment->comment);
     }
 
     /**
      * Remove the specified resource from storage.
-     *@param \App\Models\comment $comment
+     * @param \App\Models\comment $comment
      */
     public function delete(comment $comment)
     {

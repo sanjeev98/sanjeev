@@ -21,7 +21,7 @@ class Comment extends Model
      *
      * @var string
      */
-    protected $table = 'coments';
+    protected $table = 'comments';
 
     /**
      *posts has many comments.
