@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Comment;
+use App\Http\Requests\CommentRequest;
 
 class CommentController extends Controller
 {
@@ -12,23 +13,20 @@ class CommentController extends Controller
      * Store a newly created resource in storage.
      *
      */
-    public function store(Request $request)
+    public function store(CommentRequest $request)
     {
-        $comment = new Comment();
-        $comment->post_id = $request->id;
-        $comment->comment = $request->comments;
-        $comment->save();
-        $comments = $comment->created_at->diffForHumans();
-        return response()->Json([$comment, $comments]);
+        $input = $request->only(['post_id', 'comment']);
+        $comment=Comment::create($input);
+        $time = $comment->created_at->diffForHumans();
+        return response()->Json([$comment, $time]);
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
+     * @param \App\Models\comment $comment
      */
-    public function edit($id)
+    public function edit(comment $comment)
     {
-        $comment = Comment::find($id);
         return response()->Json($comment);
     }
 
@@ -36,19 +34,20 @@ class CommentController extends Controller
      * Update the specified resource in storage.
      *
      */
-    public function update(Request $request)
+    public function update(CommentRequest $request)
     {
-        Comment::find($request->id1)->update(['comment' => $request->comment1]);
-        return response()->json($request);
+        $comment=Comment::findOrFail($request->id1);
+        $comment->update(['comment' => $request->comment1]);
+        return response()->json($comment->comment);
     }
 
     /**
      * Remove the specified resource from storage.
-     *
+     *@param \App\Models\comment $comment
      */
-    public function delete($id)
+    public function delete(comment $comment)
     {
-        Comment::find($id)->delete();
+        $comment->delete();
         return response()->json(['success' => 'comment deleted!']);
     }
 }

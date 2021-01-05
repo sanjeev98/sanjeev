@@ -66,8 +66,8 @@
                     <label for="comment">Comment:</label>
                     <form id="PostForm" name="PostForm" class="form-horizontal">
                         @csrf
-                        <input type="hidden" name="id" id="id" value="{{$post->id}}">
-                        <textarea class="form-control" name="comments" rows="5" id="comment"></textarea>
+                        <input type="hidden" name="post_id" id="id" value="{{$post->id}}">
+                        <textarea class="form-control" name="comment" rows="5" id="comment"></textarea>
                         <hr>
                         <button type="submit" class="btn btn-success" id="create">create
                         </button>
