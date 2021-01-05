@@ -23,6 +23,11 @@ class Comment extends Model
      */
     protected $table = 'coments';
 
+    /**
+     *posts has many comments.
+     *
+     * @var string
+     */
     public function posts()
     {
         return $this->belongsTo(Post::class);

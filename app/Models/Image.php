@@ -23,6 +23,11 @@ class Image extends Model
      */
     protected $table = 'images';
 
+    /**
+     *posts has many image.
+     *
+     * @var string
+     */
     public function post()
     {
         return $this->belongsTo(Post::class);

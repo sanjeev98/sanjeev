@@ -23,6 +23,11 @@ class Tag extends Model
      */
     protected $table = 'tags';
 
+    /**
+     *Tags has many posts.
+     *
+     * @var string
+     */
     public function posts()
     {
         return $this->belongsToMany(Post::class, 'post_tag');
