@@ -24,6 +24,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
+
 Route::get('dashboard1', function(){
     return view('posts.dashboard');
 });
@@ -46,3 +47,4 @@ Route::delete('posts/comments/{id}', [CommentController::class,'delete']);
 //Route::put('posts/{id}',[PostController::class,'update'])->name('posts.update');
 //Route::get('posts/{id}',[PostController::class,'show'])->name('posts.show');
 //Route::get('posts/{id}/edit',[PostController::class,'edit'])->name('posts.edit');
+
