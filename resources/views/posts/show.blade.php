@@ -115,7 +115,7 @@
             e.preventDefault();
             $.ajax({
                 data: $('#postform').serialize(),
-                url: "comments" + '/' + $('#id').val(),
+                url: "comments",
                 method: 'post',
                 dataType: 'json',
                 success: function (data) {
