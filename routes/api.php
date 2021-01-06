@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Http\Controllers\UserApiController;
-use App\Http\Resources\User as UserResource;
+use App\Http\Controllers\api\v1\UserApiController as v1UserApiController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,6 +18,9 @@ use App\Http\Resources\User as UserResource;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+Route::prefix('v1')->group(function () {
+    Route::get('/users/{id}', [v1UserApiController::class,'getPost']);
 });
 Route::get('/users/{id}', [UserApiController::class,'getPost']);
 

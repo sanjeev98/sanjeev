@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\v1;
 
+use App\Http\Resources\v1\PostCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\PostCollection;
 
 class User extends JsonResource
 {
