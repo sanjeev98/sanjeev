@@ -88,7 +88,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $image = $post->load('images');
+        $image = $post->images;
         return view('posts.show', ['post' => $post, 'images' => $image]);
     }
 
@@ -149,7 +149,9 @@ class PostController extends Controller
     {
         return DataTables::of(Post::query())->addIndexColumn()
             ->addColumn('action', function ($row) {
-                $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editPost">Edit</a>';
+                $btn = ' <a href="posts/' . $row->id . '" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Show" class="edit btn btn-primary btn-sm showPost">Show</a>';
+                $btn = $btn . '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editPost">Edit</a>';
+
                 '{{ csrf_token() }}';
                 $btn = $btn . '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deletePost">Delete</a>';
                 return $btn;

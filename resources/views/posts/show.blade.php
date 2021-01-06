@@ -86,11 +86,11 @@
                     <form id="commentform" name="commentform" class="form-horizontal">
                         @csrf
                         @method('put')
-                        <input type="hidden" name="id1" id="id1">
+                        <input type="hidden" name="id" id="updateid">
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Comment</label>
                             <div class="col-sm-12">
-                                <textarea id="comment" name="comment" placeholder="Enter Description"
+                                <textarea id="updatecomment" name="comment" placeholder="Enter Description"
                                           class="form-control"></textarea>
                             </div>
                         </div>
@@ -134,8 +134,8 @@
                     $('#modelHeading').html("Edit comment");
                     $('#update').val("edit-comment");
                     $('#ajaxModel').modal('show');
-                    $('#id1').val(data.id);
-                    $('#comment').val(data.comment);
+                    $('#updateid').val(data.id);
+                    $('#updatecomment').val(data.comment);
                 },
                 error: function (data) {
                     console.log('Error:', data);
@@ -145,13 +145,13 @@
         $('#update').click(function (e) {
             e.preventDefault();
             $.ajax({
-                data: $('#commentForm').serialize(),
-                url: "comments" + '/' + $('#id1').val(),
+                data: $('#commentform').serialize(),
+                url: "comments" + '/' + $('#updateid').val(),
                 method: 'put',
                 dataType: 'json',
                 success: function (data) {
                     $('#ajaxModel').modal('hide');
-                    $('#' + data.id1).html(data.comment);
+                    $('#' + data.id).html(data.comment);
                 },
                 error: function (data) {
                     console.log('Error:', data);

@@ -23,10 +23,11 @@ class CommentController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     * @param \App\Models\comment $comment
+     *
      */
-    public function edit(comment $comment)
+    public function edit($comment)
     {
+        $comment = Comment::findOrFail($comment);
         return response()->Json($comment);
     }
 
@@ -34,19 +35,20 @@ class CommentController extends Controller
      * Update the specified resource in storage.
      *
      */
-    public function update(CommentRequest $request)
+    public function update(CommentRequest $request, $comment)
     {
-        $comment = Comment::findOrFail($request->id1);
-        $comment->update(['comment' => $request->comment1]);
-        return response()->json($comment->comment);
+        $comment = Comment::findOrFail($comment);
+        $comment->update(['comment' => $request->comment]);
+        return response()->json($comment);
     }
 
     /**
      * Remove the specified resource from storage.
-     * @param \App\Models\comment $comment
+     *
      */
-    public function delete(comment $comment)
+    public function delete($comment)
     {
+        $comment = Comment::findOrFail($comment);
         $comment->delete();
         return response()->json(['success' => 'comment deleted!']);
     }
