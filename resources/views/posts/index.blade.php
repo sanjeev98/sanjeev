@@ -45,7 +45,7 @@
                     <h4 class="modal-title" id="modelHeading"></h4>
                 </div>
                 <div class="modal-body">
-                    <form id="postform" name="postform" class="form-horizontal">
+                    <form id="post-form" name="post-form" class="form-horizontal">
                         @csrf
                         @method('put')
                         <input type="hidden" name="id" id="id">
@@ -105,7 +105,7 @@
                 ]
             });
         });
-        $('body').on('click', '.editPost', function () {
+        $('body').on('click', '.edit-Post', function () {
             var user_id = $(this).data('id');
             var s = '';
             $.ajax({
@@ -133,12 +133,12 @@
             e.preventDefault();
             var tab = $('#post-table').DataTable();
             $.ajax({
-                data: $('#postform').serialize(),
+                data: $('#post-form').serialize(),
                 url: "posts" + '/' + $('#id').val(),
                 method: 'post',
                 dataType: 'json',
                 success: function (data) {
-                    $('#PostForm').trigger("reset");
+                    $('#post-form').trigger("reset");
                     $('#ajaxModel').modal('hide');
                     tab.draw();
                 },
@@ -149,7 +149,7 @@
             });
         });
 
-        $('body').on('click', '.deletePost', function () {
+        $('body').on('click', '.delete-Post', function () {
             var post_id = $(this).data("id");
             var tab = $('#post-table').DataTable();
             confirm("Are You sure want to delete !");

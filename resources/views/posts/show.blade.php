@@ -35,11 +35,11 @@
                                 @foreach($images as $image)
                                     @if($loop->iteration == 1)
                                         <div class="carousel-item active">
-                                            <img src="{{asset('files/'.$image->name.'')}}" alt="Los Angeles" style="width:100%;">
+                                            <img src="{{ asset('files/' . $image->name . '') }}" alt="Los Angeles" style="width: 100%;">
                                         </div>
                                     @else
                                         <div class="carousel-item">
-                                            <img src="{{asset('files/'.$image->name.'')}}" alt="Los Angeles" style="width:100%;">
+                                            <img src="{{ asset('files/' . $image->name . '') }}" alt="Los Angeles" style="width: 100%;">
                                         </div>
                                     @endif
                                 @endforeach
@@ -62,9 +62,9 @@
             <div class="col-xs-8 col-sm-8 col-md-8">
                 <div class="form-group">
                     <label for="comment">Comment:</label>
-                    <form id="postform" name="postform" class="form-horizontal">
+                    <form id="post-form" name="post-form" class="form-horizontal">
                         @csrf
-                        <input type="hidden" name="post_id" id="id" value="{{$post->id}}">
+                        <input type="hidden" name="post_id" id="id" value="{{ $post->id }}">
                         <textarea class="form-control" name="comment" rows="5" id="comment"></textarea>
                         <hr>
                         <button type="submit" class="btn btn-success" id="create">create
@@ -73,7 +73,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-4 col-sm-4 col-md-4" id="c">
+        <div class="col-xs-4 col-sm-4 col-md-4" id="user-comment">
         </div>
     </div>
     <div class="modal fade" id="ajaxModel" aria-hidden="true">
@@ -83,14 +83,14 @@
                     <h4 class="modal-title" id="modelHeading"></h4>
                 </div>
                 <div class="modal-body">
-                    <form id="commentform" name="commentform" class="form-horizontal">
+                    <form id="comment-form" name="comment-form" class="form-horizontal">
                         @csrf
                         @method('put')
-                        <input type="hidden" name="id" id="updateid">
+                        <input type="hidden" name="id" id="update-id">
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Comment</label>
                             <div class="col-sm-12">
-                                <textarea id="updatecomment" name="comment" placeholder="Enter Description"
+                                <textarea id="update-comment" name="comment" placeholder="Enter Description"
                                           class="form-control"></textarea>
                             </div>
                         </div>
@@ -114,19 +114,19 @@
         $('#create').click(function (e) {
             e.preventDefault();
             $.ajax({
-                data: $('#postform').serialize(),
+                data: $('#post-form').serialize(),
                 url: "comments",
                 method: 'post',
                 dataType: 'json',
                 success: function (data) {
-                    $('#c').append('<div class=' + data[0].id + '><hr><span>' + data[0].id + '</span> <hr><span>' + data[1] + '</span><br> <hr><p id=' + data[0].id + '>' + data[0].comment + '</p><br> <a href="javascript:void(0)" data-toggle="tooltip"  data-id=' + data[0].id + ' data-original-title="Edit" class="edit btn btn-primary btn-sm editcomment">Edit</a><hr><a href="javascript:void(0)"  data-id=' + data[0].id + ' class="edit btn btn-primary btn-sm deletecomment">delete</a></div>');
+                    $('#user-comment').append('<div class=' + data[0].id + '><hr><span>' + data[0].id + '</span> <hr><span>' + data[1] + '</span><br> <hr><p id=' + data[0].id + '>' + data[0].comment + '</p><br> <a href="javascript:void(0)" data-toggle="tooltip"  data-id=' + data[0].id + ' data-original-title="Edit" class="edit btn btn-primary btn-sm edit-comment">Edit</a><hr><a href="javascript:void(0)"  data-id=' + data[0].id + ' class="edit btn btn-primary btn-sm delete-comment">delete</a></div>');
                 },
                 error: function (data) {
                     console.log('Error:', data);
                 }
             });
         });
-        $('body').on('click', '.editcomment', function () {
+        $('body').on('click', '.edit-comment', function () {
             var comment_id = $(this).data('id');
             $.ajax({
                 url: "comments" + '/' + comment_id + '/edit',
@@ -134,8 +134,8 @@
                     $('#modelHeading').html("Edit comment");
                     $('#update').val("edit-comment");
                     $('#ajaxModel').modal('show');
-                    $('#updateid').val(data.id);
-                    $('#updatecomment').val(data.comment);
+                    $('#update-id').val(data.id);
+                    $('#update-comment').val(data.comment);
                 },
                 error: function (data) {
                     console.log('Error:', data);
@@ -145,8 +145,8 @@
         $('#update').click(function (e) {
             e.preventDefault();
             $.ajax({
-                data: $('#commentform').serialize(),
-                url: "comments" + '/' + $('#updateid').val(),
+                data: $('#comment-form').serialize(),
+                url: "comments" + '/' + $('#update-id').val(),
                 method: 'put',
                 dataType: 'json',
                 success: function (data) {
@@ -159,7 +159,7 @@
                 }
             });
         });
-        $('body').on('click', '.deletecomment', function () {
+        $('body').on('click', '.delete-comment', function () {
             var comment_id = $(this).data("id");
             confirm("Are You sure want to delete !");
             $.ajax({

@@ -8,7 +8,7 @@
                 <h2>New</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('posts.index') }}"> Back</a>
+                <a class="btn btn-primary" href="{{ route('posts.index') }}">Back</a>
             </div>
         </div>
     </div>
@@ -32,10 +32,10 @@
                     <input type="text" name="title" class="form-control" placeholder="title" minlength="3"
                            maxlength="200" required>
                     <strong>Tags:</strong>
-                    <select class="form-control" id="js-example-basic-multiple" name="tags[]" style="width:100%;"
+                    <select class="form-control" id="js-example-basic-multiple" name="tags[]" style="width: 100%;"
                             multiple="multiple">
                         @foreach($tags as $tag)
-                            <option>{{$tag->name}}</option>
+                            <option>{{ $tag->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -43,7 +43,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Description:</strong>
-                    <textarea class="form-control" style="height:150px" name="description"
+                    <textarea class="form-control" style="height: 150px" name="description"
                               placeholder="description" minlength="10" maxlength="200" required></textarea>
                 </div>
             </div>

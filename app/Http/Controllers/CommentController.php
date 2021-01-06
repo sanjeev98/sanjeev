@@ -17,8 +17,8 @@ class CommentController extends Controller
     {
         $input = $request->only(['post_id', 'comment']);
         $comment = Comment::create($input);
-        $ = $comment->created_at->diffForHumans();
-        return response()->Json([$comment, $time]);
+        $commentedAt = $comment->created_at->diffForHumans();
+        return response()->Json([$comment, $commentedAt]);
     }
 
     /**
