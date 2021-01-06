@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StorePostRequest extends FormRequest
 {
@@ -23,9 +24,21 @@ class StorePostRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+
+        $rules = [
             'title' => 'required|unique:posts|min:3|max:255',
             'description' => 'required|min:10|max:255',
         ];
+
+        if (in_array($this->method(), ['PUT', 'PATCH'])) {
+            $rules['title'] = [
+                'required',
+                'min:3',
+                'max:255',
+                'unique:posts,title,' . $this->id . 'id',
+            ];
+        }
+
+        return $rules;
     }
 }

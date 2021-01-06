@@ -45,7 +45,7 @@
                     <h4 class="modal-title" id="modelHeading"></h4>
                 </div>
                 <div class="modal-body">
-                    <form id="PostForm" name="PostForm" class="form-horizontal">
+                    <form id="postform" name="postform" class="form-horizontal">
                         @csrf
                         @method('put')
                         <input type="hidden" name="id" id="id">
@@ -133,7 +133,7 @@
             e.preventDefault();
             var tab = $('#post-table').DataTable();
             $.ajax({
-                data: $('#PostForm').serialize(),
+                data: $('#postform').serialize(),
                 url: "posts" + '/' + $('#id').val(),
                 method: 'post',
                 dataType: 'json',

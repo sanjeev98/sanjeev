@@ -9,7 +9,7 @@ use App\Models\Image;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePostRequest;
-use App\Http\Requests\UpdatePostRequest;
+
 use DataTables;
 
 class PostController extends Controller
@@ -120,7 +120,7 @@ class PostController extends Controller
      * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePostRequest $request, Post $post)
+    public function update(StorePostRequest $request, Post $post)
     {
         $input = $request->only(['title', 'description']);
         $post->update($input);
