@@ -105,7 +105,7 @@ class PostController extends Controller
         foreach ($tags as $tag) {
             $allTags[$tag->id] = $tag->name;
         }
-        $tags = $post->load('tags');
+        $tags = $post->tags;
         $postTags = array();
         foreach ($tags as $tag) {
             $postTags[] = $tag->name;
