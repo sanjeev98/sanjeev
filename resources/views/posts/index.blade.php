@@ -57,7 +57,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <strong>tags:</strong>
+                            <strong>Tags:</strong>
                             <select class="form-control" id="js-example-basic-multiple" name="tags[]"
                                     style="width:100%;" multiple="multiple">
                             </select>
@@ -138,7 +138,6 @@
                 method: 'post',
                 dataType: 'json',
                 success: function (data) {
-                    alert(data.success);
                     $('#PostForm').trigger("reset");
                     $('#ajaxModel').modal('hide');
                     tab.draw();
@@ -163,7 +162,6 @@
                     '_token': '{{ csrf_token() }}',
                 },
                 success: function (data) {
-                    alert(data.success);
                     tab.draw();
                 },
                 error: function (data) {

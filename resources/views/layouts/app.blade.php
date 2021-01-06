@@ -21,6 +21,7 @@
     <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -47,7 +48,7 @@
      data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
     <!-- ============================================================== -->
     @include('layouts.header');
-    @include('layouts.aside');
+    @include('layouts.side');
     <div class="page-wrapper">
         <div class="container-fluid">
             @yield('content')

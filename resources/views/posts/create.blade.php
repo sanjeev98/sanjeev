@@ -31,7 +31,7 @@
                     <strong>Title:</strong>
                     <input type="text" name="title" class="form-control" placeholder="title" minlength="3"
                            maxlength="200" required>
-                    <strong>tags:</strong>
+                    <strong>Tags:</strong>
                     <select class="form-control" id="js-example-basic-multiple" name="tags[]" style="width:100%;"
                             multiple="multiple">
                         @foreach($tags as $tag)

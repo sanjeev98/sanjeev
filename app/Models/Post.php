@@ -53,7 +53,6 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
-
     /**
      *posts has many tags.
      *
@@ -63,5 +62,4 @@ class Post extends Model
     {
         return $this->belongsToMany(Tag::class, 'post_tag');
     }
-
 }
