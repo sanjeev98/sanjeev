@@ -36,9 +36,7 @@ class CommentController extends Controller
      */
     public function update(CommentRequest $request, $commentId)
     {
-        DB::table('comments')
-            ->where('id', '=', $commentId)
-            ->update(['comment' => $request->comment]);
+        DB::table('comments')->where('id', '=', $commentId)->update(['comment' => $request->comment]);
         $comment = DB::table('comments')->select('*')->where('id', '=', $commentId)->get();
         return response()->json($comment[0]);
     }
@@ -49,8 +47,7 @@ class CommentController extends Controller
      */
     public function delete($commentId)
     {
-        DB::table('comments')
-            ->where('id', '=', $commentId)->delete();
+        DB::table('comments')->where('id', '=', $commentId)->delete();
         return response()->json(['success' => 'comment deleted!']);
     }
 }
