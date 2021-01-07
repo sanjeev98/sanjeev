@@ -62,10 +62,7 @@ class PostController extends Controller
             foreach ($request->tags as $tag) {
                 DB::table('tags')->insertOrIgnore(['name' => $tag]);
                 $tagId = DB::table('tags')->select('id')->where('name', '=', $tag)->first();
-                DB::table('post_tag')->insert([
-                    'post_id' => $posts->id,
-                    'tag_id' => $tagId->id
-                ]);
+                DB::table('post_tag')->insert(['post_id' => $posts->id, 'tag_id' => $tagId->id]);
             }
         }
         if ($request->has('files')) {
