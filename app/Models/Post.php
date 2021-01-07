@@ -42,4 +42,24 @@ class Post extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     *posts has many comments.
+     *
+     * @var string
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    /**
+     *posts has many tags.
+     *
+     * @var string
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'post_tag');
+    }
 }

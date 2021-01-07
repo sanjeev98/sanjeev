@@ -38,14 +38,14 @@
             </tbody>
         </table>
     </div>
-    <div class="modal fade" id="ajaxModel" aria-hidden="true">
+    <div class="modal fade" id="ajax-model" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="modelHeading"></h4>
+                    <h4 class="modal-title" id="model-heading"></h4>
                 </div>
                 <div class="modal-body">
-                    <form id="PostForm" name="PostForm" class="form-horizontal">
+                    <form id="post-form" name="post-form" class="form-horizontal">
                         @csrf
                         @method('put')
                         <input type="hidden" name="id" id="id">
@@ -55,6 +55,12 @@
                                 <input type="text" class="form-control" id="title" name="title"
                                        placeholder="Enter title" value="" minlength="3" maxlength="50" required="">
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <strong>Tags:</strong>
+                            <select class="form-control" id="select-tags" name="tags[]"
+                                    style="width: 100%;" multiple="multiple">
+                            </select>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Description</label>
@@ -99,17 +105,24 @@
                 ]
             });
         });
-        $('body').on('click', '.editPost', function () {
+        $('body').on('click', '.edit-post', function () {
             var user_id = $(this).data('id');
+            var s = '';
             $.ajax({
                 url: "posts" + '/' + user_id + '/edit',
                 success: function (data) {
-                    $('#modelHeading').html("Edit Customer");
+                    $('#model-heading').html("Edit Post");
                     $('#update').val("edit-post");
-                    $('#ajaxModel').modal('show');
-                    $('#id').val(data.id);
-                    $('#title').val(data.title);
-                    $('#description').val(data.description);
+                    $('#ajax-model').modal('show');
+                    $('#id').val(data[0].id);
+                    $('#title').val(data[0].title);
+                    $('#description').val(data[0].description);
+                    for (s in data[1]) {
+                        $("#select-tags").append('<option >' + data[1][s] + '</option>');
+                    }
+                    $("#js-example-basic-multiple").select2({
+                        tags: true,
+                    }).val(data[2]);
                 },
                 error: function (data) {
                     console.log('Error:', data);
@@ -120,12 +133,12 @@
             e.preventDefault();
             var tab = $('#post-table').DataTable();
             $.ajax({
-                data: $('#PostForm').serialize(),
+                data: $('#post-form').serialize(),
                 url: "posts" + '/' + $('#id').val(),
-                method: 'put',
+                method: 'post',
                 dataType: 'json',
                 success: function (data) {
-                    $('#PostForm').trigger("reset");
+                    $('#post-form').trigger("reset");
                     $('#ajaxModel').modal('hide');
                     tab.draw();
                 },
@@ -135,10 +148,12 @@
                 }
             });
         });
-        $('body').on('click', '.deletePost', function () {
+
+        $('body').on('click', '.delete-post', function () {
             var post_id = $(this).data("id");
             var tab = $('#post-table').DataTable();
             confirm("Are You sure want to delete !");
+
             $.ajax({
                 type: "DELETE",
                 url: "posts/" + post_id,
