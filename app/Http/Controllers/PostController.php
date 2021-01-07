@@ -108,10 +108,7 @@ class PostController extends Controller
         foreach ($tags as $tag) {
             $allTags[$tag->id] = $tag->name;
         }
-        $tags = DB::table('post_tag')
-            ->select('tag_id')
-            ->where('post_id', '=', $id)
-            ->get();
+        $tags = DB::table('post_tag')->select('tag_id')->where('post_id', '=', $id)->get();
         $postTags = array();
         foreach ($tags as $tag) {
             $postTags[] = $tag->tag_id;
