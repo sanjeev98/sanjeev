@@ -127,12 +127,13 @@ class PostController extends Controller
     {
         DB::table('posts')->where('id', $id)->update(['title' => $request['title'], 'description' => $request['description']]);
         DB::table('post_tag')->where('post_id', '=', $id)->delete();
-        foreach ($request->tags as $tag) {
-            DB::table('tags')->insertOrIgnore(['name' => $tag]);
-            $tagId = DB::table('tags')->select('id')->where('name', '=', $tag)->first();
-            DB::table('post_tag')->insert(['post_id' => id, 'tag_id' => $tagId->id]);
+        if ($request->has('tags')) {
+            foreach ($request->tags as $tag) {
+                DB::table('tags')->insertOrIgnore(['name' => $tag]);
+                $tagId = DB::table('tags')->select('id')->where('name', '=', $tag)->first();
+                DB::table('post_tag')->insert(['post_id' => $id, 'tag_id' => $tagId->id]);
+            }
         }
-
         return response()->json(['success' => 'Post updated successfully!']);
     }
 
@@ -144,7 +145,7 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('posts')->where('post_id', '=', $id)->delete();
+        DB::table('posts')->where('id', '=', $id)->delete();
         return response()->json(['success' => 'Post deleted!']);
     }
 
