@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StorePostRequest extends FormRequest
+class PostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,19 +26,9 @@ class StorePostRequest extends FormRequest
     {
 
         $rules = [
-            'title' => 'required|unique:posts|min:3|max:255',
+            'title' => 'required|unique:posts,title,' . $this->id . 'id|min:3|max:255',
             'description' => 'required|min:10|max:255',
         ];
-
-        if (in_array($this->method(), ['PUT', 'PATCH'])) {
-            $rules['title'] = [
-                'required',
-                'min:3',
-                'max:255',
-                'unique:posts,title,' . $this->id . 'id',
-            ];
-        }
-
         return $rules;
     }
 }

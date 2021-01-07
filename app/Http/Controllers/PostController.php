@@ -8,7 +8,7 @@ use App\Models\User;
 use App\Models\Image;
 use App\Models\Tag;
 use Illuminate\Http\Request;
-use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\PostRequest;
 
 use DataTables;
 
@@ -51,7 +51,7 @@ class PostController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePostRequest $request)
+    public function store(PostRequest $request)
     {
         $input = $request->only(['title', 'description']);
         $input['user_id'] = Auth::id();
@@ -88,8 +88,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $image = $post->images;
-        return view('posts.show', ['post' => $post, 'images' => $image]);
+        $images = $post->images;
+        return view('posts.show', ['post' => $post, 'images' => $images]);
     }
 
     /**
@@ -120,11 +120,17 @@ class PostController extends Controller
      * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function update(StorePostRequest $request, Post $post)
+    public function update(PostRequest $request, Post $post)
     {
         $input = $request->only(['title', 'description']);
         $post->update($input);
-        $post->tags()->sync($request->tags);
+        foreach ($request->tags as $tag) {
+            $tag = Tag::firstOrCreate([
+                'name' => $tag
+            ]);
+            $tags[] = $tag->id;
+        }
+        $post->tags()->sync($tags);
         return response()->json(['success' => 'Post updated successfully!']);
     }
 

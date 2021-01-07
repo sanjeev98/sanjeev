@@ -76,11 +76,11 @@
         <div class="col-xs-4 col-sm-4 col-md-4" id="user-comment">
         </div>
     </div>
-    <div class="modal fade" id="ajaxModel" aria-hidden="true">
+    <div class="modal fade" id="ajax-model" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="modelHeading"></h4>
+                    <h4 class="modal-title" id="model-heading"></h4>
                 </div>
                 <div class="modal-body">
                     <form id="comment-form" name="comment-form" class="form-horizontal">

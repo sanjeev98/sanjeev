@@ -32,7 +32,7 @@
                     <input type="text" name="title" class="form-control" placeholder="title" minlength="3"
                            maxlength="200" required>
                     <strong>Tags:</strong>
-                    <select class="form-control" id="js-example-basic-multiple" name="tags[]" style="width: 100%;"
+                    <select class="form-control" id="select-tags" name="tags[]" style="width: 100%;"
                             multiple="multiple">
                         @foreach($tags as $tag)
                             <option>{{ $tag->name }}</option>
@@ -62,7 +62,7 @@
             integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function () {
-            $("#js-example-basic-multiple").select2({tags: true});
+            $("#select-tags").select2({tags: true});
         });
     </script>
 @endsection

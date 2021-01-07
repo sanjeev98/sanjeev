@@ -38,11 +38,11 @@
             </tbody>
         </table>
     </div>
-    <div class="modal fade" id="ajaxModel" aria-hidden="true">
+    <div class="modal fade" id="ajax-model" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="modelHeading"></h4>
+                    <h4 class="modal-title" id="model-heading"></h4>
                 </div>
                 <div class="modal-body">
                     <form id="post-form" name="post-form" class="form-horizontal">
@@ -58,8 +58,8 @@
                         </div>
                         <div class="form-group">
                             <strong>Tags:</strong>
-                            <select class="form-control" id="js-example-basic-multiple" name="tags[]"
-                                    style="width:100%;" multiple="multiple">
+                            <select class="form-control" id="select-tags" name="tags[]"
+                                    style="width: 100%;" multiple="multiple">
                             </select>
                         </div>
                         <div class="form-group">
@@ -105,20 +105,20 @@
                 ]
             });
         });
-        $('body').on('click', '.edit-Post', function () {
+        $('body').on('click', '.edit-post', function () {
             var user_id = $(this).data('id');
             var s = '';
             $.ajax({
                 url: "posts" + '/' + user_id + '/edit',
                 success: function (data) {
-                    $('#modelHeading').html("Edit Post");
+                    $('#model-heading').html("Edit Post");
                     $('#update').val("edit-post");
-                    $('#ajaxModel').modal('show');
+                    $('#ajax-model').modal('show');
                     $('#id').val(data[0].id);
                     $('#title').val(data[0].title);
                     $('#description').val(data[0].description);
                     for (s in data[1]) {
-                        $("#js-example-basic-multiple").append('<option >' + data[1][s] + '</option>');
+                        $("#select-tags").append('<option >' + data[1][s] + '</option>');
                     }
                     $("#js-example-basic-multiple").select2({
                         tags: true,
@@ -149,7 +149,7 @@
             });
         });
 
-        $('body').on('click', '.delete-Post', function () {
+        $('body').on('click', '.delete-post', function () {
             var post_id = $(this).data("id");
             var tab = $('#post-table').DataTable();
             confirm("Are You sure want to delete !");
