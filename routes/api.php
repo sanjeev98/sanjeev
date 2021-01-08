@@ -19,8 +19,20 @@ use App\Http\Controllers\api\v1\UserApiController as v1UserApiController;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::prefix('v1')->group(function () {
-    Route::get('/users/{id}', [v1UserApiController::class,'getPost']);
+
+Route::group([
+    'prefix' => 'auth'
+], function () {
+
+    Route::post('login', [v1UserApiController::class,'login']);
+    Route::post('logout', [v1UserApiController::class,'logout']);
+    Route::post('refresh', [v1UserApiController::class,'refresh']);
+    Route::post('me', [v1UserApiController::class,'me']);
+    Route::prefix('v1')->group(function () {
+        Route::get('/users/{id}', [v1UserApiController::class,'getPost']);
+    });
+
 });
+
 Route::get('/users/{id}', [UserApiController::class,'getPost']);
 
