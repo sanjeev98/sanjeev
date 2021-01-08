@@ -60,13 +60,14 @@ class PostController extends Controller
         $input['user_id'] = Auth::id();
         $input['posted_by'] = auth()->user()->email;
         $post = Post::create($input);
-
         $tags = array();
-        foreach ($request->tags as $tag) {
-            $tag = Tag::firstOrCreate([
-                'name' => $tag
-            ]);
-            $tags[] = $tag->id;
+        if ($request->has('tags')) {
+            foreach ($request->tags as $tag) {
+                $tag = Tag::firstOrCreate([
+                    'name' => $tag
+                ]);
+                $tags[] = $tag->id;
+            }
         }
         $post->tags()->sync($tags, false);
         if ($request->has('files')) {
@@ -127,11 +128,13 @@ class PostController extends Controller
     {
         $input = $request->only(['title', 'description']);
         $post->update($input);
-        foreach ($request->tags as $tag) {
-            $tag = Tag::firstOrCreate([
-                'name' => $tag
-            ]);
-            $tags[] = $tag->id;
+        if ($request->has('tags')) {
+            foreach ($request->tags as $tag) {
+                $tag = Tag::firstOrCreate([
+                    'name' => $tag
+                ]);
+                $tags[] = $tag->id;
+            }
         }
         $post->tags()->sync($tags);
         return response()->json(['success' => 'Post updated successfully!']);
