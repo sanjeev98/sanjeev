@@ -9,7 +9,7 @@ use App\Models\Image;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use DataTables;
-
+use App\Http\Requests\PostRequest;
 
 class PostController extends Controller
 {
