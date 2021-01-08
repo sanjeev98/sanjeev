@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Post;
-use App\Models\Comment;
 use App\Http\Requests\CommentRequest;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class CommentController extends Controller
 {
@@ -15,41 +14,40 @@ class CommentController extends Controller
      */
     public function store(CommentRequest $request)
     {
-        $input = $request->only(['post_id', 'comment']);
-        $comment = Comment::create($input);
-        $commentedAt = $comment->created_at->diffForHumans();
-        return response()->Json([$comment, $commentedAt]);
+        $commentId = DB::table('comments')->insertGetId(['post_id' => $request->post_id, 'comment' => $request->comment]);
+        $comment = DB::table('comments')->select('*')->where('id', '=', $commentId)->get();
+        $createdAt = Carbon::parse($comment[0]->created_at)->diffForHumans();
+        return response()->Json([$comment[0], $createdAt]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      */
-    public function edit($comment)
+    public function edit($commentId)
     {
-        $comment = Comment::findOrFail($comment);
-        return response()->Json($comment);
+        $comment = DB::table('comments')->select('*')->where('id', '=', $commentId)->get();
+        return response()->Json($comment[0]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      */
-    public function update(CommentRequest $request, $comment)
+    public function update(CommentRequest $request, $commentId)
     {
-        $comment = Comment::findOrFail($comment);
-        $comment->update(['comment' => $request->comment]);
-        return response()->json($comment);
+        DB::table('comments')->where('id', '=', $commentId)->update(['comment' => $request->comment]);
+        $comment = DB::table('comments')->select('*')->where('id', '=', $commentId)->get();
+        return response()->json($comment[0]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
      */
-    public function delete($comment)
+    public function delete($commentId)
     {
-        $comment = Comment::findOrFail($comment);
-        $comment->delete();
+        DB::table('comments')->where('id', '=', $commentId)->delete();
         return response()->json(['success' => 'comment deleted!']);
     }
 }

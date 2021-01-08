@@ -120,7 +120,7 @@
                     for (s in data[1]) {
                         $("#select-tags").append('<option >' + data[1][s] + '</option>');
                     }
-                    $("#js-example-basic-multiple").select2({
+                    $("#select-tags").select2({
                         tags: true,
                     }).val(data[2]);
                 },

@@ -35,11 +35,13 @@
                                 @foreach($images as $image)
                                     @if($loop->iteration == 1)
                                         <div class="carousel-item active">
-                                            <img src="{{ asset('files/' . $image->name . '') }}" alt="Los Angeles" style="width: 100%;">
+                                            <img src="{{ asset('files/' . $image->name . '') }}" alt="Los Angeles"
+                                                 style="width: 100%;">
                                         </div>
                                     @else
                                         <div class="carousel-item">
-                                            <img src="{{ asset('files/' . $image->name . '') }}" alt="Los Angeles" style="width: 100%;">
+                                            <img src="{{ asset('files/' . $image->name . '') }}" alt="Los Angeles"
+                                                 style="width: 100%;">
                                         </div>
                                     @endif
                                 @endforeach
@@ -105,11 +107,6 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.5.0.js"
             integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script>
         $('#create').click(function (e) {
             e.preventDefault();
@@ -131,9 +128,9 @@
             $.ajax({
                 url: "comments" + '/' + comment_id + '/edit',
                 success: function (data) {
-                    $('#modelHeading').html("Edit comment");
+                    $('#model-heading').html("Edit comment");
                     $('#update').val("edit-comment");
-                    $('#ajaxModel').modal('show');
+                    $('#ajax-model').modal('show');
                     $('#update-id').val(data.id);
                     $('#update-comment').val(data.comment);
                 },

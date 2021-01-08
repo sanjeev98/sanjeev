@@ -24,7 +24,6 @@ class PostRequest extends FormRequest
      */
     public function rules()
     {
-
         $rules = [
             'title' => 'required|unique:posts,title,' . $this->id . 'id|min:3|max:255',
             'description' => 'required|min:10|max:255',
