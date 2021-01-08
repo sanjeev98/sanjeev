@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Post;
+use App\Http\Requests\CommentRequest;
 use App\Models\Comment;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 
 class CommentController extends Controller
@@ -26,9 +24,9 @@ class CommentController extends Controller
      * Show the form for editing the specified resource.
      *
      */
-    public function edit($comment)
+    public function edit($commentId)
     {
-        $comment = Comment::findOrFail($comment);
+        $comment = Comment::findOrFail($commentId);
         return response()->Json($comment);
     }
 
@@ -36,9 +34,9 @@ class CommentController extends Controller
      * Update the specified resource in storage.
      *
      */
-    public function update(CommentRequest $request, $comment)
+    public function update(CommentRequest $request, $commentId)
     {
-        $comment = Comment::findOrFail($comment);
+        $comment = Comment::findOrFail($commentId);
         $comment->update(['comment' => $request->comment]);
         return response()->json($comment);
     }
@@ -47,9 +45,9 @@ class CommentController extends Controller
      * Remove the specified resource from storage.
      *
      */
-    public function delete($comment)
+    public function delete($commentId)
     {
-        $comment = Comment::findOrFail($comment);
+        $comment = Comment::findOrFail($commentId);
         $comment->delete();
         return response()->json(['success' => 'comment deleted!']);
     }

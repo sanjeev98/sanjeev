@@ -13,14 +13,19 @@ use DataTables;
 
 class PostController extends Controller
 {
+    /**
+     * Execute all request in base method.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function __construct()
     {
         $this->middleware('permission:post-list|product-create|product-edit|product-delete', ['only' => ['index', 'show', 'getPostTable']]);
         $this->middleware('permission:post-create', ['only' => ['create', 'store']]);
         $this->middleware('permission:post-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:post-delete', ['only' => ['destroy']]);
+        $this->middleware('auth');
     }
-
 
     /**
      * Display a listing of the resource.
