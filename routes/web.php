@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,11 +24,11 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::resource('roles',RoleController::class);
-Route::resource('users',UserController::class);
-Route::resource('posts',PostController::class);
-Route::get('/home',[HomeController::class,'index'])->name('home');
-Route::put('posts/comments/{id}', [CommentController::class,'update']);
-Route::post('posts/comments/{id}', [CommentController::class,'store']);
-Route::get('posts/comments/{id}/edit', [CommentController::class,'edit']);
-Route::delete('posts/comments/{id}', [CommentController::class,'delete']);
+Route::resource('roles', RoleController::class);
+Route::resource('users', UserController::class);
+Route::resource('posts', PostController::class);
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::put('posts/comments/{id}', [CommentController::class, 'update']);
+Route::post('posts/comments/{id}', [CommentController::class, 'store']);
+Route::get('posts/comments/{id}/edit', [CommentController::class, 'edit']);
+Route::delete('posts/comments/{id}', [CommentController::class, 'delete']);

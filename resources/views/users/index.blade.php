@@ -2,25 +2,23 @@
 
 
 @section('content')
+
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
                 <h2>Users Management</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('users.create') }}"> Create New User</a>
+                <a class="btn btn-success" href="{{ route('users.create') }}">New</a>
             </div>
         </div>
     </div>
-
 
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
             <p>{{ $message }}</p>
         </div>
     @endif
-
-
     <table class="table table-bordered">
         <tr>
             <th>No</th>
@@ -36,8 +34,8 @@
                 <td>{{ $user->email }}</td>
                 <td>
                     @if(!empty($user->getRoleNames()))
-                        @foreach($user->getRoleNames() as $v)
-                            <label class="badge badge-success">{{ $v }}</label>
+                        @foreach($user->getRoleNames() as $role)
+                            <label class="badge badge-success">{{ $role }}</label>
                         @endforeach
                     @endif
                 </td>
@@ -51,10 +49,5 @@
             </tr>
         @endforeach
     </table>
-
-
     {!! $data->render() !!}
-
-
-    <p class="text-center text-primary"><small></small></p>
 @endsection
