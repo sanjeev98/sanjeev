@@ -1,14 +1,12 @@
 <?php
 
-
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
-use App\Models\User;
-use App\Models\Post;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,24 +26,18 @@ Auth::routes();
 
 
 
-Route::get('/users',function(){
-    return 4;
-});
-//Route::Redirect('/users', 'fun');
-Route::get('fun',function(){
-    return 2;
-});
+
 //Route::get('dashboard1', function(){
 //    return view('posts.dashboard');
 //});
 //
 ////Route::get('posts/{id}/show', [CommentController::class,'show']);
 //
-//Route::get('get-post', [RoleController::class,'getdata'])->name('roles.get');
-//Route::get('get-user', [UserController::class,'getdata'])->name('roles.table');
-//Route::resource('roles',RoleController::class);
-//Route::resource('users',UserController::class);
-//Route::resource('posts',PostController::class);
+Route::get('get-post', [RoleController::class,'getdata'])->name('roles.get');
+Route::get('get-user', [UserController::class,'getdata'])->name('roles.table');
+Route::resource('roles',RoleController::class);
+Route::resource('users',UserController::class);
+Route::resource('posts',PostController::class);
 //Route::get('/home',[HomeController::class,'index'])->name('home');
 //Route::put('posts/comments/{id}', [CommentController::class,'update']);
 ////Route::resource('posts', PostController::class);
