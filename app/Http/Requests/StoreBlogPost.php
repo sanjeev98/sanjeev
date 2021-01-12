@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\ApiPostRequest;
 
-class StoreBlogPost extends FormRequest
+class StoreBlogPost extends ApiPostRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,22 +24,9 @@ class StoreBlogPost extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|max:255',
-            'description' => 'required',
-            'tags' => 'required',
-            'posted_by' => 'required',
-
+            'title' => 'required|unique:posts|min:3|max:255',
+            'description' => 'required|min:10|max:255',
         ];
     }
-
-    public function messages()
-    {
-        return [
-            'title.required' => 'A title is required',
-            'description.required' => 'A description is required',
-            'posted_by.required' => 'A posted_by is required',
-        ];
-    }
-
 
 }
