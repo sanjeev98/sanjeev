@@ -29,9 +29,7 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-        $roles = Role::orderBy('id', 'DESC')->paginate(5);
-        return view('roles.index', compact('roles'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+        return view('roles.index');
     }
 
     /**
@@ -118,5 +116,18 @@ class RoleController extends Controller
         DB::table("roles")->where('id', $id)->delete();
         return redirect()->route('roles.index')
             ->with('success', 'Role deleted successfully');
+    }
+    public function getData()
+    {
+        return DataTables::of(Role::query()) ->addIndexColumn()
+            ->addColumn('action', function($row) {
+                $btn = '<a href="roles/'.$row->id.'" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm showPost">Show</a>';
+                $btn = $btn .'<a href="roles/'.$row->id.'/edit" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editPost">Edit</a>';
+                '{{ csrf_token() }}';
+                $btn = $btn.'<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deletePost">Delete</a>';
+                return $btn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);;
     }
 }

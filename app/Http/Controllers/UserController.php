@@ -17,9 +17,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $data = User::orderBy('id', 'DESC')->paginate(5);
-        return view('users.index', compact('data'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+        return view('users.index');
     }
 
     /**
@@ -109,5 +107,26 @@ class UserController extends Controller
         User::find($id)->delete();
         return redirect()->route('users.index')
             ->with('success', 'User deleted successfully');
+    }
+
+    public function getData()
+    {
+        $user = User::all();
+        $users=[];
+        foreach ($user as $user1)
+        {
+            $user1['role']=$user1->getRoleNames();
+            $users[]=$user1;
+        }
+        return DataTables::of($users) ->addIndexColumn()
+            ->addColumn('action', function($row) {
+                $btn = '<a href="users/'.$row->id.'" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm showPost">Show</a>';
+                $btn = $btn .'<a href="users/'.$row->id.'/edit" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editPost">Edit</a>';
+                '{{ csrf_token() }}';
+                $btn = $btn.'<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deletePost">Delete</a>';
+                return $btn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);;
     }
 }
