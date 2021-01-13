@@ -24,8 +24,8 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => 'required|exists:users,id|notIn(["1","2"])',
-            'roles' => 'required|exists:roles,name|notIn(["Admin","SuperAdmin"])'
+            'user_id' => 'required|exists:users,id|notIn(["1", "2"])',
+            'roles' => 'required|exists:roles,name|notIn(["Admin", "SuperAdmin"])'
         ];
     }
 }
