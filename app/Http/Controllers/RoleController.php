@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RoleRequest;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use DB;
+use Yajra\DataTables\Facades\DataTables;
 
 class RoleController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * RoleController constructor.
      */
     function __construct()
     {
-        $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index', 'store', 'getData']]);
         $this->middleware('permission:role-create', ['only' => ['create', 'store']]);
         $this->middleware('permission:role-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:role-delete', ['only' => ['destroy']]);
@@ -49,10 +49,10 @@ class RoleController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RoleRequest $request)
     {
-        $role = Role::create(['name' => $request->input('name')]);
-        $role->syncPermissions($request->input('permission'));
+        $role = Role::create(['name' => $request->input('role')]);
+        $role->syncPermissions($request->input('permissions'));
         return redirect()->route('roles.index')
             ->with('success', 'Role created successfully');
     }
@@ -95,12 +95,11 @@ class RoleController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(RoleRequest $request, $id)
     {
-        $role = Role::find($id);
-        $role->name = $request->input('name');
-        $role->save();
-        $role->syncPermissions($request->input('permission'));
+        $role = Role::findorFail($id);
+        $role->update($request->input('name'));
+        $role->syncPermissions($request->input('permissions'));
         return redirect()->route('roles.index')
             ->with('success', 'Role updated successfully');
     }
@@ -117,14 +116,18 @@ class RoleController extends Controller
         return redirect()->route('roles.index')
             ->with('success', 'Role deleted successfully');
     }
+
+    /**
+     * Getdata from Role
+     */
     public function getData()
     {
-        return DataTables::of(Role::query()) ->addIndexColumn()
-            ->addColumn('action', function($row) {
-                $btn = '<a href="roles/'.$row->id.'" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm showPost">Show</a>';
-                $btn = $btn .'<a href="roles/'.$row->id.'/edit" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editPost">Edit</a>';
+        return DataTables::of(Role::query())->addIndexColumn()
+            ->addColumn('action', function ($row) {
+                $btn = '<a href="roles/' . $row->id . '" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="btn btn-primary btn-sm show-post">Show</a>';
+                $btn = $btn . '<a href="roles/' . $row->id . '/edit" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="btn btn-primary btn-sm edit-post">Edit</a>';
                 '{{ csrf_token() }}';
-                $btn = $btn.'<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deletePost">Delete</a>';
+                $btn = $btn . '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm delete-post">Delete</a>';
                 return $btn;
             })
             ->rawColumns(['action'])

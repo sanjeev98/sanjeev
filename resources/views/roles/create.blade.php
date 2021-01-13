@@ -13,7 +13,7 @@
         </div>
     </div>
 
-    @if (count($errors) > 0)
+    @if ($errors->any())
         <div class="alert alert-danger">
             <strong>Whoops!</strong> There were some problems with your input.<br><br>
             <ul>
@@ -23,28 +23,32 @@
             </ul>
         </div>
     @endif
-    {!! Form::open(array('route' => 'roles.store', 'method'=>'POST')) !!}
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Name:</strong>
-                {!! Form::text('name', null, array('placeholder' => 'Name', 'class' => 'form-control')) !!}
+    <form action="{{ route('roles.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Name:</strong>
+                    <input type="text" name="role" class="form-control" placeholder="role" minlength="3"
+                           maxlength="20" required>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Permission:</strong>
+                    @foreach($permissions as $permission)
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" name="permissions"
+                                       value="{{ $permission->id }}">{{ $permission->name }}
+                            </label>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Permission:</strong>
-                <br/>
-                @foreach($permissions as $permission)
-                    <label>{{ Form::checkbox('permission[]', $permission->id, false, array('class' => 'name')) }}
-                        {{ $permission->name }}</label>
-                    <br/>
-                @endforeach
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-    </div>
-    {!! Form::close() !!}
+    </form>
 @endsection

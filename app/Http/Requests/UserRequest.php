@@ -24,10 +24,8 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $this->email . 'email',
-            'password' => 'same:confirm-password',
-            'roles' => 'required'
+            'user_id' => 'required|exists:users,id|notIn(["1","2"])',
+            'roles' => 'required|exists:roles,name|notIn(["Admin","SuperAdmin"])'
         ];
     }
 }
