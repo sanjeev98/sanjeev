@@ -116,7 +116,7 @@ class UserController extends Controller
     /**
      * Getdata from user
      */
-    public function getData()
+    public function getUserData()
     {
         $user = User::with('roles')->get();
         return DataTables::of($user)->addIndexColumn()

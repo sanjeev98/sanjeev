@@ -119,7 +119,7 @@ class RoleController extends Controller
     /**
      * Getdata from Role
      */
-    public function getData()
+    public function getRoleData()
     {
         return DataTables::of(Role::query())->addIndexColumn()
             ->addColumn('action', function ($row) {
