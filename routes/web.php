@@ -24,7 +24,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('get-post', [RoleController::class,'getdata'])->name('roles.get');
+Route::get('get-role', [RoleController::class,'getdata'])->name('roles.get');
+Route::get('get-post', [PostController::class,'getPostTable'])->name('posts.table');
 Route::get('get-user', [UserController::class,'getdata'])->name('roles.table');
 Route::resource('roles', RoleController::class);
 Route::resource('users', UserController::class);

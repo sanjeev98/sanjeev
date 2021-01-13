@@ -23,7 +23,7 @@
             </ul>
         </div>
     @endif
-    <form action="{{ route('users.edit', $user->id) }}" enctype="multipart/form-data">
+    <form action="{{ route('users.update', $user->id) }}" method="post" enctype="multipart/form-data">
         @method('put')
         @csrf
         <div class="row">

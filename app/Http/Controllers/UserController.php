@@ -40,7 +40,7 @@ class UserController extends Controller
     public function create()
     {
         $users = User::doesntHave('roles')->get();
-        $roles = Role::pluck('name', 'name')->whereNotIN('name', ['Admin', 'SuperAdmin'])->all();
+        $roles = Role::select('name')->whereNotIN('name', ['Admin', 'SuperAdmin'])->get();
         return view('users.create', compact('roles', 'users'));
     }
 
@@ -79,7 +79,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        $roles = Role::pluck('name', 'name')->all();
+        $roles = Role::select('name')->whereNotIN('name', ['Admin', 'SuperAdmin'])->get();
         $userRoles = $user->roles->pluck('name', 'name')->all();
         return view('users.edit', compact('user', 'roles', 'userRoles'));
     }
@@ -110,8 +110,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete();
-        return redirect()->route('users.index')
-            ->with('success', 'User deleted successfully');
+        return response()->json(['success', 'User deleted successfully']);
     }
 
     /**
@@ -119,18 +118,13 @@ class UserController extends Controller
      */
     public function getData()
     {
-        $user = User::all();
-        $users = [];
-        foreach ($user as $user1) {
-            $user1['role'] = $user1->getRoleNames();
-            $users[] = $user1;
-        }
-        return DataTables::of($users)->addIndexColumn()
+        $user = User::with('roles')->get();
+        return DataTables::of($user)->addIndexColumn()
             ->addColumn('action', function ($row) {
                 $btn = '<a href="users/' . $row->id . '" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Show" class="btn btn-primary btn-sm show-post">Show</a>';
                 $btn = $btn . '<a href="users/' . $row->id . '/edit" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="btn btn-primary btn-sm edit-post">Edit</a>';
                 '{{ csrf_token() }}';
-                $btn = $btn . '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm delete-Post">Delete</a>';
+                $btn = $btn . '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm delete-post">Delete</a>';
                 return $btn;
             })
             ->rawColumns(['action'])

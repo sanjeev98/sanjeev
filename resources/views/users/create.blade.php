@@ -42,7 +42,6 @@
                     <select class="form-control" id="select-roles" name="roles[]" style="width: 100%;" multiple>
                         @foreach($roles as $role)
                             <option>{{ $role }}</option>
-                            @endif
                         @endforeach
                     </select>
                 </div>
