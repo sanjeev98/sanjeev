@@ -8,10 +8,8 @@ use App\Models\User;
 use App\Models\Image;
 use App\Models\Tag;
 use Illuminate\Http\Request;
-use App\Http\Requests\PostRequest;
 use DataTables;
-use Illuminate\Support\Facades\DB;
-
+use App\Http\Requests\PostRequest;
 
 class PostController extends Controller
 {
@@ -22,6 +20,10 @@ class PostController extends Controller
      */
     public function __construct()
     {
+        $this->middleware('permission:post-list|product-create|product-edit|product-delete', ['only' => ['index', 'show', 'getPostTable']]);
+        $this->middleware('permission:post-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:post-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:post-delete', ['only' => ['destroy']]);
         $this->middleware('auth');
     }
 
@@ -30,7 +32,7 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         return view('posts.index');
     }
@@ -42,7 +44,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $tags = DB::table('tags')->select('*')->get();
+        $tags = Tag::all();
         return view('posts.create', compact('tags'));
     }
 
@@ -54,23 +56,28 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        $userId = Auth::id();
-        $postedBy = auth()->user()->email;
-        DB::insert('insert into posts (user_id, title, description, posted_by) values(?, ?, ?, ?)', [$userId, $request['title'], $request['description'], $postedBy]);
-        $posts = DB::table('posts')->select('id')->where('user_id', '=', $userId)->orderBy('id', 'desc')->first();
+        $input = $request->only(['title', 'description']);
+        $input['user_id'] = Auth::id();
+        $input['posted_by'] = auth()->user()->email;
+        $post = Post::create($input);
+        $tags = array();
         if ($request->has('tags')) {
             foreach ($request->tags as $tag) {
-                DB::table('tags')->insertOrIgnore(['name' => $tag]);
-                $tagId = DB::table('tags')->select('id')->where('name', '=', $tag)->first();
-                DB::table('post_tag')->insert(['post_id' => $posts->id, 'tag_id' => $tagId->id]);
+                $tag = Tag::firstOrCreate([
+                    'name' => $tag
+                ]);
+                $tags[] = $tag->id;
             }
         }
+        $post->tags()->sync($tags, false);
         if ($request->has('files')) {
             $images = $request->file('files');
             foreach ($images as $image) {
                 $new_name = rand() . '.' . $image->getClientOriginalExtension();
                 $image->move(public_path('files'), $new_name);
-                DB::table('images')->insert(['post_id' => $posts->id, 'name' => $new_name]);
+                $file = new Image();
+                $file->name = $new_name;
+                $post->images()->save($file);
             }
         }
         return redirect()->route('posts.index')
@@ -83,15 +90,10 @@ class PostController extends Controller
      * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        $post = DB::table('posts')->select('*')->where('id', '=', $id)->get();
-        $images = DB::table('posts')
-            ->join('images', 'posts.id', '=', 'images.post_id')
-            ->select('images.name')
-            ->where('posts.id', '=', $id)
-            ->get();
-        return view('posts.show', ['post' => $post[0], 'images' => $images]);
+        $images = $post->images;
+        return view('posts.show', ['post' => $post, 'images' => $images]);
     }
 
     /**
@@ -100,20 +102,19 @@ class PostController extends Controller
      * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        $post = DB::table('posts')->select('*')->where('id', '=', $id)->get();
-        $tags = DB::table('tags')->select('*')->get();
+        $tags = Tag::all();
         $allTags = array();
         foreach ($tags as $tag) {
             $allTags[$tag->id] = $tag->name;
         }
-        $tags = DB::table('post_tag')->select('tag_id')->where('post_id', '=', $id)->get();
+        $tags = $post->tags;
         $postTags = array();
         foreach ($tags as $tag) {
-            $postTags[] = $tag->tag_id;
+            $postTags[] = $tag->name;
         }
-        return Response()->json([$post[0], $allTags, $postTags]);
+        return Response()->json([$post, $allTags, $postTags]);
     }
 
     /**
@@ -123,17 +124,19 @@ class PostController extends Controller
      * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function update(PostRequest $request, $id)
+    public function update(PostRequest $request, Post $post)
     {
-        DB::table('posts')->where('id', $id)->update(['title' => $request['title'], 'description' => $request['description']]);
-        DB::table('post_tag')->where('post_id', '=', $id)->delete();
+        $input = $request->only(['title', 'description']);
+        $post->update($input);
         if ($request->has('tags')) {
             foreach ($request->tags as $tag) {
-                DB::table('tags')->insertOrIgnore(['name' => $tag]);
-                $tagId = DB::table('tags')->select('id')->where('name', '=', $tag)->first();
-                DB::table('post_tag')->insert(['post_id' => $id, 'tag_id' => $tagId->id]);
+                $tag = Tag::firstOrCreate([
+                    'name' => $tag
+                ]);
+                $tags[] = $tag->id;
             }
         }
+        $post->tags()->sync($tags);
         return response()->json(['success' => 'Post updated successfully!']);
     }
 
@@ -143,9 +146,9 @@ class PostController extends Controller
      * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        DB::table('posts')->where('id', '=', $id)->delete();
+        $post->delete();
         return response()->json(['success' => 'Post deleted!']);
     }
 
@@ -160,7 +163,6 @@ class PostController extends Controller
             ->addColumn('action', function ($row) {
                 $btn = ' <a href="posts/' . $row->id . '" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Show" class="edit btn btn-primary btn-sm show-post">Show</a>';
                 $btn = $btn . '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm edit-post">Edit</a>';
-
                 '{{ csrf_token() }}';
                 $btn = $btn . '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm delete-post">Delete</a>';
                 return $btn;

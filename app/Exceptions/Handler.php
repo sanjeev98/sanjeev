@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Complex\Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -36,5 +37,14 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request,Throwable $exception)
+    {
+        if ($exception instanceof \Spatie\Permission\Exceptions\UnauthorizedException) {
+            return response()->json(['User have not permission for this page access.']);
+        }
+
+        return parent::render($request, $exception);
     }
 }
