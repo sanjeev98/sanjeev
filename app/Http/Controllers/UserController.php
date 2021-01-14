@@ -40,7 +40,7 @@ class UserController extends Controller
     public function create()
     {
         $users = User::doesntHave('roles')->get();
-        $roles = Role::select('name')->whereNotIN('name', ['Admin', 'SuperAdmin'])->get();
+        $roles = Role::select('name')->whereNotIn('name', ['Admin', 'SuperAdmin'])->get();
         return view('users.create', compact('roles', 'users'));
     }
 
@@ -79,7 +79,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        $roles = Role::select('name')->whereNotIN('name', ['Admin', 'SuperAdmin'])->get();
+        $roles = Role::select('name')->whereNotIn('name', ['Admin', 'SuperAdmin'])->get();
         $userRoles = $user->roles->pluck('name', 'name')->all();
         return view('users.edit', compact('user', 'roles', 'userRoles'));
     }

@@ -52,7 +52,7 @@
 
             $.ajax({
                 method: "DELETE",
-                url: "roles/"+role_id,
+                url: "roles/" + role_id,
                 data: {
                     "id": role_id,
                     '_token': '{{ csrf_token() }}',
