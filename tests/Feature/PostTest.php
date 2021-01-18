@@ -9,7 +9,7 @@ use App\Models\User;
 use App\Models\Post;
 use Illuminate\Support\Str;
 
-class ExampleTest extends TestCase
+class PostTest extends TestCase
 {
     use RefreshDatabase;
     use WithFaker;
@@ -35,7 +35,7 @@ class ExampleTest extends TestCase
         $response = $this->json('POST', 'http://127.0.0.1:8000/posts', ['user_id' => $posts->user_id, 'title' => $posts->title, 'description' => $posts->description, 'posted_by' => $posts->posted_by]);
         $this->assertDatabaseHas('posts', ['title' => $posts->title, 'id' => $posts->id, 'user_id' => $posts->user_id, 'description' => $posts->description, 'posted_by' => $posts->posted_by]);
         $response->assertStatus(422);
-        $this->failedDueToTitleValidations();
+        $this->c();
         $this->failedDueToDescriptionValidations();
     }
 
