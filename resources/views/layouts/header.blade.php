@@ -14,17 +14,19 @@
                 <a href="index.html">
                     <b class="logo-icon">
                         <!-- Dark Logo icon -->
-                        <img src="{{asset('asset/assets/images/logo-icon.png')}}" alt="homepage" class="dark-logo" />
+                        <img src="{{asset('asset/assets/images/logo-icon.png')}}" alt="homepage" class="dark-logo"/>
                         <!-- Light Logo icon -->
-                        <img src="{{asset('asset/assets/images/logo-icon.png')}}" alt="homepage" class="light-logo" />
+                        <img src="{{asset('asset/assets/images/logo-icon.png')}}" alt="homepage" class="light-logo"/>
                     </b>
                     <!--End Logo icon -->
                     <!-- Logo text -->
                     <span class="logo-text">
                                 <!-- dark Logo text -->
-                                <img src="{{asset('asset/assets/images/logo-text.png')}}" alt="homepage" class="dark-logo" />
+                                <img src="{{asset('asset/assets/images/logo-text.png')}}" alt="homepage"
+                                     class="dark-logo"/>
                         <!-- Light Logo text -->
-                                <img src="{{asset('asset/assets/images/logo-light-text.png')}}" class="light-logo" alt="homepage" />
+                                <img src="{{asset('asset/assets/images/logo-light-text.png')}}" class="light-logo"
+                                     alt="homepage"/>
                             </span>
                 </a>
             </div>
@@ -152,6 +154,9 @@
                     </a>
                 </li>
             </ul>
+            <!-- ============================================================== -->
+            <!-- Right side toggle and nav items -->
+            <!-- ============================================================== -->
             <ul class="navbar-nav ml-auto">
                 <!-- Authentication Links -->
                 @guest
@@ -173,22 +178,20 @@
                     @can('role-list')
                         <li><a class="nav-link" href="{{ route('roles.index') }}">Role</a></li>
                     @endcan
-                        @can('post-list')
-                    <li><a class="nav-link" href="{{ route('posts.index') }}">posts</a></li>
-                        @endcan
+                    @can('post-list')
+                        <li><a class="nav-link" href="{{ route('posts.index') }}">posts</a></li>
+                    @endcan
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             <span class="ml-2 d-none d-lg-inline-block"><span>Hello,</span> {{ Auth::user()->name }}
                         </a>
-
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
-
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
                             </form>

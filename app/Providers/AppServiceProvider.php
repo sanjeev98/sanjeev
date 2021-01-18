@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+       //
     }
 
     /**
@@ -26,13 +26,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        DB::listen(function ($query) {
-            info('Query', [
-                "Query" => $query->sql,
-                "Bindings" => $query->bindings,
-                "Time" => $query->time,
-            ]);
-        });
         View::composer(['*'], TagComposer::class);
     }
 }

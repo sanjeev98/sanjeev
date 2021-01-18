@@ -6,28 +6,31 @@
         <!-- Sidebar navigation-->
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
-                <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="index.html"
-                                             aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span
+                <li class="sidebar-item"><a class="sidebar-link sidebar-link" href="index.html"
+                                            aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span
                             class="hide-menu">@yield('title')</span></a></li>
                 <li class="list-divider"></li>
                 <li class="nav-small-cap"><span class="hide-menu">Applications</span></li>
 
-                <li class="sidebar-item"> <a class="sidebar-link" href="ticket-list.html"
-                                             aria-expanded="false"><i data-feather="tag" class="feather-icon"></i><span
+                <li class="sidebar-item"><a class="sidebar-link" href="ticket-list.html"
+                                            aria-expanded="false"><i data-feather="tag" class="feather-icon"></i><span
                             class="hide-menu">Ticket List
                                 </span></a>
                 </li>
-                <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="app-chat.html"
-                                             aria-expanded="false"><i data-feather="message-square" class="feather-icon"></i><span
+                <li class="sidebar-item"><a class="sidebar-link sidebar-link" href="app-chat.html"
+                                            aria-expanded="false"><i data-feather="message-square"
+                                                                     class="feather-icon"></i><span
                             class="hide-menu">Chat</span></a></li>
-                <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="app-calendar.html"
-                                             aria-expanded="false"><i data-feather="calendar" class="feather-icon"></i><span
+                <li class="sidebar-item"><a class="sidebar-link sidebar-link" href="app-calendar.html"
+                                            aria-expanded="false"><i data-feather="calendar"
+                                                                     class="feather-icon"></i><span
                             class="hide-menu">Calendar</span></a></li>
 
                 <li class="list-divider"></li>
                 <li class="nav-small-cap"><span class="hide-menu">Components</span></li>
-                <li class="sidebar-item"> <a class="sidebar-link has-arrow" href="javascript:void(0)"
-                                             aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span
+                <li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)"
+                                            aria-expanded="false"><i data-feather="file-text"
+                                                                     class="feather-icon"></i><span
                             class="hide-menu">Forms </span></a>
                     <ul aria-expanded="false" class="collapse  first-level base-level-line">
                         <li class="sidebar-item"><a href="form-inputs.html" class="sidebar-link"><span
@@ -45,8 +48,8 @@
                         </li>
                     </ul>
                 </li>
-                <li class="sidebar-item"> <a class="sidebar-link has-arrow" href="javascript:void(0)"
-                                             aria-expanded="false"><i data-feather="grid" class="feather-icon"></i><span
+                <li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)"
+                                            aria-expanded="false"><i data-feather="grid" class="feather-icon"></i><span
                             class="hide-menu">Tables </span></a>
                     <ul aria-expanded="false" class="collapse  first-level base-level-line">
                         <li class="sidebar-item"><a href="table-basic.html" class="sidebar-link"><span
@@ -77,8 +80,9 @@
                         </li>
                     </ul>
                 </li>
-                <li class="sidebar-item"> <a class="sidebar-link has-arrow" href="javascript:void(0)"
-                                             aria-expanded="false"><i data-feather="bar-chart" class="feather-icon"></i><span
+                <li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)"
+                                            aria-expanded="false"><i data-feather="bar-chart"
+                                                                     class="feather-icon"></i><span
                             class="hide-menu">Charts </span></a>
                     <ul aria-expanded="false" class="collapse  first-level base-level-line">
                         <li class="sidebar-item"><a href="chart-morris.html" class="sidebar-link"><span
@@ -96,8 +100,8 @@
                         </li>
                     </ul>
                 </li>
-                <li class="sidebar-item"> <a class="sidebar-link has-arrow" href="javascript:void(0)"
-                                             aria-expanded="false"><i data-feather="box" class="feather-icon"></i><span
+                <li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)"
+                                            aria-expanded="false"><i data-feather="box" class="feather-icon"></i><span
                             class="hide-menu">UI Elements </span></a>
                     <ul aria-expanded="false" class="collapse  first-level base-level-line">
                         <li class="sidebar-item"><a href="ui-buttons.html" class="sidebar-link"><span
@@ -142,27 +146,30 @@
                         </li>
                     </ul>
                 </li>
-                <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="ui-cards.html"
-                                             aria-expanded="false"><i data-feather="sidebar" class="feather-icon"></i><span
+                <li class="sidebar-item"><a class="sidebar-link sidebar-link" href="ui-cards.html"
+                                            aria-expanded="false"><i data-feather="sidebar"
+                                                                     class="feather-icon"></i><span
                             class="hide-menu">Cards
                                 </span></a>
                 </li>
                 <li class="list-divider"></li>
                 <li class="nav-small-cap"><span class="hide-menu">Authentication</span></li>
 
-                <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="authentication-login1.html"
-                                             aria-expanded="false"><i data-feather="lock" class="feather-icon"></i><span
+                <li class="sidebar-item"><a class="sidebar-link sidebar-link" href="authentication-login1.html"
+                                            aria-expanded="false"><i data-feather="lock" class="feather-icon"></i><span
                             class="hide-menu">Login
                                 </span></a>
                 </li>
-                <li class="sidebar-item"> <a class="sidebar-link sidebar-link"
-                                             href="authentication-register1.html" aria-expanded="false"><i data-feather="lock"
-                                                                                                           class="feather-icon"></i><span class="hide-menu">Register
+                <li class="sidebar-item"><a class="sidebar-link sidebar-link"
+                                            href="authentication-register1.html" aria-expanded="false"><i
+                            data-feather="lock"
+                            class="feather-icon"></i><span class="hide-menu">Register
                                 </span></a>
                 </li>
 
-                <li class="sidebar-item"> <a class="sidebar-link has-arrow" href="javascript:void(0)"
-                                             aria-expanded="false"><i data-feather="feather" class="feather-icon"></i><span
+                <li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)"
+                                            aria-expanded="false"><i data-feather="feather"
+                                                                     class="feather-icon"></i><span
                             class="hide-menu">Icons
                                 </span></a>
                     <ul aria-expanded="false" class="collapse first-level base-level-line">
@@ -174,8 +181,9 @@
                     </ul>
                 </li>
 
-                <li class="sidebar-item"> <a class="sidebar-link has-arrow" href="javascript:void(0)"
-                                             aria-expanded="false"><i data-feather="crosshair" class="feather-icon"></i><span
+                <li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)"
+                                            aria-expanded="false"><i data-feather="crosshair"
+                                                                     class="feather-icon"></i><span
                             class="hide-menu">Multi
                                     level
                                     dd</span></a>
@@ -186,8 +194,8 @@
                         <li class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><span
                                     class="hide-menu"> item 1.2</span></a>
                         </li>
-                        <li class="sidebar-item"> <a class="has-arrow sidebar-link" href="javascript:void(0)"
-                                                     aria-expanded="false"><span class="hide-menu">Menu 1.3</span></a>
+                        <li class="sidebar-item"><a class="has-arrow sidebar-link" href="javascript:void(0)"
+                                                    aria-expanded="false"><span class="hide-menu">Menu 1.3</span></a>
                             <ul aria-expanded="false" class="collapse second-level base-level-line">
                                 <li class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><span
                                             class="hide-menu"> item
@@ -210,11 +218,13 @@
                 </li>
                 <li class="list-divider"></li>
                 <li class="nav-small-cap"><span class="hide-menu">Extra</span></li>
-                <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{asset('asset/docs/docs.html')}}"
-                                             aria-expanded="false"><i data-feather="edit-3" class="feather-icon"></i><span
+                <li class="sidebar-item"><a class="sidebar-link sidebar-link" href="{{asset('asset/docs/docs.html')}}"
+                                            aria-expanded="false"><i data-feather="edit-3"
+                                                                     class="feather-icon"></i><span
                             class="hide-menu">Documentation</span></a></li>
-                <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="authentication-login1.html"
-                                             aria-expanded="false"><i data-feather="log-out" class="feather-icon"></i><span
+                <li class="sidebar-item"><a class="sidebar-link sidebar-link" href="authentication-login1.html"
+                                            aria-expanded="false"><i data-feather="log-out"
+                                                                     class="feather-icon"></i><span
                             class="hide-menu">Logout</span></a></li>
             </ul>
         </nav>
@@ -229,6 +239,6 @@
 <!-- Page wrapper  -->
 <!-- ============================================================== -->
 
-    <!-- ============================================================== -->
-    <!-- End Bread crumb and right sidebar toggle -->
-    <!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->

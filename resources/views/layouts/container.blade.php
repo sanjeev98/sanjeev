@@ -17,7 +17,8 @@
             </div>
             <div class="col-5 align-self-center">
                 <div class="customize-input float-right">
-                    <select class="custom-select custom-select-set form-control bg-white border-0 custom-shadow custom-radius">
+                    <select
+                        class="custom-select custom-select-set form-control bg-white border-0 custom-shadow custom-radius">
                         <option selected>Aug 19</option>
                         <option value="1">July 19</option>
                         <option value="2">Jun 19</option>
@@ -291,7 +292,8 @@
                                     <p class="font-14 mb-2 text-muted">One Pending order from Ryne <br> Doe</p>
                                     <span class="font-weight-light font-14 mb-1 d-block text-muted">2 Hours
                                                 Ago</span>
-                                    <a href="javascript:void(0)" class="font-14 border-bottom pb-1 border-info">Load More</a>
+                                    <a href="javascript:void(0)" class="font-14 border-bottom pb-1 border-info">Load
+                                        More</a>
                                 </div>
                             </div>
                         </div>
@@ -351,7 +353,7 @@
                                             <div class="mr-3"><img
                                                     src="{{asset('asset/assets/images/users/widget-table-pic1.jpg')}}"
                                                     alt="user" class="rounded-circle" width="45"
-                                                    height="45" /></div>
+                                                    height="45"/></div>
                                             <div class="">
                                                 <h5 class="text-dark mb-0 font-16 font-weight-medium">Hanna
                                                     Gover</h5>
@@ -388,7 +390,7 @@
                                             <div class="mr-3"><img
                                                     src="{{asset('asset/assets/images/users/widget-table-pic2.jpg')}}"
                                                     alt="user" class="rounded-circle" width="45"
-                                                    height="45" /></div>
+                                                    height="45"/></div>
                                             <div class="">
                                                 <h5 class="text-dark mb-0 font-16 font-weight-medium">Daniel
                                                     Kristeen
@@ -421,7 +423,7 @@
                                             <div class="mr-3"><img
                                                     src="{{asset('asset/assets/images/users/widget-table-pic3.jpg')}}"
                                                     alt="user" class="rounded-circle" width="45"
-                                                    height="45" /></div>
+                                                    height="45"/></div>
                                             <div class="">
                                                 <h5 class="text-dark mb-0 font-16 font-weight-medium">Julian
                                                     Josephs
@@ -456,7 +458,7 @@
                                             <div class="mr-3"><img
                                                     src="{{asset('asset/assets/images/users/widget-table-pic4.jpg')}}"
                                                     alt="user" class="rounded-circle" width="45"
-                                                    height="45" /></div>
+                                                    height="45"/></div>
                                             <div class="">
                                                 <h5 class="text-dark mb-0 font-16 font-weight-medium">Jan
                                                     Petrovic
