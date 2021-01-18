@@ -67,7 +67,12 @@
                     <form id="post-form" name="post-form" class="form-horizontal">
                         @csrf
                         <input type="hidden" name="post_id" id="id" value="{{ $post->id }}">
-                        <textarea class="form-control" name="comment" rows="5" id="comment"></textarea>
+                        <label>Name:</label><br>
+                        <input type="text" name="user" id="user" minlength="5" maxlength="25" required>
+                        <label>email:</label><br>
+                        <input type="email" name="email" id="email" minlength="16" maxlength="25" required>
+                        <textarea class="form-control" name="comment" rows="5" id="comment" minlength="3"
+                                  maxlength="255" required></textarea>
                         <hr>
                         <button type="submit" class="btn btn-success" id="create">create
                         </button>
@@ -116,7 +121,11 @@
                 method: 'post',
                 dataType: 'json',
                 success: function (data) {
-                    $('#user-comment').append('<div class=' + data[0].id + '><hr><span>' + data[0].id + '</span> <hr><span>' + data[1] + '</span><br> <hr><p id=' + data[0].id + '>' + data[0].comment + '</p><br> <a href="javascript:void(0)" data-toggle="tooltip"  data-id=' + data[0].id + ' data-original-title="Edit" class="edit btn btn-primary btn-sm edit-comment">Edit</a><hr><a href="javascript:void(0)"  data-id=' + data[0].id + ' class="edit btn btn-primary btn-sm delete-comment">delete</a></div>');
+                    if ($('.' + 'user_id' + data[0].user_id).children().length == 0) {
+                        $('#user-comment').append('<div class=' + 'user_id' + data[0].user_id + '><div class="' + data[0].id + '"> <span>' + data[1] + '</span><br><p id=' + data[0].id + '>' + data[0].comment + '</p><br><a href="javascript:void(0)" data-toggle="tooltip"  data-id=' + data[0].id + ' data-original-title="Edit" class="edit-comment">Edit</a><a href="javascript:void(0)" data-id=' + data[0].id + ' data-original-title="delete" class="delete-comment">delete</a></div></div>');
+                    } else {
+                        $('.' + 'user_id' + data[0].user_id).append('<span>' + data[1] + '</span><br><p id=' + data[0].id + '>' + data[0].comment + '</p><br><a href="javascript:void(0)" data-toggle="tooltip"  data-id=' + data[0].id + ' data-original-title="Edit" class="edit-comment">Edit</a><a href="javascript:void(0)" data-id=' + data[0].id + ' data-original-title="delete" class="delete-comment">delete</a>');
+                    }
                 },
                 error: function (data) {
                     console.log('Error:', data);
@@ -147,7 +156,7 @@
                 method: 'put',
                 dataType: 'json',
                 success: function (data) {
-                    $('#ajaxModel').modal('hide');
+                    $('#ajax-model').modal('hide');
                     $('#' + data.id).html(data.comment);
                 },
                 error: function (data) {

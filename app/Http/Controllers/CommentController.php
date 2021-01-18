@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CommentRequest;
 use App\Models\Comment;
+use App\Models\User;
 use Illuminate\Support\Carbon;
+use function PHPUnit\Framework\isEmpty;
 
 class CommentController extends Controller
 {
@@ -14,8 +16,21 @@ class CommentController extends Controller
      */
     public function store(CommentRequest $request)
     {
-        $input = $request->only(['post_id', 'comment']);
-        $comment = Comment::create($input);
+        $user = User::where('email', '=', $request['email'])->get();
+        if (!isEmpty($user)) {
+            $user = User::firstOrCreate([
+                'email' => $request['email'],
+                'name' => $request['user'],
+                'password' => bcrypt('12345678')
+            ]);
+        } else {
+            $user = $user[0];
+        }
+        $comment = Comment::create([
+            'post_id' => $request['post_id'],
+            'comment' => $request['comment'],
+            'user_id' => $user->id,
+        ]);
         $commentedAt = $comment->created_at->diffForHumans();
         return response()->Json([$comment, $commentedAt]);
     }
