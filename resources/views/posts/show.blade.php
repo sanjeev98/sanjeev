@@ -68,7 +68,7 @@
                         @csrf
                         <input type="hidden" name="post_id" id="id" value="{{ $post->id }}">
                         <label>Name:</label><br>
-                        <input type="text" name="user" id="user" minlength="5" maxlength="25" required>
+                        <input type="text" name="user_name" id="user" minlength="5" maxlength="25" required>
                         <label>email:</label><br>
                         <input type="email" name="email" id="email" minlength="16" maxlength="25" required>
                         <textarea class="form-control" name="comment" rows="5" id="comment" minlength="3"

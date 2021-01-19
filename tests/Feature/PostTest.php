@@ -35,7 +35,7 @@ class PostTest extends TestCase
         $response = $this->json('POST', 'http://127.0.0.1:8000/posts', ['user_id' => $posts->user_id, 'title' => $posts->title, 'description' => $posts->description, 'posted_by' => $posts->posted_by]);
         $this->assertDatabaseHas('posts', ['title' => $posts->title, 'id' => $posts->id, 'user_id' => $posts->user_id, 'description' => $posts->description, 'posted_by' => $posts->posted_by]);
         $response->assertStatus(422);
-        $this->c();
+        $this->failedDueToTitleValidations();
         $this->failedDueToDescriptionValidations();
     }
 

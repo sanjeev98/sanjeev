@@ -66,7 +66,7 @@ class CommentTest extends TestCase
     /**
      * @test
      */
-    public function deleteComent()
+    public function deleteComment()
     {
         $users = User::factory()->make();
         $this->actingAs($users);

@@ -16,21 +16,17 @@ class CommentController extends Controller
      */
     public function store(CommentRequest $request)
     {
-        $user = User::where('email', '=', $request['email'])->get();
+        $user = User::where('email', '=', $request['email'])->first();
         if (!isEmpty($user)) {
-            $user = User::firstOrCreate([
+            $user = User::Create([
                 'email' => $request['email'],
-                'name' => $request['user'],
+                'name' => $request['user_name'],
                 'password' => bcrypt('12345678')
             ]);
-        } else {
-            $user = $user[0];
         }
-        $comment = Comment::create([
-            'post_id' => $request['post_id'],
-            'comment' => $request['comment'],
-            'user_id' => $user->id,
-        ]);
+        $input = $request->only(['post_id', 'comment']);
+        $input['user_id'] = $user->id;
+        $comment = Comment::create($input);
         $commentedAt = $comment->created_at->diffForHumans();
         return response()->Json([$comment, $commentedAt]);
     }
