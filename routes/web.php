@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\DashBoardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,10 +25,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('dashboard', function(){
-    return view('posts.dashboard');
-});
-
+Route::get('dashboard', [DashBoardController::class, 'index']);
 Route::get('get-role', [RoleController::class, 'getRoleData'])->name('roles.get');
 Route::get('get-post', [PostController::class, 'getPostTable'])->name('posts.table');
 Route::get('get-user', [UserController::class, 'getUserData'])->name('roles.table');
