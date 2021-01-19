@@ -24,41 +24,30 @@
             </table>
         </div>
         <div class="col-3">
-            <div style="position: fixed;">
+            <div class="tags">
                 <article class="card-group-item">
-                    <header class="card-header" style="padding: 10px;margin: 0px"><h6 class="title">Tag</h6></header>
+                    <header class="card-header"><h6 class="title">Tag</h6></header>
                     <div class="filter-content">
                         <div class="card-body">
-                            @foreach($tags_count as $tag)
-                                <button class="btn btn-success tag"
-                                        style="border-radius: 10px;padding: 2px;margin: 2px;"
-                                        data-id="{{ $tag->name }}">
-                                    <span class="form-check-label" style="font-size: 10px">{{ $tag->name }}</span>
-                                    <span class="badge badge-pill badge-primary"
-                                          style="font-size: 10px">{{ $tag->count }}</span>
+                            @foreach($latest_tag as $tag)
+                                <button class="btn btn-success tag" data-id="{{ $tag->name }}">
+                                    <span class="form-check-label">{{ $tag->name }}</span>
+                                    <span class="badge badge-pill badge-primary">{{ $tag->posts_count }}</span>
                                 </button>
-                                @if($loop->iteration == 5)
-                                    @break
-                                @endif
                             @endforeach
                         </div>
                     </div>
                 </article>
                 <article class="card-group-item">
-                    <header class="card-header" style="padding: 10px;margin: 0px"><h6 class="title">Post</h6></header>
+                    <header class="card-header"><h6 class="title">Post</h6></header>
                     <div class="filter-content">
                         <div class="card-body">
-                            @foreach($posts_created as $post)
-                                <button class="btn btn-success post"
-                                        style="border-radius: 10px;padding: 2px;margin: 2px;"
-                                        data-id="{{ $post->title }}">
-                                    <span class="form-check-label" style="font-size: 10px">{{ $post->title }}</span>
-                                    <span class="badge badge-pill badge-primary"
-                                          style="font-size: 10px">{{ $post->created }}</span>
+                            @foreach($latest_post as $post)
+                                <button class="btn btn-success post" data-id="{{ $post->title }}">
+                                    <span class="form-check-label">{{ $post->title }}</span>
+                                    <span
+                                        class="badge badge-pill badge-primary">{{ $post->created_at->diffForHumans() }}</span>
                                 </button>
-                                @if($loop->iteration == 5)
-                                    @break
-                                @endif
                             @endforeach
                         </div>
                     </div>
@@ -81,7 +70,7 @@
                     {data: 'description', name: 'description'},
                     {data: 'posted_by', name: 'posted_by'},
                     {data: 'tags[].name', name: 'tags[].name'},
-                    {data: 'date', name: 'date'},
+                    {data: 'created_at', name: 'created_at'},
                     {
                         data: "action",
                         "render": function (data, type, row, meta) {

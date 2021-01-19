@@ -1,0 +1,18 @@
+.tags {
+    position: fixed;
+}
+
+.tags button {
+    border-radius: 10px;
+    padding: 2px;
+    margin: 2px;
+}
+
+.tags header {
+    padding: 10px;
+    margin: 0px;
+}
+
+.tags span {
+    font-size: 10px
+}
