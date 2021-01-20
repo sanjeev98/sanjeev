@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UserRequest extends FormRequest
 {
@@ -24,8 +25,8 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => 'required|exists:users,id|notIn(["1", "2"])',
-            'roles' => 'required|exists:roles,name|notIn(["Admin", "SuperAdmin"])'
+            'user_id' => 'required|exists:users,id|' . Rule::notIn(["1", "2"]),
+            'roles' => 'required|exists:roles,name|' . Rule::notIn(["Admin", "SuperAdmin"])
         ];
     }
 }

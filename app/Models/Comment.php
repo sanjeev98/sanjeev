@@ -14,7 +14,7 @@ class Comment extends Model
      *
      * @var string[]
      */
-    protected $fillable = ['comment', 'post_id'];
+    protected $fillable = ['comment', 'post_id', 'user_id'];
 
     /**
      * The table associated with the model.

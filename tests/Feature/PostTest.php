@@ -9,7 +9,7 @@ use App\Models\User;
 use App\Models\Post;
 use Illuminate\Support\Str;
 
-class ExampleTest extends TestCase
+class PostTest extends TestCase
 {
     use RefreshDatabase;
     use WithFaker;
@@ -58,7 +58,7 @@ class ExampleTest extends TestCase
     /**
      * @test
      */
-    public function user_can_delete_the_post()
+    public function deletePost()
     {
         $users = User::factory()->make();
         $this->actingAs($users);
@@ -66,7 +66,7 @@ class ExampleTest extends TestCase
         $response = $this->delete('posts/' . $posts->id);
         $this->assertDeleted($posts);
         $response->assertOk();
-        $response->assertExactJson(['success' => 'Customer deleted!']);
+        $response->assertExactJson(['success' => 'Post deleted!']);
     }
 
     /**
