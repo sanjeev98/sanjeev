@@ -17,12 +17,10 @@ class CommentController extends Controller
     public function store(CommentRequest $request)
     {
         $user = User::where('email', '=', $request['email'])->first();
-        if (!isEmpty($user)) {
-            $user = User::Create([
-                'email' => $request['email'],
-                'name' => $request['user_name'],
-                'password' => bcrypt('12345678')
-            ]);
+        $input = $request->only(['email', 'user_name']);
+        $input['password'] = bcrypt('12345678');
+        if (!$user) {
+            $user = User::Create([$input]);
         }
         $input = $request->only(['post_id', 'comment']);
         $input['user_id'] = $user->id;

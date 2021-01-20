@@ -24,13 +24,12 @@ class RoleRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->route()->parameters('role');
-        if(isEmpty($id))
-        {
-            $id['role'] = '';
+        $roleId = $this->route()->parameters('role');
+        if (!$roleId) {
+            $roleId['role'] = '';
         }
         return [
-            'role' => 'required|unique:roles,name,' . $id['role']. 'id|min:3|max:20',
+            'role' => 'required|unique:roles,name,' . $roleId['role'] . 'id|min:3|max:20',
             'permissions' => 'required|exists:permissions,id'
         ];
     }
