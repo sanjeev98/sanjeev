@@ -53,7 +53,7 @@ class UserTest extends TestCase
         $this->assertDatabaseHas('roles', ['name' => $role->name]);
         $this->assertDatabaseHas('model_has_roles', ['role_id' => $role->id, 'model_id' => $user->id]);
         $response->assertStatus(302);
-        $this->failedDueToUserId($user, $role_name);
+        $this->failedDueToUserId($role_name);
         $this->failedDueToRoles($user);
     }
 
@@ -100,28 +100,28 @@ class UserTest extends TestCase
     /**
      * Validation for user_id input.
      */
-    public function failedDueToUserId($user, $role_name)
+    public function failedDueToUserId($role_name)
     {
-        $response = $this->actingAs($user)->json('POST', 'http://127.0.0.1:8000/users');
+        $response = $this->json('POST', 'http://127.0.0.1:8000/users');
         $response->assertExactJson([
             "errors" => ["user_id" => ["The user id field is required."],
                 "roles" => ["The roles field is required."]],
             "message" => "The given data was invalid."
         ]);
         $response->assertStatus(422);
-        $response = $this->actingAs($user)->json('POST', 'http://127.0.0.1:8000/users', ['user_id' => '', 'roles' => $role_name]);
+        $response = $this->json('POST', 'http://127.0.0.1:8000/users', ['user_id' => '', 'roles' => $role_name]);
         $response->assertExactJson([
             "errors" => ["user_id" => ["The user id field is required."]],
             "message" => "The given data was invalid."
         ]);
         $response->assertStatus(422);
-        $response = $this->actingAs($user)->json('POST', 'http://127.0.0.1:8000/users', ['user_id' => '1', 'roles' => $role_name]);
+        $response = $this->json('POST', 'http://127.0.0.1:8000/users', ['user_id' => '1', 'roles' => $role_name]);
         $response->assertExactJson([
             "errors" => ["user_id" => ["The selected user id is invalid."]],
             "message" => "The given data was invalid."
         ]);
         $response->assertStatus(422);
-        $response = $this->actingAs($user)->json('POST', 'http://127.0.0.1:8000/users', ['user_id' => $this->faker->randomNumber, 'roles' => $role_name]);
+        $response = $this->json('POST', 'http://127.0.0.1:8000/users', ['user_id' => $this->faker->randomNumber, 'roles' => $role_name]);
         $response->assertExactJson([
             "errors" => ["user_id" => ["The selected user id is invalid."]],
             "message" => "The given data was invalid."
@@ -134,19 +134,19 @@ class UserTest extends TestCase
      */
     public function failedDueToRoles($user)
     {
-        $response = $this->actingAs($user)->json('POST', 'http://127.0.0.1:8000/users', ['user_id' => $user->id, 'roles' => '']);
+        $response = $this->json('POST', 'http://127.0.0.1:8000/users', ['user_id' => $user->id, 'roles' => '']);
         $response->assertExactJson([
             "errors" => ["roles" => ["The roles field is required."]],
             "message" => "The given data was invalid."
         ]);
         $response->assertStatus(422);
-        $response = $this->actingAs($user)->json('POST', 'http://127.0.0.1:8000/users', ['user_id' => $user->id, 'roles' => $this->faker->name]);
+        $response = $this->json('POST', 'http://127.0.0.1:8000/users', ['user_id' => $user->id, 'roles' => $this->faker->name]);
         $response->assertExactJson([
             "errors" => ["roles" => ["The selected roles is invalid."]],
             "message" => "The given data was invalid."
         ]);
         $response->assertStatus(422);
-        $response = $this->actingAs($user)->json('POST', 'http://127.0.0.1:8000/users', ['user_id' => $user->id, 'roles' => 'Admin']);
+        $response = $this->json('POST', 'http://127.0.0.1:8000/users', ['user_id' => $user->id, 'roles' => 'Admin']);
         $response->assertExactJson([
             "errors" => ["roles" => ["The selected roles is invalid."]],
             "message" => "The given data was invalid."

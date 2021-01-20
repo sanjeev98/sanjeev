@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use function PHPUnit\Framework\isEmpty;
 
 class RoleRequest extends FormRequest
 {
@@ -24,6 +25,10 @@ class RoleRequest extends FormRequest
     public function rules()
     {
         $id = $this->route()->parameters('role');
+        if(isEmpty($id))
+        {
+            $id['role'] = '';
+        }
         return [
             'role' => 'required|unique:roles,name,' . $id['role']. 'id|min:3|max:20',
             'permissions' => 'required|exists:permissions,id'
