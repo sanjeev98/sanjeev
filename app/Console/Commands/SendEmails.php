@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Mail\PostMail;
+use App\Mail\PostsMail;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Post;
@@ -43,6 +43,6 @@ class SendEmails extends Command
     {
         $posts = Post::where("created_at", ">", Carbon::now()->subDay())->where("created_at", "<", Carbon::now())->get();
         $message = 'Yesterday post';
-        Mail::to('sanjeev@gmail.com')->send(new PostMail($posts, $message));
+        Mail::to('sanjeev@gmail.com')->send(new PostsMail($posts, $message));
     }
 }

@@ -11,7 +11,7 @@ class PostsMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $postsmail;
+    public $posts;
     public $message;
 
     /**
@@ -19,9 +19,9 @@ class PostsMail extends Mailable
      *
      * @return void
      */
-    public function __construct($postsmail, $message)
+    public function __construct($posts, $message)
     {
-        $this->postsmail = $postsmail;
+        $this->posts = $posts;
         $this->message = $message;
     }
 
