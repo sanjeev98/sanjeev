@@ -1,17 +1,19 @@
 @component('mail::message')
-# Introduction
+    # Introduction
 
-The body of your message.
-<div>
-   <label>{{$postsmail->title}}</label><hr>
-   <label>{{$postsmail->description}}</label><hr>
-    <label style="background-color: #0b2e13">{{$message}}</label>
-</div>
+    The body of your message.
+    <div>
+        <label>{{$postsmail->title}}</label>
+        <hr>
+        <label>{{$postsmail->description}}</label>
+        <hr>
+        <label style="background-color: #0b2e13;">{{$message}}</label>
+    </div>
 
-@component('mail::button', ['url' => ''])
-Button Text
-@endcomponent
+    @component('mail::button', ['url' => ''])
+        Button Text
+    @endcomponent
 
-Thanks,<br>
-{{ config('app.name') }}
+    Thanks,<br>
+    {{ config('app.name') }}
 @endcomponent

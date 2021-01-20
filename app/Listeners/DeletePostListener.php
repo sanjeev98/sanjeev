@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Mail;
 class DeletePostListener implements ShouldQueue
 {
     use InteractsWithQueue;
+
     /**
      * Create the event listener.
      *
@@ -23,24 +24,11 @@ class DeletePostListener implements ShouldQueue
     /**
      * Handle the event.
      *
-     * @param  object  $event
+     * @param object $event
      * @return void
      */
     public function handle($event)
     {
         Mail::to('example@gmail.com')->send(new PostMail());
     }
-
-    /**
-     * Handle a job failure.
-     *
-     * @param  \App\Events\OrderShipped  $event
-     * @param  \Throwable  $exception
-     * @return void
-     */
-    public function failed(OrderShipped $event, $exception)
-    {
-        dd($exception);
-    }
-
 }

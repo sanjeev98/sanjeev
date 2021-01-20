@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Providers;
+
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 
@@ -12,11 +13,11 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-//        Registered::class => [
-//            SendEmailVerificationNotification::class,
-//        ],
+        Registered::class => [
+            SendEmailVerificationNotification::class,
+        ],
         \App\Events\PostCreateEvent::class => [
-           \App\Listeners\CreatePostListener::class,
+            \App\Listeners\CreatePostListener::class,
             \App\Listeners\CreatesPostListener::class,
         ],
         \App\Events\PostUpdateEvent::class => [

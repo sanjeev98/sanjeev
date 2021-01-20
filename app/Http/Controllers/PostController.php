@@ -10,45 +10,34 @@ use App\Models\User;
 use App\Models\Image;
 use App\Models\Tag;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreBlogPost;
 use DataTables;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Event;
 use App\Events\PostCreateEvent;
+use App\Http\Requests\PostRequest;
 
 class PostController extends Controller
 {
-//    public function __construct()
-//    {
-////        $this->middleware('permission:post-list|post-create|post-edit|post-delete', ['only' => ['index','show']]);
-////        $this->middleware('permission:post-create', ['only' => ['create','store']]);
-////        $this->middleware('permission:post-edit', ['only' => ['edit','update']]);
-////        $this->middleware('permission:post-delete', ['only' => ['destroy']]);
-//    }
+    /**
+     * Execute all request in base method.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function __construct()
+    {
+        $this->middleware('permission:post-list|post-create|post-edit|post-delete', ['only' => ['index', 'show', 'getPostTable']]);
+        $this->middleware('permission:post-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:post-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:post-delete', ['only' => ['destroy']]);
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        if($request->ajax()) {
-           return DataTables::of(Post::query()) ->addIndexColumn()
-               ->addColumn('action', function($row) {
-                  ;
-                   $btn = ' <a href="posts/'.$row->id.'" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm showPost">Show</a>';
-
-                   $btn = $btn .'<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editPost">Edit</a>';
-                  '{{ csrf_token() }}';
-                   $btn = $btn.'<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deletePost">Delete</a>';
-
-                   return $btn;
-               })
-               ->rawColumns(['action'])
-               ->make(true);
-               log::info('Datatable created');
-        }
         return view('posts.index');
     }
 
@@ -59,122 +48,133 @@ class PostController extends Controller
      */
     public function create()
     {
-        $tag =Tag::all();
-        return view('posts.create',compact('tag'));
+        $tags = Tag::all();
+        return view('posts.create', compact('tags'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreBlogPost $request)
+    public function store(PostRequest $request)
     {
-        $posts= new Post();
-        $posts->title=$request['title'];
-        $posts->description=$request['description'];
-        $posts->posted_by=$request['posted_by'];
-        $post=User::find(Auth::id())->posts()->save($posts);
-        $tags3=array();
-        foreach($request->tags as $tag1)
-        {
-            $tags1 = Tag::firstOrCreate([
-                'name' => $tag1
-            ]);
-            $tags3[]=$tags1->id;
+        $input = $request->only(['title', 'description']);
+        $input['user_id'] = Auth::id();
+        $input['posted_by'] = auth()->user()->email;
+        $post = Post::create($input);
+        $tags = array();
+        if ($request->has('tags')) {
+            foreach ($request->tags as $tag) {
+                $tag = Tag::firstOrCreate([
+                    'name' => $tag
+                ]);
+                $tags[] = $tag->id;
+            }
         }
-        $posts->tags()->sync($tags3,false);
-        $images = $request->file('files');
-        foreach($images as $image)
-        {   log::error("sss");
-            $new_name = rand() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('files'), $new_name);
-            $file= new Image();
-            $file->name=$new_name;
-            $post->images()->save($file);
+        $post->tags()->sync($tags, false);
+        if ($request->has('files')) {
+            $images = $request->file('files');
+            foreach ($images as $image) {
+                $new_name = rand() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('files'), $new_name);
+                $file = new Image();
+                $file->name = $new_name;
+                $post->images()->save($file);
+            }
         }
-        PostCreateEvent::dispatch($posts);
-//        Mail::to('example@gmail.com')->send(new PostMail($posts));
+        PostCreateEvent::dispatch($post);
         return redirect()->route('posts.index')
-            ->with('success','Posts created successfully.');
+            ->with('success', 'Posts created successfully.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Post  $post
+     * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        $post = Post::find($id);
-        $image = $post->images;
-        return view('posts.show',['post'=>$post,'images'=>$image]);
+        $images = $post->images;
+        return view('posts.show', ['post' => $post, 'images' => $images]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Post  $post
+     * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        $post = Post::find($id);
-        $tag = Tag::all();
-        $tags=array();
-        foreach($tag as $tag1)
-        {
-            $tags[$tag1->id]=$tag1->name;
+        $tags = Tag::all();
+        $allTags = array();
+        foreach ($tags as $tag) {
+            $allTags[$tag->id] = $tag->name;
         }
-        $tag2=$post->tags;
-        $tags3=array();
-        foreach($tag2 as $tag1)
-        {
-            $tags3[]=$tag1->name;
+        $tags = $post->tags;
+        $postTags = array();
+        foreach ($tags as $tag) {
+            $postTags[] = $tag->name;
         }
-        return Response()->json([$post,$tags,$tags3]);
+        return Response()->json([$post, $allTags, $postTags]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Post  $post
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreBlogPost $request,$id)
+    public function update(PostRequest $request, Post $post)
     {
-        $posts=Post::find($id);
-        $posts->title=$request['title'];
-        $posts->description=$request['description'];
-        $posts->posted_by=$request['posted_by'];
-        $posts->save();
-        $tags3=array();
-        foreach($request->tags as $tag1)
-        {
-            $tags1 = Tag::firstOrCreate([
-                'name' => $tag1
-            ]);
-            $tags3[]=$tags1->id;
+        $input = $request->only(['title', 'description']);
+        $post->update($input);
+        if ($request->has('tags')) {
+            foreach ($request->tags as $tag) {
+                $tag = Tag::firstOrCreate([
+                    'name' => $tag
+                ]);
+                $tags[] = $tag->id;
+            }
         }
-        $posts->tags()->sync($tags3,false);
-        $posts->tags()->sync($tags3);
-        PostUpdateEvent::dispatch($posts);
-        return response()->json(['success'=>'Post updated successfully!']);
+        $post->tags()->sync($tags);
+        PostUpdateEvent::dispatch($post);
+        return response()->json(['success' => 'Post updated successfully!']);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Post  $post
+     * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
     public function destroy(Post $post)
     {
         PostDeleteEvent::dispatch($post);
         $post->delete();
-        return response()->json(['success'=>'Post deleted!']);
+        return response()->json(['success' => 'Post deleted!']);
+    }
+
+    /**
+     * Get post from post and send to datatable.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getPostTable()
+    {
+        return DataTables::of(Post::query())->addIndexColumn()
+            ->addColumn('action', function ($row) {
+                $btn = ' <a href="posts/' . $row->id . '" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Show" class="edit btn btn-primary btn-sm show-post">Show</a>';
+                $btn = $btn . '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm edit-post">Edit</a>';
+                '{{ csrf_token() }}';
+                $btn = $btn . '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm delete-post">Delete</a>';
+                return $btn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 }

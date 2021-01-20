@@ -13,12 +13,13 @@ class PostsMail extends Mailable
 
     public $postsmail;
     public $message;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($postsmail,$message)
+    public function __construct($postsmail, $message)
     {
         $this->postsmail = $postsmail;
         $this->message = $message;

@@ -22,11 +22,11 @@ class CreatePostListener implements ShouldQueue
     /**
      * Handle the event.
      *
-     * @param  object  $event
+     * @param object $event
      * @return void
      */
     public function handle($event)
     {
-      Mail::to($event->postCreate->posted_by)->send(new PostMail());
+        Mail::to($event->postCreate->posted_by)->send(new PostMail());
     }
 }

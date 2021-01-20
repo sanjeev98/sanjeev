@@ -23,12 +23,12 @@ class DeletesPostListener
     /**
      * Handle the event.
      *
-     * @param  object  $event
+     * @param object $event
      * @return void
      */
     public function handle($event)
     {
         $message = 'post deleted';
-        Mail::to($event->postDelete->posted_by)->send(new PostsMail($event->postDelete,$message));
+        Mail::to($event->postDelete->posted_by)->send(new PostsMail($event->postDelete, $message));
     }
 }
