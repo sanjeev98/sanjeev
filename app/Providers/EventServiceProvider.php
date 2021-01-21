@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Providers;
+
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 
@@ -12,20 +15,20 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-//        Registered::class => [
-//            SendEmailVerificationNotification::class,
-//        ],
+        Registered::class => [
+            SendEmailVerificationNotification::class,
+        ],
         \App\Events\PostCreateEvent::class => [
-           \App\Listeners\CreatePostListener::class,
-            \App\Listeners\CreatesPostListener::class,
+            \App\Listeners\SendUserCreatePostMailListener::class,
+            \App\Listeners\SendUserCreatePostDataMailListener::class,
         ],
         \App\Events\PostUpdateEvent::class => [
-            \App\Listeners\UpdatePostListener::class,
-            \App\Listeners\UpdatesPostListener::class,
+            \App\Listeners\SendUserUpdatePostMailListener::class,
+            \App\Listeners\SendUserUpdatesPostDataMailListener::class,
         ],
         \App\Events\PostDeleteEvent::class => [
-            \App\Listeners\DeletePostListener::class,
-            \App\Listeners\DeletesPostListener::class,
+            \App\Listeners\SendDeletePostMailListener::class,
+            \App\Listeners\SendDeletePostDataMailListener::class,
         ],
     ];
 

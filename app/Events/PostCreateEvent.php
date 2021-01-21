@@ -25,5 +25,4 @@ class PostCreateEvent
     {
         $this->postCreate = $postCreate;
     }
-
 }

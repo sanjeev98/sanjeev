@@ -42,6 +42,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * User has many relationship with post.
+     *
+     * @var string
+     */
     public function posts()
     {
         return $this->hasMany(Post::class);
