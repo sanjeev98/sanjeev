@@ -2,15 +2,13 @@
 
 namespace App\Listeners;
 
-use App\Mail\PostMail;
+use App\Mail\SendUserPostMail;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 
-class DeletePostListener implements ShouldQueue
+class SendUserCreatePostDataMailListener implements ShouldQueue
 {
-    use InteractsWithQueue;
-
     /**
      * Create the event listener.
      *
@@ -29,6 +27,7 @@ class DeletePostListener implements ShouldQueue
      */
     public function handle($event)
     {
-        Mail::to('example@gmail.com')->send(new PostMail());
+        $message = 'post created';
+        Mail::to($event->postCreate->posted_by)->send(new SendUserPostMail($event->postCreate, $message));
     }
 }

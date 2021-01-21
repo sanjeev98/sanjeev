@@ -4,10 +4,10 @@ namespace App\Listeners;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use App\Mail\PostMail;
+use App\Mail\SendUserMail;
 use Illuminate\Support\Facades\Mail;
 
-class CreatePostListener implements ShouldQueue
+class SendUserCreatePostMailListener implements ShouldQueue
 {
     /**
      * Create the event listener.
@@ -27,6 +27,6 @@ class CreatePostListener implements ShouldQueue
      */
     public function handle($event)
     {
-        Mail::to($event->postCreate->posted_by)->send(new PostMail());
+        Mail::to($event->postCreate->posted_by)->send(new SendUserMail());
     }
 }

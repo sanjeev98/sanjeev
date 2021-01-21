@@ -7,21 +7,23 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class PostMail extends Mailable
+class SendUserPostMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $posts;
+    public $message;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($posts, $message)
     {
-        //
+        $this->posts = $posts;
+        $this->message = $message;
     }
-
 
     /**
      * Build the message.
@@ -30,6 +32,6 @@ class PostMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.postmail');
+        return $this->markdown('emails.send_user_post_mail');
     }
 }

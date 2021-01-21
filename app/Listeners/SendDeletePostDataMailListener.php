@@ -2,12 +2,13 @@
 
 namespace App\Listeners;
 
-use App\Mail\PostsMail;
+
+use App\Mail\SendUserPostMail;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 
-class UpdatesPostListener implements ShouldQueue
+class SendDeletePostDataMailListener
 {
     /**
      * Create the event listener.
@@ -27,7 +28,7 @@ class UpdatesPostListener implements ShouldQueue
      */
     public function handle($event)
     {
-        $message = 'post updated';
-        Mail::to($event->postUpdate->posted_by)->send(new PostsMail($event->postUpdate, $message));
+        $message = 'post deleted';
+        Mail::to($event->postDelete->posted_by)->send(new SendUserPostMail($event->postDelete, $message));
     }
 }
