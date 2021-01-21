@@ -47,9 +47,9 @@ class SendEmails extends Command
     {
         $posts = Post::where("created_at", ">", Carbon::now()->subDay())->where("created_at", "<", Carbon::now())->get();
         $message = 'Yesterday Post';
-        $pdf = PDF::loadView('pdf', compact('postsmail'));
-        Storage::put('public/files/san.pdf', $pdf->output());
-        Excel::store(new PostExport(2018), 'public/files/pos1t.xlsx');
-        Mail::to(env('MAIL_TO_ADDRESS'))->send(new SendUserPostMail($posts, $message));
+        $pdf = PDF::loadView('pdf_posts', compact('posts'));
+        Storage::put('public/files/posts.pdf', $pdf->output());
+        Excel::store(new PostExport(2018), 'public/files/posts.xlsx');
+        Mail::to(env('MAIL_REPLY_TO_ADDRESS'))->send(new SendUserPostMail($posts, $message));
     }
 }

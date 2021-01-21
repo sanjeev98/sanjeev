@@ -32,10 +32,10 @@ class SendUserPostMail extends Mailable
      */
     public function build()
     {
-
-        return $this->markdown('emails.send_user_post_mail') ->attach(public_path('storage/files/san.pdf'), [
-            'as' => 'san.pdf',
-            'mime' => 'application/pdf',
-        ])->attach(public_path('storage/files/pos1t.xlsx'));
+        return $this->markdown('emails.send_user_post_mail')
+            ->attach(public_path('storage/files/posts.pdf'), [
+                'as' => 'posts.pdf',
+                'mime' => 'application/pdf',
+            ])->attach(public_path('storage/files/posts.xlsx'));
     }
 }
