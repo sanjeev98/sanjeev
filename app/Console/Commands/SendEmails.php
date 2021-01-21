@@ -42,7 +42,7 @@ class SendEmails extends Command
     public function handle()
     {
         $posts = Post::where("created_at", ">", Carbon::now()->subDay())->where("created_at", "<", Carbon::now())->get();
-        $message = 'Yesterday post';
-        Mail::to('sanjeev@gmail.com')->send(new SendUserPostMail($posts, $message));
+        $message = 'Yesterday Post';
+        Mail::to(env('MAIL_TO_ADDRESS'))->send(new SendUserPostMail($posts, $message));
     }
 }

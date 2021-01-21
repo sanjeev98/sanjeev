@@ -28,7 +28,7 @@ class SendDeletePostDataMailListener
      */
     public function handle($event)
     {
-        $message = 'post deleted';
+        $message = 'Post Deleted';
         Mail::to($event->postDelete->posted_by)->send(new SendUserPostMail($event->postDelete, $message));
     }
 }

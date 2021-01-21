@@ -27,7 +27,7 @@ class SendUserCreatePostDataMailListener implements ShouldQueue
      */
     public function handle($event)
     {
-        $message = 'post created';
+        $message = 'Post Created';
         Mail::to($event->postCreate->posted_by)->send(new SendUserPostMail($event->postCreate, $message));
     }
 }

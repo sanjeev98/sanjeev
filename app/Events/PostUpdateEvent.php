@@ -25,5 +25,4 @@ class PostUpdateEvent
     {
        $this->postUpdate = $postUpdate;
     }
-
 }

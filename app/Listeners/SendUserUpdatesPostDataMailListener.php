@@ -27,7 +27,7 @@ class SendUserUpdatesPostDataMailListener implements ShouldQueue
      */
     public function handle($event)
     {
-        $message = 'post updated';
+        $message = 'Post Updated';
         Mail::to($event->postUpdate->posted_by)->send(new SendUserPostMail($event->postUpdate, $message));
     }
 }
