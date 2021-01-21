@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PostDeleteEvent;
+use App\Events\PostUpdateEvent;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 use App\Models\User;
@@ -9,6 +11,8 @@ use App\Models\Image;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use DataTables;
+use Illuminate\Support\Facades\Event;
+use App\Events\PostCreateEvent;
 use App\Http\Requests\PostRequest;
 
 class PostController extends Controller
@@ -80,6 +84,7 @@ class PostController extends Controller
                 $post->images()->save($file);
             }
         }
+        PostCreateEvent::dispatch($post);
         return redirect()->route('posts.index')
             ->with('success', 'Posts created successfully.');
     }
@@ -137,6 +142,7 @@ class PostController extends Controller
             }
         }
         $post->tags()->sync($tags);
+        PostUpdateEvent::dispatch($post);
         return response()->json(['success' => 'Post updated successfully!']);
     }
 
@@ -148,6 +154,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        PostDeleteEvent::dispatch($post);
         $post->delete();
         return response()->json(['success' => 'Post deleted!']);
     }

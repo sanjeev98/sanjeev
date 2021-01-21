@@ -18,6 +18,18 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        \App\Events\PostCreateEvent::class => [
+            \App\Listeners\SendUserCreatePostMailListener::class,
+            \App\Listeners\SendUserCreatePostDataMailListener::class,
+        ],
+        \App\Events\PostUpdateEvent::class => [
+            \App\Listeners\SendUserUpdatePostMailListener::class,
+            \App\Listeners\SendUserUpdatesPostDataMailListener::class,
+        ],
+        \App\Events\PostDeleteEvent::class => [
+            \App\Listeners\SendDeletePostMailListener::class,
+            \App\Listeners\SendDeletePostDataMailListener::class,
+        ],
     ];
 
     /**
