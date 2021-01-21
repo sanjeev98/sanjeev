@@ -39,9 +39,9 @@
     </tr>
     @foreach($posts as $post)
         <tr>
-            <tb>{{ $post->posted_by }}</tb>
-            <tb>{{ $post->title }}</tb>
-            <tb>{{ $post->description }}</tb>
+            <th>{{ $post->posted_by }}</th>
+            <th>{{ $post->title }}</th>
+            <th>{{ $post->description }}</th>
         </tr>
     @endforeach
 </table>
