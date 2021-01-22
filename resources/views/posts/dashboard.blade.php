@@ -20,112 +20,123 @@
                 <tbody>
                 </tbody>
             </table>
+            <figure class="highcharts-figure">
+                <div id="bar-chart"></div>
+                <br>
+                <div id="graph-chart"></div>
+            </figure>
         </div>
-        <div class="col-3" >
+        <div class="col-3">
             <div style="position: fixed;">
-    <article class="card-group-item" >
-        <header class="card-header" style="padding: 10px;margin: 0px" ><h6 class="title" >Tag</h6></header>
-        <div class="filter-content">
-            <div class="card-body">
-                @foreach($tags4 as $tag)
-                <button class="btn btn-success" style="border-radius: 10px;padding: 2px;margin: 2px;" data-id="{{$tag->name}}">
-                    <span class="form-check-label" style="font-size: 10px">{{$tag->name}}</span>
-                    <span class="badge badge-pill badge-primary" style="font-size: 10px">{{$tag->count}}</span>
-                </button>
-                    @if($loop->iteration == 5)
-                        @break
-                    @endif
-                @endforeach
-            </div>
-        </div>
-    </article>
-            <article class="card-group-item" >
-                <header class="card-header" style="padding: 10px;margin: 0px" ><h6 class="title" >Post</h6></header>
-                <div class="filter-content">
-                    <div class="card-body">
-                        @foreach($pos as $post1)
-                            <button class="btn btn-success post" style="border-radius: 10px;padding: 2px;margin: 2px;" data-id="{{$post1->title}}">
-                                <span class="form-check-label" style="font-size: 10px">{{$post1->title}}</span>
-                                <span class="badge badge-pill badge-primary" style="font-size: 10px">{{$post1->time}}</span>
-                            </button>
-                            @if($loop->iteration==5)
-                                @break
-                            @endif
-                        @endforeach
+                <article class="card-group-item">
+                    <header class="card-header" style="padding: 10px;margin: 0px"><h6 class="title">Tag</h6></header>
+                    <div class="filter-content">
+                        <div class="card-body">
+                            @foreach($tags4 as $tag)
+                                <button class="btn btn-success" style="border-radius: 10px;padding: 2px;margin: 2px;"
+                                        data-id="{{$tag->name}}">
+                                    <span class="form-check-label" style="font-size: 10px">{{$tag->name}}</span>
+                                    <span class="badge badge-pill badge-primary"
+                                          style="font-size: 10px">{{$tag->count}}</span>
+                                </button>
+                                @if($loop->iteration == 5)
+                                    @break
+                                @endif
+                            @endforeach
+                        </div>
                     </div>
-                </div>
-            </article>
+                </article>
+                <article class="card-group-item">
+                    <header class="card-header" style="padding: 10px;margin: 0px"><h6 class="title">Post</h6></header>
+                    <div class="filter-content">
+                        <div class="card-body">
+                            @foreach($pos as $post1)
+                                <button class="btn btn-success post"
+                                        style="border-radius: 10px;padding: 2px;margin: 2px;"
+                                        data-id="{{$post1->title}}">
+                                    <span class="form-check-label" style="font-size: 10px">{{$post1->title}}</span>
+                                    <span class="badge badge-pill badge-primary"
+                                          style="font-size: 10px">{{$post1->time}}</span>
+                                </button>
+                                @if($loop->iteration==5)
+                                    @break
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+                </article>
             </div>
         </div>
     </div>
-    <figure class="highcharts-figure">
-        <div id="container"></div>
-    </figure>
-    <figure class="highcharts-figure">
-        <div id="container1"></div>
-    </figure>
-    <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"
+            integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.css"/>
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script>
-        $(function(){
-     $('#post-table').DataTable({
-            data:{!! json_encode($tab) !!},
-             columns: [
-                 {data: 'id', name: 'id'},
-                 {data: 'title', name: 'title'},
-                 {data: 'description', name: 'description'},
-                 {data: 'posted_by', name: 'posted_by'},
-                 {data: 'tag[].name', name: 'tag[].name'},
-                 {data: 'date', name: 'date'},
-                 {
-                     data: "action",
-                     "render": function(data, type, row, meta){
-                             data = '<a class="btn btn-info" href="posts/'+row['id']+'">show</a>';
-                         return data;
-                     },
-                     orderable: false, searchable: false
-                 }
+        $(function () {
+            $('#post-table').DataTable({
+                data:{!! json_encode($tab) !!},
+                columns: [
+                    {data: 'id', name: 'id'},
+                    {data: 'title', name: 'title'},
+                    {data: 'description', name: 'description'},
+                    {data: 'posted_by', name: 'posted_by'},
+                    {data: 'tag[].name', name: 'tag[].name'},
+                    {data: 'date', name: 'date'},
+                    {
+                        data: "action",
+                        "render": function (data, type, row, meta) {
+                            data = '<a class="btn btn-info" href="posts/' + row['id'] + '">show</a>';
+                            return data;
+                        },
+                        orderable: false, searchable: false
+                    }
 
-             ]
-     });
+                ]
+            });
         });
-        $('body').on('click','.post', function () {
+        $('body').on('click', '.post', function () {
             var table = $('#post-table').DataTable();
             var user_id = $(this).data('id');
             console.log(user_id);
             table.column(1).search(user_id).draw();
         });
 
-
-        $('body').on('click','.p', function () {
+        $('body').on('click', '.p', function () {
             $.fn.dataTableExt.afnFiltering.push(
-                function( settings, data, dataIndex ) {
+                function (settings, data, dataIndex) {
                     var min = $('#min').val();
                     var max = $('#max').val();
                     var startDate = data[5];
-                    console.log(min,max,startDate)
-                    if (min == null && max == null) { return true; }
-                    if (min == null && startDate <= max) { return true; }
-                    if (max == null && startDate >= min) { return true; }
-                    if (startDate <= max && startDate >= min) { return true; }
+                    console.log(min, max, startDate)
+                    if (min == null && max == null) {
+                        return true;
+                    }
+                    if (min == null && startDate <= max) {
+                        return true;
+                    }
+                    if (max == null && startDate >= min) {
+                        return true;
+                    }
+                    if (startDate <= max && startDate >= min) {
+                        return true;
+                    }
                     return false;
                 }
             );
             var table = $('#post-table').DataTable();
             table.draw();
         });
-
-        Highcharts.chart('container', {
+        Highcharts.chart('bar-chart', {
             chart: {
                 type: 'column'
             },
             title: {
-                text: 'Monthly post and users'
+                text: 'Monthly Posts And Users'
             },
             subtitle: {
-                text: 'Source: post and user'
+                text: 'Source: Posts And Users'
             },
             xAxis: {
                 categories: [
@@ -147,7 +158,7 @@
             yAxis: {
                 min: 0,
                 title: {
-                    text: 'No of Post AND User'
+                    text: 'No Of Posts And Users'
                 }
             },
             tooltip: {
@@ -165,43 +176,37 @@
                 }
             },
             series: [{
-                name: 'Post',
-                data: {!! json_encode($chart) !!}
+                name: 'Posts',
+                data: {!! json_encode($posts_chart) !!}
 
-            },{
-                name: 'user',
-                data: {!! json_encode($chart1) !!}
+            }, {
+                name: 'Users',
+                data: {!! json_encode($users_chart) !!}
 
             }]
         });
-        Highcharts.chart('container1', {
-
+        Highcharts.chart('graph-chart', {
             title: {
-                text: ', post and user 2010-2020'
+                text: ', Posts And Users 2010-2020'
             },
-
             subtitle: {
-                text: 'Source: post and user'
+                text: 'Source: Posts And Users'
             },
-
             yAxis: {
                 title: {
-                    text: 'Nunber of posts and user'
+                    text: 'Number Of Posts and Users'
                 }
             },
-
             xAxis: {
                 accessibility: {
                     rangeDescription: 'Range:2010 to 2020'
                 }
             },
-
             legend: {
                 layout: 'vertical',
                 align: 'right',
                 verticalAlign: 'middle'
             },
-
             plotOptions: {
                 series: {
                     label: {
@@ -210,15 +215,13 @@
                     pointStart: 2010
                 }
             },
-
             series: [{
-                name: 'post',
-                data: {!! json_encode($graphchart1) !!}
+                name: 'Posts',
+                data: {!! json_encode($posts_graph) !!}
             }, {
-                name: 'user',
-                data: {!! json_encode($graphchart) !!}
+                name: 'Users',
+                data: {!! json_encode($users_graph) !!}
             }],
-
             responsive: {
                 rules: [{
                     condition: {
@@ -233,7 +236,6 @@
                     }
                 }]
             }
-
         });
     </script>
 @endsection
