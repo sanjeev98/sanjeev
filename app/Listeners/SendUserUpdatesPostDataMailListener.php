@@ -2,12 +2,12 @@
 
 namespace App\Listeners;
 
+use App\Mail\SendUserPostMail;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use App\Mail\PostMail;
 use Illuminate\Support\Facades\Mail;
 
-class CreatePostListener implements ShouldQueue
+class SendUserUpdatesPostDataMailListener implements ShouldQueue
 {
     /**
      * Create the event listener.
@@ -22,11 +22,12 @@ class CreatePostListener implements ShouldQueue
     /**
      * Handle the event.
      *
-     * @param  object  $event
+     * @param object $event
      * @return void
      */
     public function handle($event)
     {
-      Mail::to($event->postCreate->posted_by)->send(new PostMail());
+        $message = 'Post Updated';
+        Mail::to($event->postUpdate->posted_by)->send(new SendUserPostMail($event->postUpdate, $message));
     }
 }

@@ -23,7 +23,7 @@ class CommentFactory extends Factory
     public function definition()
     {
         return [
-            'post_id'=> Post::factory()->create(),
+            'post_id' => Post::factory()->create(),
             'comment' => $this->faker->text,
         ];
     }
