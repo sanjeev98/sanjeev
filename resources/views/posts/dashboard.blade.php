@@ -22,6 +22,11 @@
                 <tbody>
                 </tbody>
             </table>
+            <figure class="highcharts-figure">
+                <div id="bar-chart"></div>
+                <br>
+                <div id="graph-chart"></div>
+            </figure>
         </div>
         <div class="col-3">
             <div class="tags">
@@ -60,6 +65,7 @@
             integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.css"/>
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
     <script>
         $(function () {
             $('#post-table').DataTable({
@@ -115,6 +121,115 @@
             );
             var table = $('#post-table').DataTable();
             table.draw();
+        });
+        Highcharts.chart('bar-chart', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Monthly Posts And Users'
+            },
+            subtitle: {
+                text: 'Source: Posts And Users'
+            },
+            xAxis: {
+                categories: [
+                    'Jan',
+                    'Feb',
+                    'Mar',
+                    'Apr',
+                    'May',
+                    'Jun',
+                    'Jul',
+                    'Aug',
+                    'Sep',
+                    'Oct',
+                    'Nov',
+                    'Dec'
+                ],
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'No Of Posts And Users'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y} {series.name}</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                name: 'Posts',
+                data: {!! json_encode($posts_chart) !!}
+
+            }, {
+                name: 'Users',
+                data: {!! json_encode($users_chart) !!}
+
+            }]
+        });
+        Highcharts.chart('graph-chart', {
+            title: {
+                text: ', Posts And Users 2010-2020'
+            },
+            subtitle: {
+                text: 'Source: Posts And Users'
+            },
+            yAxis: {
+                title: {
+                    text: 'Number Of Posts and Users'
+                }
+            },
+            xAxis: {
+                accessibility: {
+                    rangeDescription: 'Range:2010 to 2020'
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle'
+            },
+            plotOptions: {
+                series: {
+                    label: {
+                        connectorAllowed: false
+                    },
+                    pointStart: 2010
+                }
+            },
+            series: [{
+                name: 'Posts',
+                data: {!! json_encode($posts_graph) !!}
+            }, {
+                name: 'Users',
+                data: {!! json_encode($users_graph) !!}
+            }],
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 500
+                    },
+                    chartOptions: {
+                        legend: {
+                            layout: 'horizontal',
+                            align: 'center',
+                            verticalAlign: 'bottom'
+                        }
+                    }
+                }]
+            }
         });
     </script>
 @endsection

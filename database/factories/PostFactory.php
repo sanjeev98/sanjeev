@@ -23,10 +23,11 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => User::factory()->create(),
+            'user_id' => User::factory()->create(['created_at' => $this->faker->dateTimeBetween( '-30 years', 'now',  null)]),
             'title' => $this->faker->title,
             'description' => $this->faker->text,
             'posted_by' => $this->faker->safeEmail,
+            'created_at' => $this->faker->dateTimeBetween( '-30 years', 'now',  null)
         ];
     }
 }
