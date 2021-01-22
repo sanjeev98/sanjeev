@@ -2,9 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Models\User;
-use App\Http\Controllers\UserApiController;
-use App\Http\Controllers\api\v1\UserApiController as v1UserApiController;
+use App\Http\Controllers\Api\UserApiController;
+use App\Http\Controllers\Api\V1\UserApiController as v1UserApiController;
+use App\Http\Controllers\Api\Auth\AuthApiController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,16 +24,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group([
     'prefix' => 'auth'
 ], function () {
-
-    Route::post('login', [v1UserApiController::class,'login']);
-    Route::post('logout', [v1UserApiController::class,'logout']);
-    Route::post('refresh', [v1UserApiController::class,'refresh']);
-    Route::post('me', [v1UserApiController::class,'me']);
+    Route::post('login', [AuthApiController::class, 'login']);
+    Route::post('logout', [AuthApiController::class, 'logout']);
+    Route::post('refresh', [AuthApiController::class, 'refresh']);
+    Route::post('me', [AuthApiController::class, 'me']);
     Route::prefix('v1')->group(function () {
-        Route::get('/users/{id}', [v1UserApiController::class,'getPost']);
+        Route::get('/users/{id}', [V1UserApiController::class, 'getPost']);
     });
-
 });
-
-Route::get('/users/{id}', [UserApiController::class,'getPost']);
-
+Route::get('/users/{id}', [UserApiController::class, 'getPost']);

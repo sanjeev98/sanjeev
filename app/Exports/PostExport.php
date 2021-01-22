@@ -9,10 +9,10 @@ use Illuminate\Support\Carbon;
 class PostExport implements FromCollection
 {
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
     public function collection()
     {
-       return Post::where("created_at",">",Carbon::now()->subDay())->where("created_at","<",Carbon::now())->get();
+        return Post::where("created_at", ">", Carbon::now()->subDay())->where("created_at", "<", Carbon::now())->get();
     }
 }

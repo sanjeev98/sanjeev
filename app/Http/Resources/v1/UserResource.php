@@ -5,7 +5,7 @@ namespace App\Http\Resources\v1;
 use App\Http\Resources\v1\PostCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class User extends JsonResource
+class UserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

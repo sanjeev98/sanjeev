@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\View\Composers;
 
 use App\Models\Tag;
@@ -10,129 +9,79 @@ use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
 use DataTables;
 use Illuminate\Support\Facades\DB;
+
 class TagComposer
 {
-
-    function myPost($a,$b)
-    {
-        if ($a['count']==$b['count']) return 0;
-        return ($a['count']>$b['count'])?-1:1;
-    }
-
+    /**
+     * @param View $view
+     */
     public function compose(View $view)
     {
-        $value = Cache::remember('tags',300, function () {
-            $tag=Tag::all();
-            $tag2=[];
-            foreach($tag as $tag1)
-            {
-                $tag1['count'] = count($tag1->posts);
-                $tag2[]=$tag1;
-            }
-            uasort($tag2,array($this,'myPost'));
-            return $tag2;
+        $latest_tag = Cache::remember('tags', 300, function () {
+            $tags = Tag::withCount('posts')->orderBy('posts_count', 'desc')->limit(5)->get();
+            return $tags;
         });
-        $value1 = Cache::remember('post',300, function () {
-            $post=Post::orderby('created_at','desc')->get();
-            $post1=[];
-            foreach($post as $post2)
-            {
-                $post2['time'] =$post2->created_at->diffForHumans ();
-                $post1[]=$post2;
-            }
-            return $post1;
+        $posts_table = Cache::remember('posts', 300, function () {
+            $posts = Post::with('tags')->latest()->get();
+            return $posts;
         });
-        $k = Cache::remember('hello',400, function () {
-            $post=Post::all();
-            $post2=[];
-            foreach($post as $post3)
-            {
-                $post3['tag']= DB::table('tags')->leftJoin('post_tag','tags.id','=','post_tag.tag_id')->select('tags.name')->where('post_tag.post_id','=',$post3->id)->get();
-                $post3['date']=$post3->created_at->format('Y-m-d');
-                $post2[]=$post3;
-            }
-            return $post2;
-
-        });
-        $chart = Cache::remember('chart1',400, function () {
-           $user1= DB::table('posts')->select(\DB::raw("COUNT(*) as count"))
-                ->whereYear('created_at','2020')
+        $latest_post = $posts_table->slice(0, 5);
+        $posts_chart = Cache::remember('posts_chart', 1, function () {
+            $postsCreatedAt = DB::table('posts')->select([\DB::raw("COUNT(*) as count"), \DB::raw("Month(created_at) as month")])
+                ->whereYear('created_at', '=', Carbon::now()->subYear()->year)
                 ->groupBy(\DB::raw("Month(created_at)"))
-                ->pluck('count');
-            $user= DB::table('posts')->select(\DB::raw("Month(created_at) as month"))
-                ->whereYear('created_at','2020')
-                ->groupBy(\DB::raw("Month(created_at)"))
-                ->pluck('month');
-            $postmonth=array(0,0,0,0,0,0,0,0,0,0,0,0);
-            foreach($user as $index=>$user2)
-            {
-                $postmonth[$user2]=$user1[$index];
+                ->orderBy(\DB::raw("Month(created_at)"))->get();
+            $post_month = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            foreach ($postsCreatedAt as $postCreatedAt) {
+                $post_month[$postCreatedAt->month - 1] = $postCreatedAt->count;
             }
-           return $postmonth;
+            return $post_month;
         });
-        $chart1 = Cache::remember('chart2',400, function () {
-            $user1= DB::table('users')->select(\DB::raw("COUNT(*) as count"))
-                ->whereYear('created_at','2020')
+        $users_chart = Cache::remember('users_chart', 1, function () {
+            $usersCreatedAt = DB::table('users')->select([\DB::raw("COUNT(*) as count"), \DB::raw("Month(created_at) as month")])
+                ->whereYear('created_at', Carbon::now()->subYear()->year)
                 ->groupBy(\DB::raw("Month(created_at)"))
-                ->pluck('count');
-            $user= DB::table('users')->select(\DB::raw("Month(created_at) as month"))
-                ->whereYear('created_at','2020')
-                ->groupBy(\DB::raw("Month(created_at)"))
-                ->pluck('month');
-            $usermonth=array(0,0,0,0,0,0,0,0,0,0,0,0);
-            foreach($user as $index=>$user2)
-            {
-                $usermonth[$user2]=$user1[$index];
+                ->orderBy(\DB::raw("Month(created_at)"))->get();
+            $user_month = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            foreach ($usersCreatedAt as $userCreatedAt) {
+                $user_month[$userCreatedAt->month - 1] = $userCreatedAt->count;
             }
-            return $usermonth;
+            return $user_month;
         });
-        $graphchart = Cache::remember('graphchart',400, function () {
-            $user1= DB::table('users')->select(\DB::raw("COUNT(*) as count"))
-                ->whereBetween(\DB::raw("Year(created_at)"),['2010','2020'])
+        $users_graph = Cache::remember('users_graph', 1, function () {
+            $year = Carbon::now()->subYear()->year;
+            $usersCreatedAt = DB::table('users')->select([\DB::raw("COUNT(*) as count"), \DB::raw("Year(created_at) as year")])
+                ->whereBetween(\DB::raw("Year(created_at)"), [$year - 10, $year])
                 ->groupBy(\DB::raw("Year(created_at)"))
-                ->orderBy(\DB::raw("Year(created_at)"))
-                ->pluck('count');
-            $user= DB::table('users')->select(\DB::raw("Year(created_at) as year"))
-                ->whereBetween(\DB::raw("Year(created_at)"),['2010','2020'])
-                ->groupBy(\DB::raw("Year(created_at)"))
-                ->orderBy(\DB::raw("Year(created_at)"))
-                ->pluck('year');
-            $useryear=array();
-            $year=2010;
-            foreach($user as $index=>$user2)
-            {
-                if($user2 == $year)
-                $useryear[]=$user1[$index];
+                ->orderBy(\DB::raw("Year(created_at)"))->get();
+            $user_year = array();
+            $year = $year - 10;
+            foreach ($usersCreatedAt as $userCreatedAt) {
+                if ($userCreatedAt->year == $year)
+                    $users_year[] = $userCreatedAt->count;
                 else
-                    $useryear[]=0;
+                    $user_year[] = 0;
                 ++$year;
             }
-            return $useryear;
+            return $user_year;
         });
-        $graphchart1 = Cache::remember('graphchart1',400, function () {
-            $user1= DB::table('posts')->select(\DB::raw("COUNT(*) as count"))
-                ->whereBetween(\DB::raw("Year(created_at)"),['2010','2020'])
+        $posts_graph = Cache::remember('posts_graph', 1, function () {
+            $year = Carbon::now()->subYear()->year;
+            $postsCreatedAt = DB::table('posts')->select([\DB::raw("COUNT(*) as count"), \DB::raw("Year(created_at) as year")])
+                ->whereBetween(\DB::raw("Year(created_at)"), [$year - 10, $year])
                 ->groupBy(\DB::raw("Year(created_at)"))
-                ->orderBy(\DB::raw("Year(created_at)"))
-                ->pluck('count');
-            $user= DB::table('posts')->select(\DB::raw("Year(created_at) as year"))
-                ->whereBetween(\DB::raw("Year(created_at)"),['2010','2020'])
-                ->groupBy(\DB::raw("Year(created_at)"))
-                ->orderBy(\DB::raw("Year(created_at)"))
-                ->pluck('year');
-            $useryear=array();
-            $year=2010;
-            foreach($user as $index=>$user2)
-            {
-                if($user2 == $year)
-                    $useryear[]=$user1[$index];
+                ->orderBy(\DB::raw("Year(created_at)"))->get();
+            $post_year = array();
+            $year = $year - 10;
+            foreach ($postsCreatedAt as $postCreatedAt) {
+                if ($postCreatedAt->year == $year)
+                    $post_year[] = $postCreatedAt->count;
                 else
-                    $useryear[]=0;
+                    $post_year[] = 0;
                 ++$year;
             }
-
-            return $useryear;
+            return $post_year;
         });
-        $view->with('tags4',$value)->with('pos',$value1)->with('tab',$k)->with('chart',$chart)->with('chart1',$chart1)->with('graphchart1',$graphchart1)->with('graphchart', $graphchart);
+        $view->with('latest_tag', $latest_tag)->with('posts_table', $posts_table)->with('latest_post', $latest_post);->with('posts_chart', $posts_chart)->with('users_chart', $users_chart)->with('users_graph', $users_graph)->with('posts_graph', $posts_graph);
     }
 }
