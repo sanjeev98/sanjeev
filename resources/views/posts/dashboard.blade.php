@@ -20,12 +20,6 @@
                 <tbody>
                 </tbody>
             </table>
-            <figure class="highcharts-figure">
-                <div id="container"></div>
-            </figure>
-            <figure class="highcharts-figure">
-                <div id="container1"></div>
-            </figure>
         </div>
         <div class="col-3" >
             <div style="position: fixed;">
@@ -64,6 +58,12 @@
             </div>
         </div>
     </div>
+    <figure class="highcharts-figure">
+        <div id="container"></div>
+    </figure>
+    <figure class="highcharts-figure">
+        <div id="container1"></div>
+    </figure>
     <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.css"/>
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.js"></script>

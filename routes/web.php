@@ -24,7 +24,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('dashboard1', function(){
+Route::get('dashboard', function(){
     return view('posts.dashboard');
 });
 //Route::get('posts/{id}/show', [CommentController::class,'show']);

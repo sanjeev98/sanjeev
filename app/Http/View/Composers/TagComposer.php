@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
 use DataTables;
 use Illuminate\Support\Facades\DB;
+
 class TagComposer
 {
 
