@@ -23,7 +23,7 @@ class RoleTest extends TestCase
      */
     public function indexRole()
     {
-        //UserResource does not have role-list permission case
+        //User does not have role-list permission case
         $user = User::factory()->create();
         $response = $this->actingAs($user)->get('http://127.0.0.1:8000/roles');
         $response->assertStatus(403);
@@ -42,7 +42,7 @@ class RoleTest extends TestCase
      */
     public function storeUserRole()
     {
-        //UserResource does not have role-creat permission case
+        //User does not have role-creat permission case
         $user = User::factory()->create();
         $role_name = $this->faker->name;
         $permission = Permission::create(['name' => 'role-create']);
@@ -66,7 +66,7 @@ class RoleTest extends TestCase
      */
     public function updateUserRole()
     {
-        //UserResource does not have role-edit permission case
+        //User does not have role-edit permission case
         $user = User::factory()->create();
         $role_name = $this->faker->name;
         $this->actingAs($user);
@@ -89,7 +89,7 @@ class RoleTest extends TestCase
      */
     public function deleteRole()
     {
-        //UserResource does have role-delete permission case
+        //User does have role-delete permission case
         $user = User::factory()->create();
         $role_name = $this->faker->name;
         Permission::create(['name' => 'role-delete']);

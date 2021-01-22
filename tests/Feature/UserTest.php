@@ -23,7 +23,7 @@ class UserTest extends TestCase
      */
     public function indexUser()
     {
-        //UserResource doesn't have user-list permission testcase
+        //User doesn't have user-list permission testcase
         $user = User::factory()->create();
         $response = $this->actingAs($user)->get('http://127.0.0.1:8000/users');
         $response->assertStatus(403);
@@ -42,7 +42,7 @@ class UserTest extends TestCase
      */
     public function storeUserRole()
     {
-        //UserResource doesn't have user-create permission testcase
+        //User doesn't have user-create permission testcase
         $user = User::factory()->create();
         $role_name = $this->faker->name;
         $response = $this->actingAs($user)->json('POST', 'http://127.0.0.1:8000/users', ['user_id' => $user->id, 'roles' => $role_name]);
@@ -66,7 +66,7 @@ class UserTest extends TestCase
      */
     public function updateUserRole()
     {
-        //UserResource doesn't have user-edit permission testcase
+        //User doesn't have user-edit permission testcase
         $user = User::factory()->create();
         $role_name = $this->faker->name;
         $this->actingAs($user);
@@ -89,7 +89,7 @@ class UserTest extends TestCase
      */
     public function deleteUser()
     {
-        //UserResource doesn't have user-delete permission testcase
+        //User doesn't have user-delete permission testcase
         $user = User::factory()->create();
         $role_name = $this->faker->name;
         Permission::create(['name' => 'user-delete']);
@@ -101,7 +101,7 @@ class UserTest extends TestCase
         $response = $this->delete('users/' . $user->id);
         $this->assertDeleted($user);
         $response->assertOk();
-        $response->assertExactJson(['success' => 'UserResource deleted successfully']);
+        $response->assertExactJson(['success' => 'User deleted successfully']);
     }
 
     /**

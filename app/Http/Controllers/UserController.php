@@ -56,7 +56,7 @@ class UserController extends Controller
         $user = User::findOrFail($request->input('user_id'));
         $user->assignRole($request->input('roles'));
         return redirect()->route('users.index')
-            ->with('success', 'UserResource created successfully');
+            ->with('success', 'User created successfully');
     }
 
     /**
@@ -98,7 +98,7 @@ class UserController extends Controller
         DB::table('model_has_roles')->where('model_id', $id)->delete();
         $user->assignRole($request->input('roles'));
         return redirect()->route('users.index')
-            ->with('success', 'UserResource updated successfully');
+            ->with('success', 'User updated successfully');
     }
 
     /**
@@ -111,7 +111,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete();
-        return response()->json(['success' => 'UserResource deleted successfully']);
+        return response()->json(['success' => 'User deleted successfully']);
     }
 
     /**

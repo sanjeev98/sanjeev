@@ -34,7 +34,7 @@ class AuthApiController extends Controller
     }
 
     /**
-     * Get the authenticated UserResource.
+     * Get the authenticated User.
      *
      * @return \Illuminate\Http\JsonResponse
      */

@@ -34,7 +34,7 @@ class Post extends Model
     }
 
     /**
-     * UserResource has many relationship with post.
+     * User has many relationship with post.
      *
      * @var string
      */

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\v1\UserResource;
+use App\Http\Resources\V1\UserResource;
 use App\Models\User;
 
 class UserApiController extends Controller
@@ -21,7 +21,7 @@ class UserApiController extends Controller
 
     /**
      * @param $id
-     * @return UserResource
+     * @return User
      */
     public function getPost($id)
     {
