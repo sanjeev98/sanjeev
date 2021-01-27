@@ -12,3 +12,6 @@ npm-debug.log
 yarn-error.log
 .idea/
 san1/
+storage/debugbar/
+public/files
+files.pdf

@@ -1,14 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\api\v1;
+namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\v1\User as UserResource;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 
-class UserApiController extends Controller
+class AuthApiController extends Controller
 {
     /**
      * Create a new AuthController instance.
@@ -30,7 +26,7 @@ class UserApiController extends Controller
     {
         $credentials = request(['email', 'password']);
 
-        if (! $token = auth()->attempt($credentials)) {
+        if (!$token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
@@ -72,7 +68,7 @@ class UserApiController extends Controller
     /**
      * Get the token array structure.
      *
-     * @param  string $token
+     * @param string $token
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -84,8 +80,5 @@ class UserApiController extends Controller
             'expires_in' => auth()->factory()->getTTL() * 60
         ]);
     }
-    public function getPost($id)
-    {
-        return new UserResource(User::findOrFail($id));
-    }
 }
+

@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class PostRequest extends FormRequest
+class UserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,9 @@ class PostRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'title' => 'required|unique:posts,title,' . $this->id . 'id|min:3|max:255',
-            'description' => 'required|min:10|max:255',
+        return [
+            'user_id' => 'required|exists:users,id|' . Rule::notIn(["1", "2"]),
+            'roles' => 'required|exists:roles,name|' . Rule::notIn(["Admin", "SuperAdmin"])
         ];
-        return $rules;
     }
 }

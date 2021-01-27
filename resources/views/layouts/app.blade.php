@@ -9,79 +9,28 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('asset/assets/images/favicon.png') }}">
     <title>@yield('title')</title>
     <!-- Custom CSS -->
     <link href="{{ asset('asset/assets/extra-libs/c3/c3.min.css') }}" rel="stylesheet">
     <link href="{{ asset('asset/assets/libs/chartist/dist/chartist.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('asset/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet" />
+    <link href="{{ asset('asset/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet"/>
     <!-- Custom CSS -->
     <link href="{{ asset('asset/dist/css/style.min.css') }}" rel="stylesheet">
-{{--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">--}}
-{{--    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">--}}
-{{--    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">--}}
+    <link href="{{ asset('asset/dist/css/dashboard-style.css') }}" rel="stylesheet">
+    <link href="{{ asset('asset/dist/css/high-chart.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet">
 
-{{--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>--}}
-{{--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>--}}
-{{--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">--}}
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
 
     <title>Laravel</title>
-
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
-
     <!-- Styles -->
-    <style>
-        .highcharts-figure, .highcharts-data-table table {
-            min-width: 310px;
-            max-width: 800px;
-            margin: 1em auto;
-        }
-
-        #container {
-            height: 400px;
-        }
-
-        .highcharts-data-table table {
-            font-family: Verdana, sans-serif;
-            border-collapse: collapse;
-            border: 1px solid #EBEBEB;
-            margin: 10px auto;
-            text-align: center;
-            width: 100%;
-            max-width: 500px;
-        }
-        .highcharts-data-table caption {
-            padding: 1em 0;
-            font-size: 1.2em;
-            color: #555;
-        }
-        .highcharts-data-table th {
-            font-weight: 600;
-            padding: 0.5em;
-        }
-        .highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
-            padding: 0.5em;
-        }
-        .highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
-            background: #f8f8f8;
-        }
-        .highcharts-data-table tr:hover {
-            background: #f1f7ff;
-        }
-    </style>
 </head>
-
 <body>
 <!-- ============================================================== -->
 <!-- Preloader - style you can find in spinners.css -->
@@ -99,7 +48,7 @@
      data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
     <!-- ============================================================== -->
     @include('layouts.header');
-    @include('layouts.aside');
+    @include('layouts.side');
     <div class="page-wrapper">
         <div class="container-fluid">
             @yield('content')
@@ -140,8 +89,5 @@
 <script src="{{ asset('asset/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js') }}"></script>
 <script src="{{ asset('asset/dist/js/pages/dashboards/dashboard1.min.js') }}"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-
-
 </body>
-
 </html>

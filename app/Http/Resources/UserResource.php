@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Resources\v1;
+namespace App\Http\Resources;
 
-use App\Http\Resources\v1\PostCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\PostCollection;
 
-class User extends JsonResource
+class UserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array
      */
     public function toArray($request)

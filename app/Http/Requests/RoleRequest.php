@@ -3,9 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
+use function PHPUnit\Framework\isEmpty;
 
-class PostRequest extends FormRequest
+class RoleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,13 @@ class PostRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'title' => 'required|unique:posts,title,' . $this->id . 'id|min:3|max:255',
-            'description' => 'required|min:10|max:255',
+        $roleId = $this->route()->parameters('role');
+        if (!$roleId) {
+            $roleId['role'] = '';
+        }
+        return [
+            'role' => 'required|unique:roles,name,' . $roleId['role'] . 'id|min:3|max:20',
+            'permissions' => 'required|exists:permissions,id'
         ];
-        return $rules;
     }
 }

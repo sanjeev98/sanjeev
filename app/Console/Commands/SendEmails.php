@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Mail\PostMail;
+use App\Mail\SendUserPostMail;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Post;
@@ -45,10 +45,11 @@ class SendEmails extends Command
      */
     public function handle()
     {
-        $postsmail=Post::where("created_at",">",Carbon::now()->subDay())->where("created_at","<",Carbon::now())->get();
-         $pdf = PDF::loadView('pdf', compact('postsmail'));
-         Storage::put('public/files/san.pdf', $pdf->output());
-         Excel::store(new PostExport(2018), 'public/files/pos1t.xlsx');
-         Mail::to('sanjeev@gmail.com')->send(new PostMail($postsmail));
+        $posts = Post::where("created_at", ">", Carbon::now()->subDay())->where("created_at", "<", Carbon::now())->get();
+        $message = 'Yesterday Post';
+        $pdf = PDF::loadView('pdf_posts', compact('posts'));
+        Storage::put('public/files/posts.pdf', $pdf->output());
+        Excel::store(new PostExport(2018), 'public/files/posts.xlsx');
+        Mail::to(env('MAIL_REPLY_TO_ADDRESS'))->send(new SendUserPostMail($posts, $message));
     }
 }

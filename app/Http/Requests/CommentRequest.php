@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class PostRequest extends FormRequest
+class CommentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +23,10 @@ class PostRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'title' => 'required|unique:posts,title,' . $this->id . 'id|min:3|max:255',
-            'description' => 'required|min:10|max:255',
+        return [
+            'comment' => 'required|min:3|max:255',
+            'user_name' => 'required|min:5|max:20',
+            'email' => 'required|email|min:16|max:25'
         ];
-        return $rules;
     }
 }
