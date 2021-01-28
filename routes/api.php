@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserApiController;
 use App\Http\Controllers\Api\V1\UserApiController as v1UserApiController;
 use App\Http\Controllers\Api\Auth\AuthApiController;
-use App\Http\Controllers\api\Auth\PostController;
+use App\Http\Controllers\api\v1\PostController;
 
 /*
 |--------------------------------------------------------------------------
