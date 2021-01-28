@@ -31,7 +31,7 @@ Route::group([
     Route::post('me', [AuthApiController::class, 'me']);
     Route::prefix('v1')->group(function () {
         Route::get('/users/{id}', [V1UserApiController::class, 'getPost']);
-        Route::apiResource('posts',PostController::class);
+        Route::apiResource('posts', PostController::class);
     });
 });
 Route::get('/users/{id}', [UserApiController::class, 'getPost']);

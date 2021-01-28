@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Http\Resources\v1\PostResource;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -14,7 +15,7 @@ use Illuminate\Support\Str;
 class PostApiTest extends TestCase
 {
     use WithFaker;
-    use RefreshDatabase;
+    use DatabaseTransactions;
 
     protected $user;
 
