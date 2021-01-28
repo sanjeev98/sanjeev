@@ -14,7 +14,7 @@ class Image extends Model
      *
      * @var string[]
      */
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'post_id'];
 
     /**
      * The table associated with the model.

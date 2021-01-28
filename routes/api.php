@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserApiController;
 use App\Http\Controllers\Api\V1\UserApiController as v1UserApiController;
 use App\Http\Controllers\Api\Auth\AuthApiController;
+use App\Http\Controllers\api\v1\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,7 @@ Route::group([
     Route::post('me', [AuthApiController::class, 'me']);
     Route::prefix('v1')->group(function () {
         Route::get('/users/{id}', [V1UserApiController::class, 'getPost']);
+        Route::apiResource('posts', PostController::class);
     });
 });
 Route::get('/users/{id}', [UserApiController::class, 'getPost']);
